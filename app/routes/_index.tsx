@@ -3,6 +3,7 @@ import type {Route} from './+types/_index';
 import {Suspense} from 'react';
 import {Image} from '@shopify/hydrogen';
 import {ProductRange} from '~/components/home/ProductRange';
+import {FeaturedIn} from '~/components/home/FeaturedIn';
 import {MockShopNotice} from '~/components/MockShopNotice';
 
 export const meta: Route.MetaFunction = () => {
@@ -143,6 +144,8 @@ export default function Homepage() {
           ))}
         </div>
       </section>
+
+      <FeaturedIn />
 
       {/* Routines — one editorial moment: photo on left, structured copy on right. */}
       <section className="bg-paper">

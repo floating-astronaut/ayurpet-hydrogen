@@ -14,6 +14,11 @@ import {
 import {ProductForm} from '~/components/ProductForm';
 import type {Image as StorefrontImage} from '@shopify/hydrogen/storefront-api-types';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
+import {HowToUse} from '~/components/pdp/HowToUse';
+import {WhoIsItFor} from '~/components/pdp/WhoIsItFor';
+import {ShippingReturns} from '~/components/pdp/ShippingReturns';
+import {PaymentTrust} from '~/components/pdp/PaymentTrust';
+import {StickyAtc} from '~/components/pdp/StickyAtc';
 
 export const meta: Route.MetaFunction = ({data}) => {
   const product = data?.product;
@@ -273,6 +278,11 @@ export default function Product() {
               <p className="mt-5 text-center text-[11px] uppercase tracking-[0.22em] text-ink-muted">
                 Free shipping over USD 60 · 30-day returns
               </p>
+
+              {/* Payment + secure-checkout strip directly under the CTA. */}
+              <div className="mt-6">
+                <PaymentTrust />
+              </div>
             </div>
           </div>
         </div>
@@ -291,6 +301,10 @@ export default function Product() {
           ))}
         </div>
       </section>
+
+      <HowToUse />
+      <WhoIsItFor />
+      <ShippingReturns />
 
       {/* Why it fits — editorial split with description-rich content */}
       <section className="bg-paper">
@@ -322,6 +336,12 @@ export default function Product() {
           </div>
         </div>
       </section>
+
+      <StickyAtc
+        productTitle={displayTitle}
+        thumbnail={(activeImage as StorefrontImage | null) ?? null}
+        selectedVariant={selectedVariant}
+      />
 
       <Analytics.ProductView
         data={{

@@ -4,6 +4,7 @@ import type {CartApiQueryFragment} from 'storefrontapi.generated';
 import {useAside} from '~/components/Aside';
 import {CartLineItem, type CartLine} from '~/components/CartLineItem';
 import {CartSummary} from './CartSummary';
+import {CartProgress} from './CartProgress';
 
 export type CartLayout = 'page' | 'aside';
 
@@ -56,6 +57,7 @@ export function CartMain({layout, cart: originalCart}: CartMainProps) {
     >
       <CartEmpty hidden={linesCount} layout={layout} />
       <div className="cart-details">
+        {cartHasItems ? <CartProgress cart={cart} /> : null}
         <p id="cart-lines" className="sr-only">
           Line items
         </p>

@@ -17,6 +17,12 @@ export function ProductItem({
 }) {
   const variantUrl = useVariantUrl(product.handle);
   const image = product.featuredImage;
+  // Hover image: prefer the second image of the product if it exists and
+  // is distinct from the featured image.
+  const altImageNode =
+    'images' in product && Array.isArray(product.images?.nodes)
+      ? product.images.nodes.find((n) => n?.id && n.id !== image?.id)
+      : undefined;
 
   // Show a "Save" badge only when there's a real price difference.
   const min = Number(product.priceRange.minVariantPrice.amount);
@@ -32,14 +38,28 @@ export function ProductItem({
     >
       <div className="relative aspect-square overflow-hidden rounded-[1.4rem] bg-cream transition duration-500 group-hover:shadow-[0_24px_60px_rgba(31,26,20,0.12)]">
         {image ? (
-          <Image
-            alt={image.altText || product.title}
-            aspectRatio="1/1"
-            data={image}
-            loading={loading}
-            sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 92vw"
-            className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]"
-          />
+          <>
+            <Image
+              alt={image.altText || product.title}
+              aspectRatio="1/1"
+              data={image}
+              loading={loading}
+              sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 92vw"
+              className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${
+                altImageNode ? 'group-hover:opacity-0' : ''
+              }`}
+            />
+            {altImageNode ? (
+              <Image
+                alt={altImageNode.altText || product.title}
+                aspectRatio="1/1"
+                data={altImageNode}
+                loading="lazy"
+                sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 92vw"
+                className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+              />
+            ) : null}
+          </>
         ) : (
           <div className="grid h-full w-full place-items-center font-display text-3xl text-ink-muted">
             AyurPet

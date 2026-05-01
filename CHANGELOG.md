@@ -13,7 +13,36 @@ Body text (if present) shown as indented sub-bullets.
 
 ## 2026-05-01
 
-- **09:15 UTC** — auto-sync: 2026-05-01 09:15 UTC (`83f5979`) — 6 files
+- **09:45 UTC** — auto-sync: 2026-05-01 09:45 UTC (`fc9bc54`) — 15 files
+        M	app/components/CartMain.tsx
+        A	app/components/CartProgress.tsx
+        M	app/components/ProductItem.tsx
+        A	app/components/home/FeaturedIn.tsx
+        A	app/components/pdp/HowToUse.tsx
+        ... (+10 more)
+- **09:37 UTC** — docs: CRO checklist scaffold + sheet sync (`6fbe060`) — 3 files
+    Wire the AyurPet CRO checklist (Google Sheet) into the repo so progress
+    tracking lives in code and stays in sync with the sheet automatically.
+      docs/CRO_CHECKLIST.md
+        Snapshot of all 9 tabs (~330 items) extracted from
+        https://docs.google.com/spreadsheets/d/1nH4Y2EUXDKcnlgFTHWE5Dpe2k7wxEz44sWxh_8fpGt0
+        Read with the existing Google service account
+        glitch-vertex-ai@capable-boulder-487806-j0.iam.gserviceaccount.com.
+      docs/CRO_AUDIT.md
+        Living mapping of every actionable checklist row to its current
+        state in the Hydrogen storefront, with a one-line code-proof per
+- **09:21 UTC** — visual polish pass — header, footer, PDP, collections, homepage rhythm (`2639178`) — 7 files
+    A storefront-wide pass focused on restraint and confidence over decoration.
+    Lessons from the Codex homepage applied across the rest of the surfaces:
+    big confident type, strip out repeated decorative cards, drop generic
+    badges/copy that appear on every product, and let images carry sections.
+    Header (app/components/Header.tsx)
+    - Drop the green "AP" circle. Replace with a clean serif AyurPet wordmark
+      + small uppercase "Global" subtitle.
+    - Sticky on scroll, paper background with 70% backdrop-blur.
+    - Active link gets an underline tab below the header rather than a color
+      swap; clearer current-page state, more editorial.
+- **09:15 UTC** — auto-sync: 2026-05-01 09:15 UTC (`be60c44`) — 7 files
         M	app/components/Footer.tsx
         M	app/components/Header.tsx
         M	app/components/ProductItem.tsx
