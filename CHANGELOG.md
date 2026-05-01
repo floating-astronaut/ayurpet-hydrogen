@@ -13,7 +13,25 @@ Body text (if present) shown as indented sub-bullets.
 
 ## 2026-05-01
 
-- **21:00 UTC** — auto-sync: 2026-05-01 21:00 UTC (`1f01a67`) — 1 file
+- **21:30 UTC** — auto-sync: 2026-05-01 21:30 UTC (`a991700`) — 6 files
+        M	app/components/MultiRowMarquee.tsx
+        M	app/components/collection/MerchSpotlight.tsx
+        M	app/components/home/FeaturedIn.tsx
+        M	app/components/home/ShopTheShelf.tsx
+        M	app/components/pdp/BrandStrip.tsx
+        ... (+1 more)
+- **21:12 UTC** — brand: wire real AyurPet media throughout the storefront (`4f87678`) — 65 files
+    Pulled curated assets from the AyurPet Drive (folder
+    11DGtEO7cyhU9_ZKphdK8Nb97sT9F7_oy) via the social-media-agent service
+    account, optimized them, and replaced generic visuals across the
+    storefront so the site reads as a real brand.
+    Asset pipeline
+    - 22 curated files inventoried and downloaded from Drive (logos,
+      finished web banners, designed product carousels, AI-art lifestyle
+      shots, IG-story proof creatives, one short product clip).
+    - Pillow pass produced WebP + JPG fallbacks at responsive sizes.
+    - IG-story screenshots cropped to remove phone chrome (status bar +
+- **21:00 UTC** — auto-sync: 2026-05-01 21:00 UTC (`5c3e923`) — 2 files
         A	.drive-staging/folder-listing.json
 - **20:27 UTC** — quality: hydration fix, CSP for fonts, retail tile redesign, premium cart (`807a584`) — 14 files
     Technical

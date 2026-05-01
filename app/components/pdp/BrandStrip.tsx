@@ -20,7 +20,7 @@ const FRAMES: Frame[] = [
     caption: 'FDA · ISO · HACCP certified. Single-ingredient yak cheese.',
   },
   {
-    img: 'lifestyle-kelpie-chewing',
+    img: 'lifestyle-kelpie-chewing-1200',
     alt: 'A brown kelpie chewing a yak cheese chew',
     eyebrow: 'In real homes',
     caption: 'Six hours of dental engagement. No greasy paws after.',

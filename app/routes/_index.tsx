@@ -103,10 +103,10 @@ export default function Homepage() {
 
             <HeroWordReveal
               text="A calmer dog. A cleaner shelf."
-              className="ayur-hero-h1 mt-7 break-words font-display text-[2.75rem] font-medium leading-[0.92] tracking-[-0.015em] text-ink sm:text-[4.6rem] lg:text-[6.4rem]"
+              className="ayur-hero-h1 mt-7 break-words font-display text-[3.1rem] font-medium leading-[0.9] tracking-[-0.018em] text-ink sm:text-[5.4rem] lg:text-[7.2rem] xl:text-[8.2rem]"
             />
 
-            <p className="mt-5 max-w-xl text-[15px] leading-7 text-ink-soft sm:text-lg sm:leading-8">
+            <p className="mt-6 max-w-xl text-[15px] leading-7 text-ink-soft sm:text-[17px] sm:leading-8">
               Vet-informed Ayurvedic supplements and slow-aged Himalayan yak chews — built for daily wellness rituals, not the average pet aisle.
             </p>
 
@@ -176,7 +176,6 @@ export default function Homepage() {
                     width={1200}
                     height={800}
                     loading="eager"
-                    fetchPriority="high"
                   />
                 </picture>
                 <div
@@ -243,20 +242,20 @@ export default function Homepage() {
       <FeaturedIn />
 
       {/* Brand promise — short editorial dark band, alternating rhythm. */}
-      <section className="ayur-band-ink relative overflow-hidden border-y border-line/40 px-4 py-12 text-paper sm:px-6 lg:px-10 lg:py-16">
+      <section className="ayur-band-ink relative overflow-hidden border-t border-line/40 px-5 py-14 text-paper sm:px-6 sm:py-16 lg:px-10 lg:py-20">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 opacity-[0.10] [background-image:radial-gradient(circle_at_18%_30%,#fdfaf2_0%,transparent_45%),radial-gradient(circle_at_82%_70%,#d99441_0%,transparent_50%)]"
         />
         <ScrollReveal
           kind="rise-soft"
-          className="relative mx-auto flex max-w-7xl flex-col items-start gap-8 sm:flex-row sm:items-end sm:justify-between"
+          className="relative mx-auto flex max-w-7xl flex-col items-start gap-10 sm:flex-row sm:items-end sm:justify-between sm:gap-12"
         >
           <div className="max-w-2xl">
             <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-saffron-soft">
               Why pet parents stay
             </p>
-            <h2 className="mt-3 font-display text-[2rem] leading-[1.05] tracking-tight sm:text-[2.5rem] lg:text-[3rem]">
+            <h2 className="mt-4 font-display text-[1.85rem] leading-[1.08] tracking-tight sm:text-[2.5rem] sm:leading-[1.05] lg:text-[3.1rem]">
               Vet-informed formulas. Ayurvedic actives. Daily, repeatable rituals — not aisle-shelf filler.
             </h2>
           </div>
@@ -290,8 +289,9 @@ export default function Homepage() {
       {/* Premium merchandising — five image-led routine tiles. */}
       <ShopTheShelf />
 
-      {/* Kinetic interstitial — three lanes, mixed sizes/speeds/directions. */}
-      <section className="border-y border-line bg-cream py-5 sm:py-7">
+      {/* Quiet kinetic interstitial — slim, restrained, just bridges the
+          dark trust band into the routine grid below. */}
+      <section className="border-b border-line bg-cream py-3.5 sm:py-5">
         <MultiRowMarquee />
       </section>
 

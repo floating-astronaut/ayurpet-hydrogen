@@ -31,7 +31,7 @@ const TILES: Tile[] = [
     body: 'Slow-aged Himalayan yak cheese — single ingredient, no fillers, 6h+.',
     cta: 'Shop chews',
     to: '/collections/yak-chews',
-    img: 'lifestyle-kelpie-chewing',
+    img: 'lifestyle-kelpie-chewing-1200',
     imgAlt: 'A dog chewing a yak cheese chew',
   },
   {

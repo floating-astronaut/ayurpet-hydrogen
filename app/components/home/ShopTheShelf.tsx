@@ -24,34 +24,34 @@ const TILES: Tile[] = [
     title: 'Calming routines',
     body: 'Ashwagandha-led rituals for fireworks, travel, vet visits, anxious nights.',
     to: '/collections/calming',
-    img: 'ashwa-lifestyle',
-    imgAlt: 'Calming chew lifestyle — golden dog smiling in a green field',
+    img: 'lifestyle-two-dogs-1200',
+    imgAlt: 'Two dogs being offered a yak cheese chew',
     feature: true,
-    pos: 'object-center',
+    pos: 'object-[center_30%]',
   },
   {
     label: 'Gut · skin · coat',
     title: 'Daily wellness',
     body: 'Turmeric and gut-support formulas for itchy skin, tear stains, and sensitive bellies.',
     to: '/collections/gut-support',
-    img: 'turmeric-lifestyle',
-    imgAlt: 'Healing turmeric chew lifestyle',
+    img: 'lifestyle-corgi-chew-1200',
+    imgAlt: 'A corgi running with a chew',
   },
   {
     label: 'Chew · enrich',
     title: 'Yak chew rituals',
     body: 'Slow-aged Himalayan yak cheese chews — six hours of dental engagement, no fillers.',
     to: '/collections/yak-chews',
-    img: 'lifestyle-kelpie-resting',
-    imgAlt: 'Brown kelpie resting with a yak cheese chew',
+    img: 'lifestyle-kelpie-resting-1200',
+    imgAlt: 'A brown kelpie resting with a yak cheese chew',
   },
   {
     label: 'For senior dogs',
     title: 'Joint support',
     body: 'Turmeric, boswellia, and ghee-based blends to keep stairs and walks easy.',
     to: '/collections/joint-care',
-    img: 'lifestyle-corgi-chew',
-    imgAlt: 'Corgi running with a chew',
+    img: 'turmeric-lifestyle',
+    imgAlt: 'Healing turmeric chew — boosts joint health and mobility',
   },
   {
     label: 'Save & simplify',
@@ -113,7 +113,7 @@ export function ShopTheShelf() {
                 {/* Brand-color overlay so copy stays legible regardless of photo */}
                 <div
                   aria-hidden
-                  className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(31,26,20,0.05)_30%,rgba(31,26,20,0.55)_75%,rgba(31,26,20,0.78)_100%)]"
+                  className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(31,26,20,0.10)_0%,rgba(31,26,20,0.30)_45%,rgba(31,26,20,0.78)_85%,rgba(31,26,20,0.92)_100%)]"
                 />
 
                 <div className="relative p-6 sm:p-7">

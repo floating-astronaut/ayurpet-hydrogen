@@ -11,9 +11,8 @@ type Row = {
 };
 
 const DEFAULT_ROWS: Row[] = [
-  {text: 'Vet-approved · Lab-tested · Himalayan-sourced · Buy 1 · Help 1', speed: 36, weight: 'display', size: 'lg', opacity: 0.9},
+  {text: 'Vet-approved · Lab-tested · Himalayan-sourced · Buy 1 · Help 1', speed: 38, weight: 'display', size: 'md', opacity: 0.85},
   {text: 'No nasties · Single-ingredient · Same-day dispatch · 30-day returns', speed: 28, reverse: true, weight: 'sans', size: 'sm', opacity: 0.55},
-  {text: 'Ashwagandha · Turmeric · Yak · Ayurveda · Daily ritual', speed: 44, weight: 'display', size: 'md', opacity: 0.7},
 ];
 
 export function MultiRowMarquee({
@@ -57,10 +56,10 @@ function Lane({
 }: Required<Row>) {
   const sizeClass =
     size === 'lg'
-      ? 'text-3xl sm:text-5xl lg:text-7xl'
+      ? 'text-2xl sm:text-4xl lg:text-5xl'
       : size === 'md'
-        ? 'text-xl sm:text-3xl lg:text-5xl'
-        : 'text-sm sm:text-base lg:text-lg';
+        ? 'text-lg sm:text-2xl lg:text-3xl'
+        : 'text-[11px] sm:text-xs lg:text-[13px]';
   const weightClass =
     weight === 'display'
       ? 'font-display tracking-tight'
