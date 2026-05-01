@@ -2,7 +2,7 @@
 import {motion} from 'framer-motion';
 
 type Pillar = {icon: 'vet' | 'lab' | 'mountain' | 'paw'; title: string; body: string};
-type Props = {eyebrow?: string; title: string; pillars?: Pillar[]};
+type Props = {eyebrow?: string; title?: string; pillars?: Pillar[]};
 
 const ICONS: Record<Pillar['icon'], JSX.Element> = {
   vet: (

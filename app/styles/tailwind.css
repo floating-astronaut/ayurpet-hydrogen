@@ -4,6 +4,7 @@
  * `2684sq-mt-horizon-dev/_build/src/tokens.json` so design stays in sync.
  */
 
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap');
 @import 'tailwindcss';
 
 @theme {
@@ -42,8 +43,6 @@
   --radius-pill: 9999px;
 }
 
-/* Google Fonts — Fraunces (display) + Inter (body) */
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap');
 
 @layer base {
   body {

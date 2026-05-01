@@ -5,22 +5,12 @@ import {Link} from 'react-router';
 import {Image, Money} from '@shopify/hydrogen';
 import {Swiper, SwiperSlide} from 'swiper/react';
 import {Navigation, FreeMode, Mousewheel} from 'swiper/modules';
+import type {RangeProductFragment} from 'storefrontapi.generated';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/free-mode';
 
-type ProductLite = {
-  id: string;
-  handle: string;
-  title: string;
-  vendor?: string | null;
-  featuredImage?: {url: string; altText?: string | null; width?: number | null; height?: number | null} | null;
-  priceRange: {minVariantPrice: {amount: string; currencyCode: string}};
-  tags?: string[];
-  compareAtPriceRange?: {
-    minVariantPrice: {amount: string; currencyCode: string};
-  };
-};
+type ProductLite = RangeProductFragment;
 
 type Props = {
   eyebrow?: string;
