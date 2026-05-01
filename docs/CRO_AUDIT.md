@@ -56,6 +56,11 @@ Row | Status | Note
 36 | In progress | 404 boundary handles missing routes; explicit redirects for legacy paths not yet configured
 37 | In progress | `Analytics.Provider` wired in `app/root.tsx`; GA4/Pixel still to be added
 
+Just shipped (this batch):
+Row | Status | Proof
+--- | --- | ---
+15 | Done | "As featured in" press strip (Vogue India · YourStory · The Hindu · Mint Lounge · Forbes India · Conde Nast Traveller — placeholder titles until real coverage) — `app/components/home/FeaturedIn.tsx`
+
 ## 📦 Product Page
 
 Row | Status | Proof
@@ -76,13 +81,26 @@ Row | Status | Note
 --- | --- | ---
 48 | In progress | Description copy is short; emotional/benefit-led copy needs a content pass
 
+Just shipped (this batch):
+Row | Status | Proof
+--- | --- | ---
+80 | Done | Payment-method strip (Visa · Mastercard · AMEX · PayPal · Shop Pay · Apple Pay) — `app/components/pdp/PaymentTrust.tsx`
+81 | Done | "Your transaction is secure…" micro-copy with lock icon under the payment logos — `PaymentTrust.tsx`
+102 | Done | "How to use" 3-step explainer (Open the pouch → Offer once a day → Watch the routine) — `app/components/pdp/HowToUse.tsx`
+103 | Done | "Made for / Not for" two-column honest-fit section — `app/components/pdp/WhoIsItFor.tsx`
+105 | Done | "Free over USD 60 — usually 3–7 working days" delivery panel — `app/components/pdp/ShippingReturns.tsx`
+106 | Done | Free-shipping threshold + same-day dispatch panel — `ShippingReturns.tsx`
+107 | Done | Returns/exchange policy: "30-day no-questions returns, email hello@theayurpet.store" — `ShippingReturns.tsx`
+137 | Done | Dedicated returns panel above the description — `ShippingReturns.tsx`
+
 ## 📁 Collection Page
 
 Row | Status | Proof
 --- | --- | ---
 4 | Done | Collection page shows live product count + sort indicator above grid — `collections.all.tsx`, `collections.$handle.tsx`
 5 | Done | All product images use a unified 1:1 aspect — `app/components/ProductItem.tsx`
-6 | Done | Brand-aligned product photography (sourced from Shopify CDN, framed with consistent radii/cream surface)
+6 | Done | Hover swap to the second product image (fades in/out at 500ms) — `ProductItem.tsx` + extended fragments
+7 | Done | Brand-aligned product photography (sourced from Shopify CDN, framed with consistent radii/cream surface)
 
 ## 💳 Checkout Page
 
@@ -95,6 +113,8 @@ N/A items | N/A | Checkout is hosted by Shopify; the storefront only links into 
 Row | Status | Proof
 --- | --- | ---
 2 | Done | Cart aside is clean — `app/components/CartMain.tsx` / scaffolded Hydrogen cart UI
+3 | Done | Free-shipping threshold progress bar at top of cart aside (USD-aware; falls back to a generic shipping note for non-USD carts) — `app/components/CartProgress.tsx`
+11 | Done | Trust-badge row in cart aside (Secure checkout · 30-day returns · Same-day dispatch) — `CartProgress.tsx`
 
 ---
 
