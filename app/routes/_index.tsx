@@ -6,6 +6,8 @@ import {ProductRange} from '~/components/home/ProductRange';
 import {FeaturedIn} from '~/components/home/FeaturedIn';
 import {HeroWordReveal} from '~/components/home/HeroWordReveal';
 import {MultiRowMarquee} from '~/components/MultiRowMarquee';
+import {ScrollReveal} from '~/components/motion/ScrollReveal';
+import {CountUpStat} from '~/components/motion/CountUpStat';
 import {MockShopNotice} from '~/components/MockShopNotice';
 
 export const meta: Route.MetaFunction = () => {
@@ -51,13 +53,6 @@ function loadDeferredData({context}: Route.LoaderArgs) {
 
 const HERO_PRODUCT_HANDLE =
   'calming-ashwagandha-yak-cheese-chews-6-hour-long-lasting-dental-chew';
-
-const TRUST_POINTS: Array<[string, string]> = [
-  ['Vet-informed', 'Daily-support formulas, not trend-led filler.'],
-  ['Ayurvedic actives', 'Ashwagandha, turmeric, Himalayan yak.'],
-  ['Native checkout', 'Fast Shopify cart and trusted payments.'],
-  ['30-day returns', 'Send it back if the routine isn’t a fit.'],
-];
 
 const ROUTINES: Array<{n: string; title: string; body: string}> = [
   {
@@ -136,17 +131,56 @@ export default function Homepage() {
         </div>
       </section>
 
-      {/* Trust strip — single dense row, no cards. */}
-      <section className="border-b border-line bg-cream">
-        <div className="mx-auto grid max-w-7xl gap-x-12 gap-y-8 px-4 py-12 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-10 lg:py-14">
-          {TRUST_POINTS.map(([title, body]) => (
-            <div key={title}>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-brand">
-                {title}
-              </p>
-              <p className="mt-2 text-sm leading-6 text-ink-muted">{body}</p>
-            </div>
-          ))}
+      {/* Trust strip — eyebrow + count-up stat row, no flat cards. */}
+      <section className="relative border-b border-line bg-cream">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 [background-image:radial-gradient(circle_at_15%_50%,rgba(45,90,61,0.08),transparent_42%),radial-gradient(circle_at_85%_50%,rgba(217,148,65,0.08),transparent_42%)]"
+        />
+        <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-10 lg:py-20">
+          <ScrollReveal kind="rise-soft" className="mb-10 max-w-2xl">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-brand">
+              Made for pet parents who notice the small things
+            </p>
+            <p className="mt-3 font-display text-2xl leading-tight text-ink sm:text-3xl">
+              Vet-informed formulas. Ayurvedic actives. Daily, repeatable
+              rituals — not aisle-shelf filler.
+            </p>
+          </ScrollReveal>
+
+          <ScrollReveal kind="rise-soft" stagger>
+            <ul className="grid grid-cols-2 gap-y-10 sm:grid-cols-4 sm:gap-x-2">
+              {[
+                {label: 'Average rating', value: 4.9, decimals: 1, caption: '★★★★★ verified buyers'},
+                {label: 'Reviews', value: 9340, suffix: '+', caption: 'Across the AyurPet shelf'},
+                {label: 'Hour chew', value: 6, suffix: '+', caption: 'Slow-aged Himalayan yak cheese'},
+                {label: 'Day returns', value: 30, caption: 'No-questions, full refund'},
+              ].map((s, i, arr) => (
+                <li
+                  key={s.label}
+                  className={
+                    'flex flex-col items-start' +
+                    (i % 2 === 0 ? ' border-r border-line pr-4 sm:pr-6' : ' pl-4 sm:pl-6') +
+                    (i < arr.length - 1 ? ' sm:border-r sm:border-line sm:pr-6' : '')
+                  }
+                >
+                  <p className="font-display text-[clamp(2.25rem,5vw,3.5rem)] leading-none tracking-tight text-ink">
+                    <CountUpStat
+                      value={s.value}
+                      decimals={s.decimals ?? 0}
+                      suffix={s.suffix}
+                    />
+                  </p>
+                  <p className="mt-3 text-[11px] font-bold uppercase tracking-[0.24em] text-brand">
+                    {s.label}
+                  </p>
+                  <p className="mt-1.5 text-[12px] leading-5 text-ink-muted">
+                    {s.caption}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -160,7 +194,7 @@ export default function Homepage() {
       {/* Routines — one editorial moment: photo on left, structured copy on right. */}
       <section className="bg-paper">
         <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-center lg:gap-16 lg:px-10 lg:py-24">
-          <div className="relative overflow-hidden rounded-[1.75rem] bg-cream shadow-[0_30px_90px_rgba(31,26,20,0.10)] sm:rounded-[2.25rem]">
+          <ScrollReveal kind="rise" className="ayur-card-frame relative overflow-hidden rounded-[1.75rem] shadow-[0_30px_90px_rgba(31,26,20,0.10)] sm:rounded-[2.25rem]">
             <div className="relative aspect-[4/5] sm:aspect-[5/6]">
               <img
                 src={ROUTINE_IMAGE}
@@ -181,20 +215,13 @@ export default function Homepage() {
                 </p>
               </div>
             </div>
-          </div>
+          </ScrollReveal>
 
-          <div>
+          <ScrollReveal kind="rise-soft" className="min-w-0">
             <p className="text-[11px] uppercase tracking-[0.32em] text-brand">
               Choose by outcome
             </p>
-            <h2
-              className="mt-4 font-display leading-[0.96] text-ink"
-              style={{
-                fontSize: 'clamp(2.25rem, 4.6vw, 3.75rem)',
-                letterSpacing: '-0.012em',
-                textWrap: 'balance' as React.CSSProperties['textWrap'],
-              }}
-            >
+            <h2 className="mt-4 break-words font-display text-3xl leading-[1.05] tracking-tight text-ink sm:text-4xl lg:text-5xl">
               One shelf. Three clear routines.
             </h2>
             <p className="mt-5 max-w-md text-[15px] leading-7 text-ink-muted sm:text-base sm:leading-8">
@@ -202,22 +229,23 @@ export default function Homepage() {
               around a single function: digest, calm, or chew.
             </p>
 
-            <ol className="mt-9 divide-y divide-line border-t border-line">
+            <ol className="ayur-timeline mt-9 border-t border-line">
               {ROUTINES.map((item) => (
                 <li
                   key={item.title}
-                  className="grid grid-cols-[auto_1fr] items-start gap-x-5 gap-y-1.5 py-6 sm:grid-cols-[3rem_1fr]"
+                  className="ayur-timeline-step grid grid-cols-[2.4rem_1fr] items-start gap-x-4 border-b border-line py-6 last:border-b-0"
                 >
-                  <span className="font-display text-2xl leading-none text-saffron-deep">
+                  <span className="block pl-2 font-display text-2xl leading-none text-saffron-deep">
                     {item.n}
                   </span>
-                  <h3 className="font-display text-xl text-ink sm:text-2xl">
-                    {item.title}
-                  </h3>
-                  <span aria-hidden />
-                  <p className="text-sm leading-7 text-ink-muted">
-                    {item.body}
-                  </p>
+                  <div>
+                    <h3 className="font-display text-xl leading-tight text-ink sm:text-2xl">
+                      {item.title}
+                    </h3>
+                    <p className="mt-2 text-sm leading-7 text-ink-muted">
+                      {item.body}
+                    </p>
+                  </div>
                 </li>
               ))}
             </ol>
@@ -230,7 +258,7 @@ export default function Homepage() {
               Browse the full shelf
               <span aria-hidden>→</span>
             </Link>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -242,13 +270,35 @@ export default function Homepage() {
         </Await>
       </Suspense>
 
-      <section className="bg-brand-deep px-4 py-16 text-paper sm:px-6 lg:px-10 lg:py-24">
-        <div className="mx-auto max-w-5xl text-center">
+      <section className="ayur-band-ink relative overflow-hidden px-4 py-20 text-paper sm:px-6 lg:px-10 lg:py-28">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-[0.10] [background-image:linear-gradient(#fdfaf2_1px,transparent_1px),linear-gradient(90deg,#fdfaf2_1px,transparent_1px)] [background-size:64px_64px]"
+        />
+        <ScrollReveal kind="rise" className="relative mx-auto max-w-5xl text-center">
           <p className="text-[11px] uppercase tracking-[0.32em] text-saffron-soft">Start simple</p>
-          <h2 className="mt-4 font-display text-4xl leading-[1] sm:text-6xl">A better daily ritual can start with one chew.</h2>
-          <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-paper/72">Pick the routine, add to cart, and keep checkout native to Shopify.</p>
-          <Link to="/collections/all" className="mt-9 inline-flex rounded-full bg-saffron px-8 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-ink">Shop now</Link>
-        </div>
+          <h2 className="mt-4 break-words font-display text-4xl leading-[1.02] tracking-tight sm:text-6xl lg:text-[5.5rem]">
+            A better daily ritual can start with one chew.
+          </h2>
+          <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-paper/72 sm:text-lg">
+            Pick the routine, add to cart, and keep checkout native to Shopify.
+          </p>
+          <div className="mt-10 inline-flex flex-col items-center gap-3 sm:flex-row">
+            <Link
+              to="/collections/all"
+              className="inline-flex min-h-12 items-center justify-center rounded-full bg-saffron px-8 py-4 text-[12px] font-semibold uppercase tracking-[0.2em] text-ink transition hover:bg-saffron-soft sm:text-sm"
+            >
+              Shop the range
+            </Link>
+            <Link
+              to="/pages/about"
+              className="inline-flex items-center gap-2 px-2 py-2 text-[12px] font-semibold uppercase tracking-[0.2em] text-paper/80 transition hover:text-paper sm:text-sm"
+            >
+              Read our story
+              <span aria-hidden>→</span>
+            </Link>
+          </div>
+        </ScrollReveal>
       </section>
     </main>
   );

@@ -13,7 +13,58 @@ Body text (if present) shown as indented sub-bullets.
 
 ## 2026-05-01
 
-- **09:45 UTC** — auto-sync: 2026-05-01 09:45 UTC (`fc9bc54`) — 15 files
+- **18:45 UTC** — auto-sync: 2026-05-01 18:45 UTC (`78e5fc5`) — 8 files
+        M	app/components/ProductItem.tsx
+        A	app/components/motion/CountUpStat.tsx
+        A	app/components/motion/ScrollReveal.tsx
+        A	app/components/pdp/HowItWorksTimeline.tsx
+        A	app/components/pdp/RichTrustBand.tsx
+        ... (+3 more)
+- **10:24 UTC** — motion: gsap + split-type word reveal, vaul cart drawer, multi-row marquee, tilt cards (`0a58fde`) — 9 files
+    Adds the visual / motion layer the storefront was missing. Five OSS libs
+    installed (all MIT or equivalent), four concrete moments shipped.
+    Deps
+      gsap                 — declarative animation engine + ScrollTrigger
+                             (free as of 3.13 under Webflow, all plugins MIT-equiv)
+      split-type           — letter / word / line splitting for kinetic type
+      vaul                 — drawer / sheet primitive (Linear / iOS-style)
+      react-parallax-tilt  — 3D hover tilt with glare
+      tsparticles          — installed for future ambient hero use (not yet wired)
+    1. app/components/home/HeroWordReveal.tsx
+- **10:10 UTC** — mobile pdp: stop content overflowing the viewport on narrow widths (`f6e17bc`) — 5 files
+    The PDP detail panel and homepage hero were rendering wider than the
+    viewport on mobile / narrow desktop windows — title, description,
+    purchase-panel labels, and trust micro-copy all clipped on the right
+    edge. Two things were causing it:
+      1. CSS Grid auto track sizing. By default a grid track grows to its
+         min-content. The h1 title (with text-wrap: balance + clamp font
+         size) and the variant-pill row both have large min-content, so
+         the grid track expanded past the container width whenever the
+         parent didn't constrain it. We were not constraining it.
+      2. textWrap: balance set inline on every section heading. In some
+- **09:58 UTC** — mobile: storefront-wide responsive hardening pass (`ce3d532`) — 10 files
+    Concrete mobile breakage that needed fixing:
+      Hero headline (_index.tsx) was hardcoded text-[3.35rem] (53px). On
+      iPhone SE / 320px viewports that's roughly 80% of the screen width
+      for the first word, with no breakpoint floor. Replaced with inline
+      clamp(2.5rem, 9vw, 7.4rem) + textWrap: balance so it fits 320px and
+      still scales up to 7.4rem on lg. Featured-card subtitle also clamp-
+      scaled (2.6rem mobile -> 4rem lg) and the awkward `|` separator
+      replaced with em-dash, mirroring the PDP cleanTitle treatment.
+      Header touch targets (Header.tsx) were h-10 w-10 (40px). iOS HIG and
+      WCAG 2.5.5 both call for 44px minimum on tap targets. Bumped Search,
+- **09:48 UTC** — cro: PDP info blocks + cart progress bar + collection hover-swap + press strip (`2e45477`) — 1 file
+    Ships nine CRO checklist items across PDP, Cart, Collection, and Home —
+    all from the AyurPet checklist sheet, all marked Done in docs/CRO_AUDIT.md
+    and synced into the live sheet.
+    PDP (app/routes/products.$handle.tsx — six new sections wired in)
+      app/components/pdp/HowToUse.tsx
+        Three-step explainer (Open the pouch → Offer once a day → Watch the
+        routine). Editorial split: brand eyebrow + serif title on left, a
+        structured numbered ordered list on right with brand-deep saffron
+        counters. No decorative cards.
+        → CRO Product Page row 102
+- **09:45 UTC** — auto-sync: 2026-05-01 09:45 UTC (`c12deac`) — 16 files
         M	app/components/CartMain.tsx
         A	app/components/CartProgress.tsx
         M	app/components/ProductItem.tsx

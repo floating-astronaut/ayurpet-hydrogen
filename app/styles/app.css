@@ -697,3 +697,136 @@ input, select, textarea {
 @media (min-width: 640px) {
   input, select, textarea { font-size: inherit; }
 }
+
+/* ---- AYUR scroll reveal ---------------------------------------------- */
+/* Children render in their final state on SSR. Once the wrapper gets
+   `data-reveal-ready=""` (set by IntersectionObserver after hydration),
+   the transition runs from the initial state back to the final state.
+   On reduced-motion the JS skips applying the initial state, so children
+   are simply visible. */
+[data-reveal] {
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    clip-path 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+[data-reveal='fade']:not([data-reveal-ready]) { opacity: 0; }
+[data-reveal='rise']:not([data-reveal-ready]) {
+  opacity: 0;
+  transform: translateY(28px);
+}
+[data-reveal='rise-soft']:not([data-reveal-ready]) {
+  opacity: 0;
+  transform: translateY(14px);
+}
+[data-reveal='mask-up']:not([data-reveal-ready]) {
+  opacity: 0;
+  clip-path: inset(0 0 100% 0);
+}
+[data-reveal-ready] {
+  opacity: 1;
+  transform: translateY(0);
+  clip-path: inset(0 0 0 0);
+}
+/* Stagger nested children when the wrapper has [data-reveal-stagger]. */
+[data-reveal-stagger] > * {
+  transition:
+    opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+[data-reveal-stagger]:not([data-reveal-ready]) > * {
+  opacity: 0;
+  transform: translateY(18px);
+}
+[data-reveal-stagger][data-reveal-ready] > *:nth-child(1)  { transition-delay: 0.05s; }
+[data-reveal-stagger][data-reveal-ready] > *:nth-child(2)  { transition-delay: 0.13s; }
+[data-reveal-stagger][data-reveal-ready] > *:nth-child(3)  { transition-delay: 0.21s; }
+[data-reveal-stagger][data-reveal-ready] > *:nth-child(4)  { transition-delay: 0.29s; }
+[data-reveal-stagger][data-reveal-ready] > *:nth-child(5)  { transition-delay: 0.37s; }
+[data-reveal-stagger][data-reveal-ready] > *:nth-child(6)  { transition-delay: 0.45s; }
+[data-reveal-stagger][data-reveal-ready] > *:nth-child(n+7) { transition-delay: 0.5s; }
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal], [data-reveal-stagger] > * {
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+}
+
+/* ---- AYUR card hover / treatments ------------------------------------ */
+.ayur-card-frame {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, #f7f0e1 0%, #ebe0c9 100%);
+  border-radius: 1.4rem;
+  isolation: isolate;
+}
+.ayur-card-frame::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.45 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  background-size: 120px 120px;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  z-index: 0;
+}
+.ayur-card-frame > * { position: relative; z-index: 1; }
+
+/* ---- AYUR section banding (alternating warm tones) ------------------ */
+.ayur-band-paper { background: var(--color-paper, #fdfaf2); }
+.ayur-band-cream { background: var(--color-cream, #f7f0e1); }
+.ayur-band-cream-deep { background: var(--color-cream-deep, #ebe0c9); }
+.ayur-band-ink {
+  background: linear-gradient(135deg, #2a1110 0%, #1a3a26 100%);
+  color: var(--color-paper, #fdfaf2);
+}
+
+/* ---- AYUR timeline (used by HowItWorksTimeline) --------------------- */
+.ayur-timeline {
+  position: relative;
+}
+.ayur-timeline::before {
+  content: '';
+  position: absolute;
+  left: 1.05rem;
+  top: 0.65rem;
+  bottom: 0.65rem;
+  width: 1px;
+  background: linear-gradient(180deg, var(--color-line, #dccfb3), transparent);
+}
+.ayur-timeline-step {
+  position: relative;
+}
+.ayur-timeline-step::before {
+  content: '';
+  position: absolute;
+  left: 0.7rem;
+  top: 0.55rem;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 9999px;
+  background: var(--color-paper, #fdfaf2);
+  border: 1px solid var(--color-line, #dccfb3);
+  box-shadow: 0 0 0 4px var(--color-paper, #fdfaf2);
+  z-index: 1;
+}
+.ayur-timeline-step[data-active]::before {
+  background: var(--color-brand, #2d5a3d);
+  border-color: var(--color-brand, #2d5a3d);
+}
+
+/* ---- AYUR gallery image cross-fade ---------------------------------- */
+.ayur-gallery-image {
+  animation: ayur-fade-zoom 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes ayur-fade-zoom {
+  from { opacity: 0; transform: scale(1.04); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ayur-gallery-image { animation: none; }
+}
