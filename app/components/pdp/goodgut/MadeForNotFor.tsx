@@ -17,7 +17,7 @@ const NOT_FOR = [
   'A replacement for urgent veterinary care',
   'Acute vomiting, blood in stool, or sudden lethargy',
   'Dogs with diagnosed pancreatic or liver disease — please consult your vet',
-  'Cats (we have a separate formula coming soon)',
+  'Cats — formulated for canine digestion only',
 ];
 
 export function MadeForNotFor() {

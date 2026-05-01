@@ -3,12 +3,19 @@
 import {Money} from '@shopify/hydrogen';
 import type {ProductFragment} from 'storefrontapi.generated';
 import {ScrollReveal} from '~/components/motion/ScrollReveal';
+import {daysFromTitle, pricePerDay} from './GoodGutVariantPicker';
 
 export function GoodGutClosing({
   selectedVariant,
 }: {
   selectedVariant: ProductFragment['selectedOrFirstAvailableVariant'];
 }) {
+  const variantDays = daysFromTitle(selectedVariant?.title);
+  const perDay =
+    selectedVariant?.price?.amount && variantDays
+      ? pricePerDay(selectedVariant.price.amount, variantDays)
+      : null;
+
   return (
     <section className="ayur-band-ink relative overflow-hidden border-t border-line/40 px-5 py-14 text-paper sm:px-6 sm:py-16 lg:px-10 lg:py-20">
       <div
@@ -30,6 +37,12 @@ export function GoodGutClosing({
           if the first 30 days don&rsquo;t show calmer digestion, we&rsquo;ll
           refund the bottle.
         </p>
+
+        {perDay !== null && variantDays ? (
+          <p className="-mt-2 text-[12.5px] tracking-tight text-saffron-soft sm:text-[13px]">
+            ${perDay.toFixed(2)} / day · {variantDays}-day supply
+          </p>
+        ) : null}
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <a

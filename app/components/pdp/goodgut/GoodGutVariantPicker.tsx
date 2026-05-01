@@ -17,13 +17,13 @@ import {useAside} from '~/components/Aside';
 
 type Variant = ProductFragment['selectedOrFirstAvailableVariant'];
 
-function daysFromTitle(title: string | null | undefined): number | null {
+export function daysFromTitle(title: string | null | undefined): number | null {
   if (!title) return null;
   const m = title.match(/(\d+)\s*Days?/i);
   return m ? Number(m[1]) : null;
 }
 
-function pricePerDay(amount: string, days: number) {
+export function pricePerDay(amount: string, days: number) {
   return Number(amount) / days;
 }
 
