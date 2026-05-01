@@ -1,6 +1,8 @@
 import {Suspense} from 'react';
-import {Await, NavLink} from 'react-router';
+import {Await, Link} from 'react-router';
 import type {FooterQuery, HeaderQuery} from 'storefrontapi.generated';
+
+type FooterMenuItem = {id: string; title: string; url?: string | null};
 
 interface FooterProps {
   footer: Promise<FooterQuery | null>;
@@ -8,122 +10,79 @@ interface FooterProps {
   publicStoreDomain: string;
 }
 
-export function Footer({
-  footer: footerPromise,
-  header,
-  publicStoreDomain,
-}: FooterProps) {
+const SHOP_LINKS = [
+  {to: '/collections/all', label: 'All products'},
+  {to: '/collections/supplements', label: 'Supplements'},
+  {to: '/collections/yak-chews', label: 'Yak chews'},
+  {to: '/collections/bundles', label: 'Bundles'},
+];
+
+const HELP_LINKS = [
+  {to: '/pages/about', label: 'About Ayurpet'},
+  {to: '/policies/shipping-policy', label: 'Shipping'},
+  {to: '/policies/refund-policy', label: 'Returns'},
+  {to: '/policies/privacy-policy', label: 'Privacy'},
+];
+
+export function Footer({footer: footerPromise}: FooterProps) {
   return (
-    <Suspense>
+    <Suspense fallback={<FooterFrame extraLinks={null} />}>
       <Await resolve={footerPromise}>
-        {(footer) => (
-          <footer className="footer">
-            {footer?.menu && header.shop.primaryDomain?.url && (
-              <FooterMenu
-                menu={footer.menu}
-                primaryDomainUrl={header.shop.primaryDomain.url}
-                publicStoreDomain={publicStoreDomain}
-              />
-            )}
-          </footer>
-        )}
+        {(footer) => <FooterFrame extraLinks={footer?.menu?.items ?? null} />}
       </Await>
     </Suspense>
   );
 }
 
-function FooterMenu({
-  menu,
-  primaryDomainUrl,
-  publicStoreDomain,
-}: {
-  menu: FooterQuery['menu'];
-  primaryDomainUrl: FooterProps['header']['shop']['primaryDomain']['url'];
-  publicStoreDomain: string;
-}) {
+function FooterFrame({extraLinks}: {extraLinks?: FooterMenuItem[] | null}) {
   return (
-    <nav className="footer-menu" role="navigation">
-      {(menu || FALLBACK_FOOTER_MENU).items.map((item) => {
-        if (!item.url) return null;
-        // if the url is internal, we strip the domain
-        const url =
-          item.url.includes('myshopify.com') ||
-          item.url.includes(publicStoreDomain) ||
-          item.url.includes(primaryDomainUrl)
-            ? new URL(item.url).pathname
-            : item.url;
-        const isExternal = !url.startsWith('/');
-        return isExternal ? (
-          <a href={url} key={item.id} rel="noopener noreferrer" target="_blank">
-            {item.title}
-          </a>
-        ) : (
-          <NavLink
-            end
-            key={item.id}
-            prefetch="intent"
-            style={activeLinkStyle}
-            to={url}
-          >
-            {item.title}
-          </NavLink>
-        );
-      })}
-    </nav>
+    <footer className="border-t border-line bg-paper">
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.4fr_0.7fr_0.7fr_0.9fr] lg:px-10 lg:py-16">
+        <div>
+          <Link to="/" className="inline-flex items-center gap-4">
+            <span className="grid h-14 w-14 place-items-center rounded-full bg-brand text-paper">AP</span>
+            <span>
+              <span className="block font-display text-3xl leading-none text-ink">AyurPet</span>
+              <span className="mt-1 block text-[10px] uppercase tracking-[0.28em] text-ink-muted">Ayurveda for modern pets</span>
+            </span>
+          </Link>
+          <p className="mt-5 max-w-md text-sm leading-7 text-ink-muted">
+            Functional pet wellness built around Ayurvedic actives, clean routines, and Shopify-native checkout.
+          </p>
+          <div className="mt-5 flex flex-wrap gap-2 text-[10px] uppercase tracking-[0.2em] text-brand">
+            <span className="rounded-full border border-line bg-white/70 px-3 py-1.5">Vet-informed</span>
+            <span className="rounded-full border border-line bg-white/70 px-3 py-1.5">No filler-led routine</span>
+            <span className="rounded-full border border-line bg-white/70 px-3 py-1.5">30-day returns</span>
+          </div>
+        </div>
+        <FooterColumn title="Shop" links={SHOP_LINKS} />
+        <FooterColumn title="Help" links={HELP_LINKS} />
+        <div>
+          <p className="text-[11px] uppercase tracking-[0.28em] text-ink-muted">Stay close</p>
+          <p className="mt-4 text-sm leading-7 text-ink-muted">Product drops, ingredient notes, and pet-parent guides. No spam.</p>
+          <form className="mt-5 flex rounded-full border border-line bg-white/70 p-1">
+            <input className="min-w-0 flex-1 bg-transparent px-4 text-sm outline-none" placeholder="Email address" type="email" />
+            <button className="rounded-full bg-brand px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-paper" type="submit">Join</button>
+          </form>
+        </div>
+      </div>
+      <div className="border-t border-line px-4 py-5 text-center text-xs leading-6 text-ink-muted sm:px-6 lg:px-10">
+        © {new Date().getFullYear()} AyurPet Global. Supplements are not a substitute for veterinary care.
+        {extraLinks?.length ? <span className="sr-only"> Footer menu loaded.</span> : null}
+      </div>
+    </footer>
   );
 }
 
-const FALLBACK_FOOTER_MENU = {
-  id: 'gid://shopify/Menu/199655620664',
-  items: [
-    {
-      id: 'gid://shopify/MenuItem/461633060920',
-      resourceId: 'gid://shopify/ShopPolicy/23358046264',
-      tags: [],
-      title: 'Privacy Policy',
-      type: 'SHOP_POLICY',
-      url: '/policies/privacy-policy',
-      items: [],
-    },
-    {
-      id: 'gid://shopify/MenuItem/461633093688',
-      resourceId: 'gid://shopify/ShopPolicy/23358013496',
-      tags: [],
-      title: 'Refund Policy',
-      type: 'SHOP_POLICY',
-      url: '/policies/refund-policy',
-      items: [],
-    },
-    {
-      id: 'gid://shopify/MenuItem/461633126456',
-      resourceId: 'gid://shopify/ShopPolicy/23358111800',
-      tags: [],
-      title: 'Shipping Policy',
-      type: 'SHOP_POLICY',
-      url: '/policies/shipping-policy',
-      items: [],
-    },
-    {
-      id: 'gid://shopify/MenuItem/461633159224',
-      resourceId: 'gid://shopify/ShopPolicy/23358079032',
-      tags: [],
-      title: 'Terms of Service',
-      type: 'SHOP_POLICY',
-      url: '/policies/terms-of-service',
-      items: [],
-    },
-  ],
-};
-
-function activeLinkStyle({
-  isActive,
-  isPending,
-}: {
-  isActive: boolean;
-  isPending: boolean;
-}) {
-  return {
-    fontWeight: isActive ? 'bold' : undefined,
-    color: isPending ? 'grey' : 'white',
-  };
+function FooterColumn({title, links}: {title: string; links: Array<{to: string; label: string}>}) {
+  return (
+    <div>
+      <p className="text-[11px] uppercase tracking-[0.28em] text-ink-muted">{title}</p>
+      <ul className="mt-4 grid gap-3 text-sm text-brand">
+        {links.map((link) => (
+          <li key={link.to}><Link to={link.to} prefetch="intent">{link.label}</Link></li>
+        ))}
+      </ul>
+    </div>
+  );
 }

@@ -18,15 +18,17 @@ export function ProductForm({
   const navigate = useNavigate();
   const {open} = useAside();
   return (
-    <div className="product-form">
+    <div className="space-y-6">
       {productOptions.map((option) => {
-        // If there is only a single value in the option values, don't display the option
         if (option.optionValues.length === 1) return null;
 
         return (
-          <div className="product-options" key={option.name}>
-            <h5>{option.name}</h5>
-            <div className="product-options-grid">
+          <div className="space-y-3" key={option.name}>
+            <div className="flex items-baseline justify-between gap-4">
+              <h3 className="text-[11px] font-bold uppercase tracking-[0.28em] text-brand">{option.name}</h3>
+              <p className="text-xs text-ink-muted">Choose what fits your routine</p>
+            </div>
+            <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
               {option.optionValues.map((value) => {
                 const {
                   name,
@@ -38,74 +40,54 @@ export function ProductForm({
                   isDifferentProduct,
                   swatch,
                 } = value;
+                const itemClass = selected
+                  ? 'rounded-2xl border-2 border-clay bg-clay/10 px-3 py-4 text-left text-brand shadow-[0_12px_30px_rgba(184,94,62,0.12)]'
+                  : 'rounded-2xl border border-line bg-white/80 px-3 py-4 text-left text-ink transition hover:border-clay hover:bg-white';
 
                 if (isDifferentProduct) {
-                  // SEO
-                  // When the variant is a combined listing child product
-                  // that leads to a different url, we need to render it
-                  // as an anchor tag
                   return (
                     <Link
-                      className="product-options-item"
+                      className={itemClass}
                       key={option.name + name}
                       prefetch="intent"
                       preventScrollReset
                       replace
                       to={`/products/${handle}?${variantUriQuery}`}
-                      style={{
-                        border: selected
-                          ? '1px solid black'
-                          : '1px solid transparent',
-                        opacity: available ? 1 : 0.3,
-                      }}
+                      style={{opacity: available ? 1 : 0.35}}
                     >
                       <ProductOptionSwatch swatch={swatch} name={name} />
                     </Link>
                   );
-                } else {
-                  // SEO
-                  // When the variant is an update to the search param,
-                  // render it as a button with javascript navigating to
-                  // the variant so that SEO bots do not index these as
-                  // duplicated links
-                  return (
-                    <button
-                      type="button"
-                      className={`product-options-item${
-                        exists && !selected ? ' link' : ''
-                      }`}
-                      key={option.name + name}
-                      style={{
-                        border: selected
-                          ? '1px solid black'
-                          : '1px solid transparent',
-                        opacity: available ? 1 : 0.3,
-                      }}
-                      disabled={!exists}
-                      onClick={() => {
-                        if (!selected) {
-                          void navigate(`?${variantUriQuery}`, {
-                            replace: true,
-                            preventScrollReset: true,
-                          });
-                        }
-                      }}
-                    >
-                      <ProductOptionSwatch swatch={swatch} name={name} />
-                    </button>
-                  );
                 }
+
+                return (
+                  <button
+                    type="button"
+                    className={itemClass}
+                    key={option.name + name}
+                    style={{opacity: available ? 1 : 0.35}}
+                    disabled={!exists}
+                    onClick={() => {
+                      if (!selected) {
+                        void navigate(`?${variantUriQuery}`, {
+                          replace: true,
+                          preventScrollReset: true,
+                        });
+                      }
+                    }}
+                  >
+                    <ProductOptionSwatch swatch={swatch} name={name} />
+                  </button>
+                );
               })}
             </div>
-            <br />
           </div>
         );
       })}
       <AddToCartButton
+        className="inline-flex min-h-14 w-full items-center justify-center rounded-full bg-brand px-7 py-4 text-sm font-bold uppercase tracking-[0.2em] text-paper shadow-[0_18px_40px_rgba(45,90,61,0.18)] transition hover:bg-brand-deep disabled:cursor-not-allowed disabled:opacity-50"
         disabled={!selectedVariant || !selectedVariant.availableForSale}
-        onClick={() => {
-          open('cart');
-        }}
+        onClick={() => open('cart')}
         lines={
           selectedVariant
             ? [
@@ -134,17 +116,18 @@ function ProductOptionSwatch({
   const image = swatch?.image?.previewImage?.url;
   const color = swatch?.color;
 
-  if (!image && !color) return name;
+  if (!image && !color) return <span className="text-sm font-semibold leading-tight">{name}</span>;
 
   return (
-    <div
-      aria-label={name}
-      className="product-option-label-swatch"
-      style={{
-        backgroundColor: color || 'transparent',
-      }}
-    >
-      {!!image && <img src={image} alt={name} />}
-    </div>
+    <span className="flex items-center gap-2 text-sm font-semibold leading-tight">
+      <span
+        aria-label={name}
+        className="inline-flex h-5 w-5 overflow-hidden rounded-full border border-line"
+        style={{backgroundColor: color || 'transparent'}}
+      >
+        {!!image && <img src={image} alt="" className="h-full w-full object-cover" />}
+      </span>
+      {name}
+    </span>
   );
 }
