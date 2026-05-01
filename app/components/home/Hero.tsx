@@ -1,6 +1,13 @@
 // Editorial home hero — full-bleed, parallax product, animated callout chips,
 // scrolling brand marquee strip at the bottom.
-import {useRef} from 'react';
+//
+// Animation strategy: the only motion that fires on first paint uses CSS
+// keyframes triggered by a `data-loaded` attribute we set after hydration.
+// This keeps server HTML identical to client HTML (no hydration mismatch),
+// while still giving us a polished entry. Scroll-driven animations use
+// Framer Motion's `useScroll`, which is SSR-safe (renders identical
+// transform: 'none' on server and progresses on client scroll).
+import {useEffect, useRef, useState} from 'react';
 import {motion, useScroll, useTransform} from 'framer-motion';
 import {Link} from 'react-router';
 import {Image} from '@shopify/hydrogen';
@@ -26,6 +33,9 @@ export function Hero({
   badges = ['Vet-approved', 'Lab-tested', 'Himalayan-sourced', 'Buy 1 · Help 1'],
 }: Props) {
   const ref = useRef<HTMLElement>(null);
+  const [loaded, setLoaded] = useState(false);
+  useEffect(() => setLoaded(true), []);
+
   const {scrollYProgress} = useScroll({
     target: ref,
     offset: ['start start', 'end start'],
@@ -36,8 +46,36 @@ export function Hero({
   return (
     <section
       ref={ref}
-      className="relative min-h-[100svh] overflow-hidden bg-cream px-6 pt-20 pb-32 md:px-12 lg:pt-32"
+      data-loaded={loaded ? '' : undefined}
+      className="ayur-hero relative min-h-[100svh] overflow-hidden bg-cream px-6 pt-20 pb-32 md:px-12 lg:pt-32"
     >
+      <style>{`
+        .ayur-hero [data-stagger] {
+          opacity: 0;
+          transform: translateY(24px);
+          transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .ayur-hero[data-loaded] [data-stagger] { opacity: 1; transform: translateY(0); }
+        .ayur-hero[data-loaded] [data-stagger="1"] { transition-delay: 0.05s; }
+        .ayur-hero[data-loaded] [data-stagger="2"] { transition-delay: 0.18s; }
+        .ayur-hero[data-loaded] [data-stagger="3"] { transition-delay: 0.32s; }
+        .ayur-hero[data-loaded] [data-stagger="4"] { transition-delay: 0.45s; }
+        .ayur-hero[data-loaded] [data-stagger="5"] { transition-delay: 0.6s; }
+        .ayur-hero[data-loaded] [data-stagger="6"] { transition-delay: 0.78s; }
+
+        .ayur-hero-marquee {
+          animation: ayur-hero-marquee 30s linear infinite;
+        }
+        @keyframes ayur-hero-marquee {
+          from { transform: translate3d(0,0,0); }
+          to   { transform: translate3d(-50%,0,0); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .ayur-hero [data-stagger] { transition: none; opacity: 1; transform: none; }
+          .ayur-hero-marquee { animation: none; }
+        }
+      `}</style>
+
       <div
         aria-hidden
         className="pointer-events-none absolute -left-20 top-32 h-[420px] w-[420px] rounded-full opacity-30 blur-3xl"
@@ -55,37 +93,26 @@ export function Hero({
       >
         <div className="lg:col-span-7">
           {eyebrow && (
-            <motion.p
-              initial={{opacity: 0, y: 12}}
-              animate={{opacity: 1, y: 0}}
-              transition={{duration: 0.5, ease: 'easeOut'}}
+            <p
+              data-stagger="1"
               className="mb-6 text-xs font-medium uppercase tracking-[0.25em] text-brand"
             >
               {eyebrow}
-            </motion.p>
+            </p>
           )}
-          <motion.h1
-            initial={{opacity: 0, y: 30}}
-            animate={{opacity: 1, y: 0}}
-            transition={{duration: 0.7, ease: [0.16, 1, 0.3, 1]}}
+          <h1
+            data-stagger="2"
             className="font-display text-[clamp(2.5rem,7vw,6rem)] font-medium leading-[0.95] text-ink"
           >
             {headline}
-          </motion.h1>
-          <motion.p
-            initial={{opacity: 0, y: 20}}
-            animate={{opacity: 1, y: 0}}
-            transition={{duration: 0.6, delay: 0.2, ease: 'easeOut'}}
+          </h1>
+          <p
+            data-stagger="3"
             className="mt-6 max-w-xl text-lg leading-relaxed text-ink-soft"
           >
             {sub}
-          </motion.p>
-          <motion.div
-            initial={{opacity: 0, y: 20}}
-            animate={{opacity: 1, y: 0}}
-            transition={{duration: 0.6, delay: 0.35}}
-            className="mt-10"
-          >
+          </p>
+          <div data-stagger="4" className="mt-10">
             <Link
               to={ctaHref}
               className="inline-flex h-14 items-center justify-center rounded-full bg-brand px-10 text-base font-medium text-paper transition hover:bg-brand-deep"
@@ -101,10 +128,13 @@ export function Hero({
                 />
               </svg>
             </Link>
-          </motion.div>
+          </div>
 
           {badges.length > 0 && (
-            <div className="mt-12 flex flex-wrap gap-x-8 gap-y-3 text-sm text-ink-muted">
+            <div
+              data-stagger="5"
+              className="mt-12 flex flex-wrap gap-x-8 gap-y-3 text-sm text-ink-muted"
+            >
               {badges.map((b) => (
                 <span key={b} className="flex items-center gap-2">
                   <span className="inline-block h-1.5 w-1.5 rounded-full bg-saffron" />
@@ -117,9 +147,7 @@ export function Hero({
 
         <motion.div
           style={{y: yProduct}}
-          initial={{opacity: 0, scale: 0.92}}
-          animate={{opacity: 1, scale: 1}}
-          transition={{duration: 0.9, ease: [0.16, 1, 0.3, 1]}}
+          data-stagger="3"
           className="relative lg:col-span-5"
         >
           <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[var(--radius-card)] bg-cream-deep shadow-2xl">
@@ -136,37 +164,29 @@ export function Hero({
               </div>
             )}
           </div>
-          <motion.div
-            initial={{opacity: 0, x: -20}}
-            animate={{opacity: 1, x: 0}}
-            transition={{duration: 0.6, delay: 0.6}}
+          <div
+            data-stagger="6"
             className="absolute -left-6 top-12 hidden rounded-2xl bg-paper px-5 py-3 shadow-lg md:block"
           >
             <div className="text-[10px] uppercase tracking-wider text-ink-muted">
               Ingredient
             </div>
             <div className="font-display text-lg text-ink">Ashwagandha</div>
-          </motion.div>
-          <motion.div
-            initial={{opacity: 0, x: 20}}
-            animate={{opacity: 1, x: 0}}
-            transition={{duration: 0.6, delay: 0.8}}
+          </div>
+          <div
+            data-stagger="6"
             className="absolute -right-4 bottom-16 hidden rounded-2xl bg-brand px-5 py-3 text-paper shadow-lg md:block"
           >
             <div className="text-[10px] uppercase tracking-wider opacity-70">
               Origin
             </div>
             <div className="font-display text-lg">Himalayan</div>
-          </motion.div>
+          </div>
         </motion.div>
       </motion.div>
 
       <div className="absolute inset-x-0 bottom-0 overflow-hidden border-t border-line bg-cream-deep py-4">
-        <motion.div
-          animate={{x: ['0%', '-50%']}}
-          transition={{duration: 30, repeat: Infinity, ease: 'linear'}}
-          className="flex shrink-0 gap-12 whitespace-nowrap font-display text-xl text-ink-soft"
-        >
+        <div className="ayur-hero-marquee flex shrink-0 gap-12 whitespace-nowrap font-display text-xl text-ink-soft will-change-transform">
           {Array.from({length: 2}).flatMap((_, k) =>
             ['Vet-approved', '·', 'Lab-tested', '·', 'Himalayan-sourced', '·', 'Buy 1 · Help 1', '·', 'No nasties', '·'].map(
               (t, i) => (
@@ -176,7 +196,7 @@ export function Hero({
               ),
             ),
           )}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
