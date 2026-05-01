@@ -130,31 +130,93 @@ export default function Homepage() {
         </div>
       </section>
 
+      {/* Trust strip — single dense row, no cards. */}
       <section className="border-b border-line bg-cream">
-        <div className="mx-auto grid max-w-7xl gap-3 px-4 py-10 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-10 lg:py-14">
+        <div className="mx-auto grid max-w-7xl gap-x-12 gap-y-8 px-4 py-12 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-10 lg:py-14">
           {TRUST_POINTS.map(([title, body]) => (
-            <div key={title} className="rounded-[1.4rem] border border-line bg-paper/80 p-6 shadow-[0_10px_30px_rgba(31,26,20,0.04)]">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-brand">{title}</p>
-              <p className="mt-3 text-sm leading-7 text-ink-muted">{body}</p>
+            <div key={title}>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-brand">
+                {title}
+              </p>
+              <p className="mt-2 text-sm leading-6 text-ink-muted">{body}</p>
             </div>
           ))}
         </div>
       </section>
 
-      <section className="bg-paper px-4 py-16 sm:px-6 lg:px-10 lg:py-24">
-        <div className="mx-auto max-w-7xl">
-          <div className="max-w-3xl">
-            <p className="text-[11px] uppercase tracking-[0.32em] text-brand">Choose by outcome</p>
-            <h2 className="mt-4 font-display text-4xl leading-none text-ink sm:text-6xl">One shelf. Three clear routines.</h2>
-          </div>
-          <div className="mt-10 grid gap-5 md:grid-cols-3">
-            {ROUTINES.map((item, index) => (
-              <div key={item.title} className="rounded-[2rem] border border-line bg-white/78 p-7 shadow-[0_20px_70px_rgba(31,26,20,0.05)]">
-                <p className="font-display text-5xl text-saffron-soft">0{index + 1}</p>
-                <h3 className="mt-6 font-display text-3xl text-ink">{item.title}</h3>
-                <p className="mt-3 text-sm leading-7 text-ink-muted">{item.body}</p>
+      {/* Routines — one editorial moment: photo on left, structured copy on right. */}
+      <section className="bg-paper">
+        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16 lg:px-10 lg:py-24">
+          <div className="relative overflow-hidden rounded-[1.75rem] bg-cream shadow-[0_30px_90px_rgba(31,26,20,0.10)] sm:rounded-[2.25rem]">
+            <div className="relative aspect-[4/5] sm:aspect-[5/6]">
+              <img
+                src={ROUTINE_IMAGE}
+                alt=""
+                className="h-full w-full object-cover"
+                loading="lazy"
+              />
+              <div
+                aria-hidden
+                className="absolute inset-0 bg-[linear-gradient(180deg,transparent_55%,rgba(42,17,16,0.45))]"
+              />
+              <div className="absolute inset-x-0 bottom-0 p-6 text-paper sm:p-8">
+                <p className="text-[10px] uppercase tracking-[0.28em] text-paper/75">
+                  Pet wellness, by routine
+                </p>
+                <p className="mt-2 max-w-[20ch] font-display text-3xl leading-[1.05] sm:text-4xl">
+                  Calmer mornings. Better digestion. Quieter evenings.
+                </p>
               </div>
-            ))}
+            </div>
+          </div>
+
+          <div>
+            <p className="text-[11px] uppercase tracking-[0.32em] text-brand">
+              Choose by outcome
+            </p>
+            <h2
+              className="mt-4 font-display leading-[0.96] text-ink"
+              style={{
+                fontSize: 'clamp(2.25rem, 4.6vw, 3.75rem)',
+                letterSpacing: '-0.012em',
+                textWrap: 'balance' as React.CSSProperties['textWrap'],
+              }}
+            >
+              One shelf. Three clear routines.
+            </h2>
+            <p className="mt-5 max-w-md text-[15px] leading-7 text-ink-muted sm:text-base sm:leading-8">
+              Pick the daily ritual that fits your dog. Each one is built
+              around a single function: digest, calm, or chew.
+            </p>
+
+            <ol className="mt-9 divide-y divide-line border-t border-line">
+              {ROUTINES.map((item) => (
+                <li
+                  key={item.title}
+                  className="grid grid-cols-[auto_1fr] items-start gap-x-5 gap-y-1.5 py-6 sm:grid-cols-[3rem_1fr]"
+                >
+                  <span className="font-display text-2xl leading-none text-saffron-deep">
+                    {item.n}
+                  </span>
+                  <h3 className="font-display text-xl text-ink sm:text-2xl">
+                    {item.title}
+                  </h3>
+                  <span aria-hidden />
+                  <p className="text-sm leading-7 text-ink-muted">
+                    {item.body}
+                  </p>
+                </li>
+              ))}
+            </ol>
+
+            <Link
+              to="/collections/all"
+              prefetch="intent"
+              className="mt-10 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-brand transition hover:text-brand-deep"
+            >
+              Browse the full shelf
+              <span aria-hidden>→</span>
+            </Link>
           </div>
         </div>
       </section>

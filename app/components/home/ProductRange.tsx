@@ -6,9 +6,13 @@ import {Image, Money} from '@shopify/hydrogen';
 import {Swiper, SwiperSlide} from 'swiper/react';
 import {Navigation, FreeMode, Mousewheel} from 'swiper/modules';
 import type {RangeProductFragment} from 'storefrontapi.generated';
+// Three distinct CSS subpaths from swiper share one .d.ts barrel, which
+// trips eslint's import/no-duplicates. They are not duplicates at runtime.
+/* eslint-disable import/no-duplicates */
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/free-mode';
+/* eslint-enable import/no-duplicates */
 
 type ProductLite = RangeProductFragment;
 

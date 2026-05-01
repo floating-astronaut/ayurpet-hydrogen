@@ -116,7 +116,7 @@ export default function Product() {
   })();
 
   const [activeImageId, setActiveImageId] = useState<string | undefined>(
-    galleryAll[0]?.id,
+    () => galleryAll[0]?.id ?? undefined,
   );
   const activeImage =
     galleryAll.find((i) => i.id === activeImageId) ?? galleryAll[0] ?? null;
@@ -171,7 +171,9 @@ export default function Product() {
                       type="button"
                       aria-label="View image"
                       aria-pressed={isActive}
-                      onClick={() => setActiveImageId(image.id ?? undefined)}
+                      onClick={() => {
+                        if (image.id) setActiveImageId(image.id);
+                      }}
                       className={`relative h-[68px] w-[68px] shrink-0 snap-start overflow-hidden rounded-xl bg-white transition sm:h-20 sm:w-20 ${
                         isActive
                           ? 'ring-2 ring-brand ring-offset-2 ring-offset-paper'

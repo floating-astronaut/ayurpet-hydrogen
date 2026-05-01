@@ -29,25 +29,50 @@ async function loadCriticalData({context, request}: Route.LoaderArgs) {
 export default function Collection() {
   const {products} = useLoaderData<typeof loader>();
 
+  const count = products?.nodes?.length ?? 0;
+
   return (
     <main className="bg-paper text-ink">
-      <section className="border-b border-line bg-[linear-gradient(135deg,#fdfaf2,#ebe0c9)] px-4 py-14 sm:px-6 lg:px-10 lg:py-20">
-        <div className="mx-auto max-w-7xl">
-          <p className="text-[11px] uppercase tracking-[0.32em] text-brand">Shop all</p>
-          <h1 className="mt-4 max-w-4xl font-display text-5xl leading-[0.96] text-ink sm:text-7xl">The full AyurPet shelf.</h1>
-          <p className="mt-5 max-w-2xl text-base leading-8 text-ink-muted">Browse supplements, yak chews, bundles, and daily pet wellness routines connected directly to Shopify inventory.</p>
+      <section className="border-b border-line bg-[linear-gradient(135deg,#fdfaf2,#ebe0c9)]">
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-10 lg:py-24">
+          <p className="text-[11px] uppercase tracking-[0.32em] text-brand">
+            Shop all
+          </p>
+          <h1
+            className="mt-4 max-w-4xl font-display leading-[0.96] text-ink"
+            style={{
+              fontSize: 'clamp(2.5rem, 6vw, 5.5rem)',
+              letterSpacing: '-0.015em',
+              textWrap: 'balance' as React.CSSProperties['textWrap'],
+            }}
+          >
+            The full AyurPet shelf.
+          </h1>
+          <p className="mt-5 max-w-2xl text-[15px] leading-8 text-ink-muted sm:text-base">
+            Supplements, yak chews, bundles, and daily pet-wellness routines —
+            connected directly to live Shopify inventory.
+          </p>
         </div>
       </section>
+
       <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-10 lg:py-16">
+        <div className="mb-8 flex items-baseline justify-between border-b border-line pb-4">
+          <p className="text-[11px] uppercase tracking-[0.24em] text-ink-muted">
+            {count > 0 ? `${count} products` : 'Loading…'}
+          </p>
+          <p className="hidden text-[11px] uppercase tracking-[0.24em] text-ink-muted sm:block">
+            Sorted by best-selling
+          </p>
+        </div>
         <PaginatedResourceSection<CollectionItemFragment>
           connection={products}
-          resourcesClassName="grid gap-5 md:grid-cols-2 xl:grid-cols-3"
+          resourcesClassName="grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
         >
           {({node: product, index}) => (
             <ProductItem
               key={product.id}
               product={product}
-              loading={index < 6 ? 'eager' : undefined}
+              loading={index < 8 ? 'eager' : undefined}
             />
           )}
         </PaginatedResourceSection>
