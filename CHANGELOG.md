@@ -13,7 +13,9 @@ Body text (if present) shown as indented sub-bullets.
 
 ## 2026-05-01
 
-- **19:30 UTC** — auto-sync: 2026-05-01 19:30 UTC (`e2877a2`) — 4 files
+- **20:15 UTC** — auto-sync: 2026-05-01 20:15 UTC (`79c90b4`) — 1 file
+        M	app/components/pdp/StickyAtc.tsx
+- **19:30 UTC** — auto-sync: 2026-05-01 19:30 UTC (`0f01255`) — 5 files
         A	app/components/home/MissionBand.tsx
         A	app/components/home/ShopTheShelf.tsx
         M	app/routes/_index.tsx

@@ -54,12 +54,12 @@ export function StickyAtc({
         ) : null}
 
         <div className="min-w-0 flex-1">
-          <p className="truncate font-display text-sm leading-tight text-ink">
+          <span className="block truncate font-display text-sm leading-tight text-ink">
             {productTitle}
-          </p>
-          <p className="text-[11px] uppercase tracking-[0.18em] text-ink-muted">
+          </span>
+          <span className="mt-0.5 block text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-muted [&>div]:contents">
             <Money data={selectedVariant.price} />
-          </p>
+          </span>
         </div>
 
         <AddToCartButton
