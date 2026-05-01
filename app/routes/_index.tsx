@@ -4,6 +4,8 @@ import {Suspense} from 'react';
 import {Image} from '@shopify/hydrogen';
 import {ProductRange} from '~/components/home/ProductRange';
 import {FeaturedIn} from '~/components/home/FeaturedIn';
+import {HeroWordReveal} from '~/components/home/HeroWordReveal';
+import {MultiRowMarquee} from '~/components/MultiRowMarquee';
 import {MockShopNotice} from '~/components/MockShopNotice';
 
 export const meta: Route.MetaFunction = () => {
@@ -96,16 +98,10 @@ export default function Homepage() {
               Free shipping over USD 60
             </div>
             <p className="mt-10 text-[11px] uppercase tracking-[0.36em] text-brand">AyurPet Global</p>
-            <h1
-              className="mt-5 max-w-5xl font-display leading-[0.93] text-ink"
-              style={{
-                fontSize: 'clamp(2.5rem, 9vw, 7.4rem)',
-                letterSpacing: '-0.015em',
-                textWrap: 'balance' as React.CSSProperties['textWrap'],
-              }}
-            >
-              Daily rituals for calmer, healthier dogs.
-            </h1>
+            <HeroWordReveal
+              text="Daily rituals for calmer, healthier dogs."
+              className="ayur-hero-h1 mt-5 max-w-5xl break-words font-display text-[2.5rem] leading-[0.95] tracking-tight text-ink sm:text-6xl lg:text-[7.4rem]"
+            />
             <p className="mt-6 max-w-2xl text-[15px] leading-7 text-ink-muted sm:text-lg sm:leading-8 lg:text-xl">
               Premium Ayurvedic supplements and Himalayan yak chews, designed like a clean wellness routine instead of another crowded pet aisle.
             </p>
@@ -155,6 +151,11 @@ export default function Homepage() {
       </section>
 
       <FeaturedIn />
+
+      {/* Kinetic interstitial — three lanes, mixed sizes/speeds/directions. */}
+      <section className="border-y border-line bg-paper py-6 sm:py-8">
+        <MultiRowMarquee />
+      </section>
 
       {/* Routines — one editorial moment: photo on left, structured copy on right. */}
       <section className="bg-paper">

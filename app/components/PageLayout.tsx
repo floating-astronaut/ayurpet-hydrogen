@@ -8,7 +8,7 @@ import type {
 import {Aside} from '~/components/Aside';
 import {Footer} from '~/components/Footer';
 import {Header, HeaderMenu} from '~/components/Header';
-import {CartMain} from '~/components/CartMain';
+import {CartDrawer} from '~/components/CartDrawer';
 import {
   SEARCH_ENDPOINT,
   SearchFormPredictive,
@@ -34,7 +34,7 @@ export function PageLayout({
 }: PageLayoutProps) {
   return (
     <Aside.Provider>
-      <CartAside cart={cart} />
+      <CartDrawer cart={cart} />
       <SearchAside />
       <MobileMenuAside header={header} publicStoreDomain={publicStoreDomain} />
       {header && (
@@ -55,19 +55,10 @@ export function PageLayout({
   );
 }
 
-function CartAside({cart}: {cart: PageLayoutProps['cart']}) {
-  return (
-    <Aside type="cart" heading="CART">
-      <Suspense fallback={<p>Loading cart ...</p>}>
-        <Await resolve={cart}>
-          {(cart) => {
-            return <CartMain cart={cart} layout="aside" />;
-          }}
-        </Await>
-      </Suspense>
-    </Aside>
-  );
-}
+// CartAside replaced by CartDrawer (vaul). The old side-panel cart lived
+// here behind <Aside type="cart">; see app/components/CartDrawer.tsx for the
+// new implementation. Keeping the search and mobile-menu Aside instances
+// since they don't need the drag-to-dismiss UX.
 
 function SearchAside() {
   const queriesDatalistId = useId();
