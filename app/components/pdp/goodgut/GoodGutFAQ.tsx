@@ -1,7 +1,7 @@
 // Digestive-drops specific FAQ. Native <details>/<summary> for SSR-
-// friendly accordion. Tone is clinical-but-warm and matches the rest of
-// the GoodGut+ page.
+// friendly accordion + visual rhythm matching the rest of the page.
 import {ScrollReveal} from '~/components/motion/ScrollReveal';
+import {LandingSection, SectionHeader} from './primitives';
 
 type Item = {q: string; a: string};
 
@@ -34,25 +34,24 @@ const ITEMS: Item[] = [
 
 export function GoodGutFAQ() {
   return (
-    <section className="bg-paper">
-      <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[minmax(0,0.4fr)_minmax(0,0.6fr)] lg:gap-16 lg:px-10 lg:py-20">
+    <LandingSection tone="paper">
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-9 lg:grid-cols-[minmax(0,0.4fr)_minmax(0,0.6fr)] lg:gap-16">
         <ScrollReveal kind="rise-soft" className="min-w-0">
-          <p className="text-[11px] font-bold uppercase tracking-[0.32em] text-brand">
-            Quick answers
-          </p>
-          <h2 className="mt-4 break-words font-display text-[1.85rem] leading-[1.05] tracking-tight text-ink sm:text-[2.4rem] lg:text-[3rem]">
-            What pet parents ask about the drops.
-          </h2>
-          <p className="mt-4 max-w-md text-[14.5px] leading-7 text-ink-muted sm:text-[15px] sm:leading-8">
-            Still wondering? Email{' '}
-            <a
-              href="mailto:hello@theayurpet.store"
-              className="text-brand underline decoration-saffron underline-offset-4 transition hover:text-brand-deep"
-            >
-              hello@theayurpet.store
-            </a>{' '}
-            — we read every one.
-          </p>
+          <SectionHeader
+            eyebrow="Quick answers"
+            title={<>What pet parents ask about the drops.</>}
+          >
+            <p className="mt-4 max-w-md text-[14px] leading-[1.65] text-ink-muted sm:text-[14.5px]">
+              Still wondering? Email{' '}
+              <a
+                href="mailto:hello@theayurpet.store"
+                className="text-brand underline decoration-saffron underline-offset-4 transition hover:text-brand-deep"
+              >
+                hello@theayurpet.store
+              </a>{' '}
+              — we read every one.
+            </p>
+          </SectionHeader>
         </ScrollReveal>
 
         <ScrollReveal kind="rise-soft" stagger className="min-w-0">
@@ -60,13 +59,13 @@ export function GoodGutFAQ() {
             {ITEMS.map((it) => (
               <li key={it.q}>
                 <details className="ayur-faq group [&_summary::-webkit-details-marker]:hidden">
-                  <summary className="flex cursor-pointer list-none items-start justify-between gap-6 py-5 text-left">
-                    <span className="font-display text-lg leading-tight text-ink sm:text-xl">
+                  <summary className="flex cursor-pointer list-none items-start justify-between gap-5 py-5 text-left">
+                    <span className="font-display text-[16px] leading-tight text-ink sm:text-[17px]">
                       {it.q}
                     </span>
                     <span
                       aria-hidden
-                      className="ayur-faq__toggle mt-1 grid h-8 w-8 shrink-0 place-items-center rounded-full border border-line text-ink-muted transition"
+                      className="ayur-faq__toggle mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-full border border-line text-ink-muted transition"
                     >
                       <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
                         <path
@@ -78,7 +77,7 @@ export function GoodGutFAQ() {
                       </svg>
                     </span>
                   </summary>
-                  <div className="ayur-faq__body pb-5 pr-12 text-[14px] leading-7 text-ink-muted sm:text-[15px]">
+                  <div className="ayur-faq__body pb-5 pr-12 text-[13.5px] leading-[1.7] text-ink-muted sm:text-[14.5px]">
                     {it.a}
                   </div>
                 </details>
@@ -87,6 +86,6 @@ export function GoodGutFAQ() {
           </ul>
         </ScrollReveal>
       </div>
-    </section>
+    </LandingSection>
   );
 }

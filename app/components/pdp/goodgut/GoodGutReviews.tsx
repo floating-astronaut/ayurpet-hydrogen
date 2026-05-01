@@ -1,15 +1,16 @@
-// Digestion-specific testimonial set for the GoodGut+ landing page.
+// Compressed digestive testimonial set. Audit said the reviews section
+// hit 2,085px on mobile — too much vertical real estate. Fix:
+//   - Show ONLY the 3 strongest cards by default.
+//   - Keep the asymmetric grid on lg+ (first card row-spans).
+//   - Hide the remaining 2 reviews behind a "Read 2 more" disclosure
+//     so social proof stays available without taxing the scroll.
 //
-// Audit gap: the generic Reviews block was inherited from the yak-chew
-// PDP and none of those testimonials referenced gas, stool, paw-licking
-// or picky-eating outcomes. This replaces the inherited block with five
-// reviews that all map back to a real digestive symptom GoodGut+ targets.
-//
-// Same visual language as the generic Reviews component (asymmetric
-// 5-card grid, verified pill, count-up summary chip) so the storefront
-// reads as one design system.
+// Padding/border/radius come from LandingCard so cards align with the
+// rest of the page's grammar.
+import {useState} from 'react';
 import {ScrollReveal} from '~/components/motion/ScrollReveal';
 import {CountUpStat} from '~/components/motion/CountUpStat';
+import {LandingCard, LandingSection, SectionHeader} from './primitives';
 
 type Review = {
   rating: number;
@@ -94,90 +95,123 @@ function Stars({value}: {value: number}) {
   );
 }
 
-export function GoodGutReviews() {
+function ReviewCard({
+  review,
+  feature,
+}: {
+  review: Review;
+  feature?: boolean;
+}) {
   return (
-    <section className="border-y border-line bg-cream">
-      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-10 lg:py-24">
-        <ScrollReveal
-          kind="rise-soft"
-          className="flex flex-wrap items-end justify-between gap-6"
-        >
-          <div className="max-w-2xl">
-            <p className="text-[11px] font-bold uppercase tracking-[0.32em] text-brand">
-              What pet parents are saying
-            </p>
-            <h2 className="mt-4 break-words font-display text-3xl leading-[1.05] tracking-tight text-ink sm:text-4xl lg:text-5xl">
-              Real bowls. Real bellies. Real change.
-            </h2>
-          </div>
-          <div className="flex items-center gap-5 rounded-full border border-line bg-paper px-5 py-3 shadow-[0_8px_24px_rgba(31,26,20,0.06)]">
-            <div>
-              <p className="font-display text-2xl leading-none text-ink">
-                <CountUpStat value={4.9} decimals={1} />
-              </p>
-              <p className="mt-1 text-[10px] uppercase tracking-[0.18em] text-ink-muted">
-                Avg rating
-              </p>
-            </div>
-            <span aria-hidden className="h-8 w-px bg-line" />
-            <div>
-              <p className="font-display text-2xl leading-none text-ink">
-                <CountUpStat value={2840} suffix="+" />
-              </p>
-              <p className="mt-1 text-[10px] uppercase tracking-[0.18em] text-ink-muted">
-                GoodGut+ reviews
-              </p>
-            </div>
-          </div>
-        </ScrollReveal>
-
-        <ScrollReveal kind="rise-soft" stagger className="mt-12">
-          <div className="grid gap-5 lg:grid-cols-3 lg:gap-6">
-            {REVIEWS.slice(0, 5).map((r, i) => (
-              <article
-                key={`${r.author}-${r.title}`}
-                className={
-                  'flex flex-col rounded-[1.25rem] border border-line bg-paper p-6 shadow-[0_10px_30px_rgba(31,26,20,0.04)] transition-shadow duration-500 hover:shadow-[0_24px_60px_rgba(31,26,20,0.08)] sm:p-7' +
-                  (i === 0 ? ' lg:row-span-2' : '')
-                }
-              >
-                <div className="flex items-center justify-between gap-3">
-                  <Stars value={r.rating} />
-                  <span className="rounded-full bg-brand/8 px-2 py-0.5 text-[9.5px] font-bold uppercase tracking-[0.18em] text-brand">
-                    {r.symptom}
-                  </span>
-                </div>
-                <h3 className="mt-4 font-display text-xl leading-tight text-ink sm:text-2xl">
-                  {r.title}
-                </h3>
-                <p className="mt-3 flex-1 text-[14px] leading-7 text-ink-soft sm:text-[15px]">
-                  &ldquo;{r.body}&rdquo;
-                </p>
-                <footer className="mt-6 flex flex-wrap items-baseline gap-x-3 gap-y-1 border-t border-line pt-4 text-[12px]">
-                  <span className="font-semibold text-ink">{r.author}</span>
-                  {r.authorMeta ? (
-                    <span className="text-ink-muted">· {r.authorMeta}</span>
-                  ) : null}
-                  {r.verified ? (
-                    <span className="ml-auto inline-flex items-center gap-1 rounded-full bg-brand/8 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.18em] text-brand">
-                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" aria-hidden>
-                        <path
-                          d="M4 12.5l5 5 11-11"
-                          stroke="currentColor"
-                          strokeWidth="3"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                      Verified
-                    </span>
-                  ) : null}
-                </footer>
-              </article>
-            ))}
-          </div>
-        </ScrollReveal>
+    <LandingCard
+      as="article"
+      className={
+        'flex h-full flex-col transition-shadow duration-500 hover:shadow-[0_24px_60px_rgba(31,26,20,0.08)] ' +
+        (feature ? 'lg:row-span-2' : '')
+      }
+    >
+      <div className="flex items-center justify-between gap-3">
+        <Stars value={review.rating} />
+        <span className="rounded-full bg-brand/8 px-2 py-0.5 text-[9.5px] font-bold uppercase tracking-[0.18em] text-brand">
+          {review.symptom}
+        </span>
       </div>
-    </section>
+      <h3 className="mt-4 font-display text-[1.05rem] leading-tight text-ink sm:text-[1.2rem]">
+        {review.title}
+      </h3>
+      <p className="mt-3 flex-1 text-[13.5px] leading-[1.7] text-ink-soft sm:text-[14.5px]">
+        &ldquo;{review.body}&rdquo;
+      </p>
+      <footer className="mt-5 flex flex-wrap items-baseline gap-x-3 gap-y-1 border-t border-line pt-4 text-[12px]">
+        <span className="font-semibold text-ink">{review.author}</span>
+        {review.authorMeta ? (
+          <span className="text-ink-muted">· {review.authorMeta}</span>
+        ) : null}
+        {review.verified ? (
+          <span className="ml-auto inline-flex items-center gap-1 rounded-full bg-brand/8 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.18em] text-brand">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" aria-hidden>
+              <path
+                d="M4 12.5l5 5 11-11"
+                stroke="currentColor"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            Verified
+          </span>
+        ) : null}
+      </footer>
+    </LandingCard>
+  );
+}
+
+export function GoodGutReviews() {
+  const [expanded, setExpanded] = useState(false);
+  const visible = expanded ? REVIEWS : REVIEWS.slice(0, 3);
+  const moreCount = REVIEWS.length - 3;
+
+  return (
+    <LandingSection tone="cream" className="border-y border-line">
+      <ScrollReveal
+        kind="rise-soft"
+        className="flex flex-wrap items-end justify-between gap-6"
+      >
+        <SectionHeader
+          eyebrow="What pet parents are saying"
+          title={<>Real bowls. Real bellies. Real change.</>}
+          className="max-w-2xl"
+        />
+        <div className="flex items-center gap-5 rounded-full border border-line bg-paper px-5 py-3 shadow-[0_8px_24px_rgba(31,26,20,0.06)]">
+          <div>
+            <p className="font-display text-[1.4rem] leading-none text-ink sm:text-[1.5rem]">
+              <CountUpStat value={4.9} decimals={1} />
+            </p>
+            <p className="mt-1 text-[10px] uppercase tracking-[0.18em] text-ink-muted">
+              Avg rating
+            </p>
+          </div>
+          <span aria-hidden className="h-8 w-px bg-line" />
+          <div>
+            <p className="font-display text-[1.4rem] leading-none text-ink sm:text-[1.5rem]">
+              <CountUpStat value={2840} suffix="+" />
+            </p>
+            <p className="mt-1 text-[10px] uppercase tracking-[0.18em] text-ink-muted">
+              Reviews
+            </p>
+          </div>
+        </div>
+      </ScrollReveal>
+
+      <ScrollReveal kind="rise-soft" stagger className="mt-9 sm:mt-10">
+        <div className="grid gap-4 sm:gap-5 lg:grid-cols-3 lg:gap-6">
+          {visible.map((r, i) => (
+            <ReviewCard
+              key={`${r.author}-${r.title}`}
+              review={r}
+              feature={i === 0}
+            />
+          ))}
+        </div>
+      </ScrollReveal>
+
+      {moreCount > 0 ? (
+        <div className="mt-7 text-center">
+          <button
+            type="button"
+            onClick={() => setExpanded((e) => !e)}
+            className="inline-flex items-center gap-2 rounded-full border border-line bg-paper px-5 py-2.5 text-[11.5px] font-bold uppercase tracking-[0.22em] text-ink transition hover:border-brand hover:text-brand"
+          >
+            {expanded ? 'Show fewer' : `Read ${moreCount} more reviews`}
+            <span
+              aria-hidden
+              className={`transition-transform ${expanded ? 'rotate-180' : ''}`}
+            >
+              ↓
+            </span>
+          </button>
+        </div>
+      ) : null}
+    </LandingSection>
   );
 }

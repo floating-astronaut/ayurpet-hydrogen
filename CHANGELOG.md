@@ -13,7 +13,47 @@ Body text (if present) shown as indented sub-bullets.
 
 ## 2026-05-01
 
-- **21:30 UTC** — auto-sync: 2026-05-01 21:30 UTC (`a991700`) — 6 files
+- **23:30 UTC** — auto-sync: 2026-05-01 23:30 UTC (`b54f88a`) — 17 files
+        M	app/components/pdp/StickyAtc.tsx
+        M	app/components/pdp/goodgut/GoodGutAPlus.tsx
+        M	app/components/pdp/goodgut/GoodGutClosing.tsx
+        M	app/components/pdp/goodgut/GoodGutCrossSell.tsx
+        M	app/components/pdp/goodgut/GoodGutFAQ.tsx
+        ... (+12 more)
+- **22:27 UTC** — goodgut polish: native trust chips, bundle picker, real reviews, cross-sell (`44618f5`) — 8 files
+    Closing the conversion-leak gaps from the audit. Five upgrades that
+    move the GoodGut+ landing from "decent custom PDP" toward "premium
+    storefront":
+    1. Native trust chips above the fold (GoodGutTrustChips)
+       FDA-registered facility · ISO 22000 · HACCP · Vet-formulated.
+       Previously the same marks lived only inside the merchant A+
+       artboards 70% down the page — invisible to crawlers and to scan-
+       readers. Now they sit as a 4-up native chip rail next to the
+       benefit chips, with inline SVG icons.
+    2. Bundle-aware variant picker (GoodGutVariantPicker)
+- **21:54 UTC** — goodgut: custom symptom-led product landing page (`31f1016`) — 13 files
+    Built a dedicated landing for the GoodGut+ digestive drops product so
+    the page sells the gut problem instead of reading like a generic PDP.
+    The yak-chew flow and every other product still get the existing
+    generic PDP unchanged.
+    Routing
+    - products.$handle.tsx now branches on product.handle. When the
+      handle matches GOODGUT_HANDLE
+      (goodgut-digestive-enzyme-drops-for-dog-natural-ayurvedic-formula)
+      it renders <GoodGutLanding> with the full Storefront product +
+      selected variant + product options. Hooks moved above the branch so
+- **21:32 UTC** — home polish: fix 404s, hero scale, transitions, video, marquee tone (`3e8297b`) — 2 files
+    Bugs
+    - ShopTheShelf, MerchSpotlight and PDP BrandStrip referenced
+      /brand/lifestyle-kelpie-resting, /lifestyle-corgi-chew and
+      /lifestyle-kelpie-chewing without the -1200 size suffix that the
+      optimization pipeline actually produced. Two routine tiles and the
+      PDP campaign frame were rendering with naturalWidth=0 / 404. All
+      three components now use the -1200 paths and resolve at runtime.
+    - The hero <img> used React's camelCase fetchPriority prop, which
+      triggers a "unknown DOM attribute" warning on this React version.
+      Removed; the <img> still inherits eager loading.
+- **21:30 UTC** — auto-sync: 2026-05-01 21:30 UTC (`bbfe308`) — 7 files
         M	app/components/MultiRowMarquee.tsx
         M	app/components/collection/MerchSpotlight.tsx
         M	app/components/home/FeaturedIn.tsx

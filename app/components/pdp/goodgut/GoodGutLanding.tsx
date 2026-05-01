@@ -1,17 +1,19 @@
 // GoodGut+ custom product landing page. Composes the GoodGut-specific
 // sections in conversion-led order:
 //
-//   hero (purchase + symptom-led copy)
+//   hero (mobile-compressed; image+H1+stars+price+ATC above the fold)
 //   ↓ symptom checker
 //   ↓ ingredients + liquid-format pillar
-//   ↓ trial results (81% / 76% / 74% / 92%)
+//   ↓ trial results
 //   ↓ how to use + dosage table
 //   ↓ made for / not for
-//   ↓ Reviews (reused from generic PDP — universally relevant)
-//   ↓ A+ content from descriptionHtml (branded wrapper)
-//   ↓ FAQ (digestive-specific)
-//   ↓ closing CTA → bounces back to purchase panel
-//   ↓ sticky mobile ATC (reused)
+//   ↓ digestion-specific reviews (3 visible + Read-more reveal)
+//   ↓ A+ content — 3 curated panels + Full brand deck disclosure
+//   ↓ ShippingReturns
+//   ↓ FAQ
+//   ↓ Hip-O-Joint+ cross-sell rail
+//   ↓ closing CTA → bounces back to data-purchase-anchor
+//   ↓ sticky mobile ATC (compact title + full Add-to-cart text)
 //
 // The handle branch in products.$handle.tsx renders this landing
 // instead of the generic flow when product.handle === GOODGUT_HANDLE.
@@ -29,6 +31,8 @@ import {GoodGutFAQ} from './GoodGutFAQ';
 import {GoodGutClosing} from './GoodGutClosing';
 import {GoodGutReviews} from './GoodGutReviews';
 import {GoodGutCrossSell} from './GoodGutCrossSell';
+import {GoodGutTrustStrip} from './GoodGutTrustStrip';
+import {GoodGutGalleryStrip} from './GoodGutGalleryStrip';
 import {ShippingReturns} from '~/components/pdp/ShippingReturns';
 import {StickyAtc} from '~/components/pdp/StickyAtc';
 
@@ -59,10 +63,20 @@ export function GoodGutLanding({
     return acc;
   })();
 
-  // Display title without the noisy `|` separators Shopify carries.
-  const displayTitle = product.title.replace(/\s*\|\s*/g, ' — ');
+  const variantTitle =
+    selectedVariant?.title &&
+    selectedVariant.title.toLowerCase() !== 'default title'
+      ? selectedVariant.title
+      : null;
+
+  // Sticky ATC compact label — short brand mark, never the full SEO title.
+  const compactTitle = variantTitle
+    ? `GoodGut+ · ${variantTitle}`
+    : 'GoodGut+ Drops';
 
   return (
+    // pb-24 on mobile clears the ~70px sticky ATC bar + safe area inset
+    // so the closing band's CTA never sits underneath it.
     <main className="overflow-x-clip bg-paper pb-24 text-ink lg:pb-0">
       <GoodGutHero
         product={product}
@@ -70,6 +84,10 @@ export function GoodGutLanding({
         selectedVariant={selectedVariant}
         galleryImages={gallery}
       />
+
+      <GoodGutTrustStrip />
+
+      <GoodGutGalleryStrip images={gallery.slice(1, 5)} />
 
       <SymptomChecker />
 
@@ -81,32 +99,28 @@ export function GoodGutLanding({
 
       <MadeForNotFor />
 
-      {/* GoodGut-specific reviews — five testimonials each tied to a
-          digestive symptom (gas, picky eating, paw-licking, stool, senior
-          digestion). Replaces the inherited yak-chew testimonials. */}
       <GoodGutReviews />
 
-      {/* The merchant's authored A+ content, wrapped in a branded
-          container so it reads as part of the page instead of pasted
-          Shopify HTML. */}
       {product.descriptionHtml ? (
-        <GoodGutAPlus html={product.descriptionHtml} />
+        <GoodGutAPlus
+          html={product.descriptionHtml}
+          images={gallery}
+        />
       ) : null}
 
       <ShippingReturns />
 
       <GoodGutFAQ />
 
-      {/* Cross-sell — Hip-O-Joint+ companion formula. Lifts the
-          merchant's "Two Targeted Formulas, One Complete System" pitch
-          out of the static A+ artboard and into a real shoppable rail. */}
       <GoodGutCrossSell />
 
       <GoodGutClosing selectedVariant={selectedVariant} />
 
-      {/* Sticky mobile ATC — reused, wired to the same selected variant. */}
+      {/* Sticky mobile ATC — compact title, full Add-to-cart text,
+          appears only after the in-page purchase panel scrolls out. */}
       <StickyAtc
-        productTitle={displayTitle}
+        productTitle={product.title}
+        compactTitle={compactTitle}
         thumbnail={(gallery[0] as StorefrontImage | null) ?? null}
         selectedVariant={selectedVariant}
       />
