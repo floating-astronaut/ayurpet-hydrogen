@@ -15,6 +15,7 @@
   "prettier": "@shopify/prettier-config",
   "dependencies": {
     "@shopify/hydrogen": "2026.4.2",
+    "framer-motion": "^12.38.0",
     "graphql": "^16.10.0",
     "graphql-tag": "^2.12.6",
     "isbot": "^5.1.22",
@@ -22,6 +23,7 @@
     "react-dom": "^18.3.1",
     "react-router": "7.14.0",
     "react-router-dom": "7.14.0",
+    "swiper": "^12.1.4",
     "tailwindcss": "^4.1.6"
   },
   "devDependencies": {
