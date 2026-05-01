@@ -49,18 +49,33 @@ function loadDeferredData({context}: Route.LoaderArgs) {
 const HERO_PRODUCT_HANDLE =
   'calming-ashwagandha-yak-cheese-chews-6-hour-long-lasting-dental-chew';
 
-const TRUST_POINTS = [
-  ['Vet-informed', 'Built around daily support, not trend-led pet-store filler.'],
-  ['Ayurvedic actives', 'Ashwagandha, turmeric, Himalayan yak cheese, and clean functional ingredients.'],
-  ['Shopify checkout', 'Fast cart, trusted payments, order tracking, and native customer accounts.'],
-  ['30-day returns', 'Simple post-purchase support if the routine is not a fit.'],
+const TRUST_POINTS: Array<[string, string]> = [
+  ['Vet-informed', 'Daily-support formulas, not trend-led filler.'],
+  ['Ayurvedic actives', 'Ashwagandha, turmeric, Himalayan yak.'],
+  ['Native checkout', 'Fast Shopify cart and trusted payments.'],
+  ['30-day returns', 'Send it back if the routine isn’t a fit.'],
 ];
 
-const ROUTINES = [
-  {title: 'Gut comfort', body: 'Daily digestive support for itching, licking, tear stains, and sensitive stomach routines.'},
-  {title: 'Calm behavior', body: 'Ashwagandha-led support for stress, travel, grooming, separation, and noisy days.'},
-  {title: 'Long chew ritual', body: 'Himalayan yak chews for dental engagement and slow, satisfying enrichment.'},
+const ROUTINES: Array<{n: string; title: string; body: string}> = [
+  {
+    n: '01',
+    title: 'Gut comfort',
+    body: 'Daily digestive support for itching, licking, tear stains, and sensitive stomach routines.',
+  },
+  {
+    n: '02',
+    title: 'Calm behaviour',
+    body: 'Ashwagandha-led support for stress, travel, grooming, separation, and noisy days.',
+  },
+  {
+    n: '03',
+    title: 'Long chew ritual',
+    body: 'Himalayan yak chews for dental engagement and slow, satisfying enrichment.',
+  },
 ];
+
+const ROUTINE_IMAGE =
+  'https://cdn.shopify.com/s/files/1/0782/4657/6363/files/WhatsApp_Image_2025-04-23_at_21.19.22.jpg?v=1757964471';
 
 export default function Homepage() {
   const data = useLoaderData<typeof loader>();

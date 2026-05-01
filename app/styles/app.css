@@ -643,3 +643,32 @@ button.reset:hover:not(:has(> *)) {
   gap: 0.75rem;
   flex-wrap: wrap;
 }
+
+/* AYUR — typography for product description HTML rendered via dangerouslySetInnerHTML. */
+.ayur-prose { color: var(--color-ink-soft, #3d342a); }
+.ayur-prose > * + * { margin-top: 1rem; }
+.ayur-prose h1,
+.ayur-prose h2,
+.ayur-prose h3,
+.ayur-prose h4 {
+  font-family: var(--font-display), Georgia, serif;
+  color: var(--color-ink, #1f1a14);
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+.ayur-prose h2 { font-size: 1.6rem; margin-top: 2rem; }
+.ayur-prose h3 { font-size: 1.3rem; margin-top: 1.6rem; }
+.ayur-prose p,
+.ayur-prose li { line-height: 1.75; }
+.ayur-prose a {
+  color: var(--color-brand, #2d5a3d);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+.ayur-prose a:hover { color: var(--color-brand-deep, #1a3a26); }
+.ayur-prose ul { padding-left: 1.25rem; list-style: disc; }
+.ayur-prose ol { padding-left: 1.25rem; list-style: decimal; }
+.ayur-prose strong { color: var(--color-ink, #1f1a14); }
+.ayur-prose img { border-radius: 0.75rem; }
+.ayur-prose hr { border: 0; border-top: 1px solid var(--color-line, #dccfb3); margin: 2rem 0; }

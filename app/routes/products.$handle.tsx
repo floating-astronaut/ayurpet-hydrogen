@@ -1,4 +1,5 @@
-import {redirect, useLoaderData} from 'react-router';
+import {useState} from 'react';
+import {useLoaderData} from 'react-router';
 import type {Route} from './+types/products.$handle';
 import {
   getSelectedProductOptions,
@@ -20,7 +21,10 @@ export const meta: Route.MetaFunction = ({data}) => {
     {title: product?.seo?.title || `${product?.title ?? 'Product'} | AyurPet Global`},
     {
       name: 'description',
-      content: product?.seo?.description || product?.description || 'Premium Ayurvedic wellness for modern pets.',
+      content:
+        product?.seo?.description ||
+        product?.description ||
+        'Premium Ayurvedic wellness for modern pets.',
     },
     {
       rel: 'canonical',
@@ -32,7 +36,6 @@ export const meta: Route.MetaFunction = ({data}) => {
 export async function loader(args: Route.LoaderArgs) {
   const deferredData = loadDeferredData(args);
   const criticalData = await loadCriticalData(args);
-
   return {...deferredData, ...criticalData};
 }
 
@@ -56,22 +59,31 @@ async function loadCriticalData({context, params, request}: Route.LoaderArgs) {
 
   redirectIfHandleIsLocalized(request, {handle, data: product});
 
-  return {
-    product,
-  };
+  return {product};
 }
 
 function loadDeferredData(_args: Route.LoaderArgs) {
   return {};
 }
 
-const PROOF_POINTS = [
-  ['Daily support', 'Built for repeatable wellness routines, not one-off treats.'],
-  ['Ayurvedic actives', 'Turmeric, ashwagandha, and Himalayan ingredient traditions.'],
-  ['Clean checkout', 'Shopify cart, trusted payments, and customer account history.'],
+const TRUST_POINTS: Array<[string, string]> = [
+  ['Vet-informed formulas', 'Built around daily wellness, not pet-store filler.'],
+  ['Ayurvedic actives', 'Turmeric, ashwagandha, and Himalayan ingredient lineage.'],
+  ['Native Shopify checkout', 'Fast cart, trusted payments, customer accounts.'],
+  ['30-day return window', 'If the routine doesn’t fit, send it back.'],
 ];
 
-const OUTCOMES = ['Gut comfort', 'Calmer days', 'Chew engagement', 'Better daily ritual'];
+const OUTCOMES = [
+  'Gut comfort',
+  'Calmer days',
+  'Chew engagement',
+  'Daily ritual',
+];
+
+// Display title without the awkward `|` separator some Shopify titles carry.
+function cleanTitle(title: string): string {
+  return title.replace(/\s*\|\s*/g, ' — ');
+}
 
 export default function Product() {
   const {product} = useLoaderData<typeof loader>();
@@ -80,7 +92,6 @@ export default function Product() {
     product.selectedOrFirstAvailableVariant,
     getAdjacentAndFirstAvailableVariants(product),
   );
-
   useSelectedOptionInUrlParam(selectedVariant.selectedOptions);
 
   const productOptions = getProductOptions({
@@ -88,103 +99,221 @@ export default function Product() {
     selectedOrFirstAvailableVariant: selectedVariant,
   });
 
-  const mainImage = selectedVariant?.image ?? product.featuredImage ?? product.images.nodes[0] ?? null;
-  const gallery: StorefrontImage[] = product.images.nodes.length ? product.images.nodes : mainImage ? [mainImage] : [];
+  // Build a stable gallery: dedupe by id, prefer variant image first.
+  const galleryAll: StorefrontImage[] = (() => {
+    const acc: StorefrontImage[] = [];
+    const seen = new Set<string>();
+    const push = (img?: StorefrontImage | null) => {
+      if (img?.id && !seen.has(img.id)) {
+        seen.add(img.id);
+        acc.push(img);
+      }
+    };
+    push(selectedVariant?.image as StorefrontImage | undefined);
+    push(product.featuredImage as StorefrontImage | undefined);
+    product.images.nodes.forEach((n) => push(n as StorefrontImage));
+    return acc;
+  })();
+
+  const [activeImageId, setActiveImageId] = useState<string | undefined>(
+    galleryAll[0]?.id,
+  );
+  const activeImage =
+    galleryAll.find((i) => i.id === activeImageId) ?? galleryAll[0] ?? null;
+
+  const compareAt = selectedVariant?.compareAtPrice;
+  const showCompare =
+    compareAt &&
+    Number(compareAt.amount) > Number(selectedVariant?.price.amount);
+  const displayTitle = cleanTitle(product.title);
 
   return (
     <main className="bg-paper text-ink">
-      <section className="relative overflow-hidden bg-[linear-gradient(135deg,#2a1110_0%,#351614_42%,#f7f0e1_42%,#fdfaf2_100%)] lg:min-h-[calc(100svh-76px)]">
-        <div className="absolute inset-0 opacity-[0.13] [background-image:linear-gradient(#dccfb3_1px,transparent_1px),linear-gradient(90deg,#dccfb3_1px,transparent_1px)] [background-size:92px_92px]" />
-        <div className="relative mx-auto grid max-w-7xl gap-8 px-4 py-8 sm:px-6 lg:grid-cols-[1.02fr_0.98fr] lg:px-10 lg:py-14">
+      {/* Hero: split editorial layout. Sticky gallery on desktop, stacked on mobile. */}
+      <section className="relative overflow-hidden border-b border-line">
+        <div className="absolute inset-0 -z-10 bg-[linear-gradient(155deg,#ebe0c9_0%,#fdfaf2_45%,#f7f0e1_100%)]" />
+        <div
+          className="absolute inset-x-0 top-0 -z-10 h-1/2 bg-[linear-gradient(180deg,rgba(74,140,94,0.08),transparent)]"
+          aria-hidden
+        />
+
+        <div className="relative mx-auto grid max-w-7xl gap-10 px-4 py-10 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:px-10 lg:py-16">
+          {/* Gallery */}
           <div className="lg:sticky lg:top-24 lg:self-start">
-            <div className="overflow-hidden rounded-[2rem] border border-white/20 bg-cream p-3 shadow-[0_34px_110px_rgba(31,26,20,0.22)] sm:rounded-[2.7rem] sm:p-4">
-              <div className="relative aspect-[4/5] overflow-hidden rounded-[1.55rem] bg-paper sm:rounded-[2.1rem]">
-                {mainImage ? (
+            <div className="relative overflow-hidden rounded-[1.75rem] bg-white shadow-[0_30px_90px_rgba(31,26,20,0.10)] sm:rounded-[2.25rem]">
+              <div className="relative aspect-[4/5] overflow-hidden">
+                {activeImage ? (
                   <Image
-                    data={mainImage}
+                    key={activeImage.id}
+                    data={activeImage}
                     aspectRatio="4/5"
                     sizes="(min-width:1024px) 48vw, 92vw"
                     className="h-full w-full object-cover"
                   />
                 ) : (
-                  <div className="grid h-full place-items-center font-display text-5xl text-brand">AyurPet</div>
+                  <div className="grid h-full place-items-center font-display text-5xl text-brand">
+                    AyurPet
+                  </div>
                 )}
               </div>
             </div>
-            {gallery.length > 1 ? (
-              <div className="mt-4 flex snap-x gap-3 overflow-x-auto pb-2">
-                {gallery.slice(0, 8).map((image) => (
-                  <div key={image.id} className="h-20 w-20 shrink-0 snap-start overflow-hidden rounded-2xl border border-line bg-paper sm:h-24 sm:w-24">
-                    <Image data={image} aspectRatio="1/1" sizes="96px" className="h-full w-full object-cover" />
-                  </div>
-                ))}
+
+            {galleryAll.length > 1 ? (
+              <div
+                className="mt-4 flex snap-x snap-mandatory gap-3 overflow-x-auto pb-1 lg:flex-wrap lg:snap-none lg:overflow-visible"
+                aria-label="Product images"
+              >
+                {galleryAll.slice(0, 8).map((image) => {
+                  const isActive = image.id === activeImage?.id;
+                  return (
+                    <button
+                      key={image.id}
+                      type="button"
+                      aria-label="View image"
+                      aria-pressed={isActive}
+                      onClick={() => setActiveImageId(image.id ?? undefined)}
+                      className={`relative h-[68px] w-[68px] shrink-0 snap-start overflow-hidden rounded-xl bg-white transition sm:h-20 sm:w-20 ${
+                        isActive
+                          ? 'ring-2 ring-brand ring-offset-2 ring-offset-paper'
+                          : 'opacity-70 hover:opacity-100'
+                      }`}
+                    >
+                      <Image
+                        data={image}
+                        aspectRatio="1/1"
+                        sizes="80px"
+                        className="h-full w-full object-cover"
+                      />
+                    </button>
+                  );
+                })}
               </div>
             ) : null}
           </div>
 
-          <div className="rounded-[2rem] border border-line bg-paper/95 p-5 shadow-[0_24px_90px_rgba(31,26,20,0.09)] backdrop-blur sm:p-8 lg:p-10">
-            <div className="flex flex-wrap items-center gap-3 border-b border-line pb-5 text-sm text-ink-muted">
-              <span className="tracking-[0.18em] text-saffron">★★★★★</span>
-              <span className="font-semibold text-ink">4.9</span>
-              <span>from 9,340+ reviews</span>
-            </div>
-
-            <p className="mt-8 text-[11px] font-bold uppercase tracking-[0.34em] text-brand">{product.vendor || 'AyurPet Global'}</p>
-            <h1 className="mt-4 font-display text-5xl leading-[0.93] text-ink sm:text-6xl lg:text-[5.7rem]">
-              {product.title}
-            </h1>
-            <p className="mt-6 max-w-2xl text-base leading-8 text-ink-muted sm:text-lg">
-              {product.description || 'A premium daily wellness product built for modern pet routines with Ayurvedic care principles.'}
+          {/* Detail */}
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-brand">
+              {product.vendor || 'AyurPet Global'}
             </p>
+            <h1
+              className="mt-4 font-display leading-[0.96] text-ink"
+              style={{
+                fontSize: 'clamp(2.25rem, 4.5vw, 3.75rem)',
+                letterSpacing: '-0.015em',
+                textWrap: 'balance' as React.CSSProperties['textWrap'],
+              }}
+            >
+              {displayTitle}
+            </h1>
 
-            <div className="mt-6 flex flex-wrap gap-2">
+            <div className="mt-6 flex flex-wrap items-center gap-3 text-sm text-ink-muted">
+              <span className="tracking-[0.16em] text-saffron-deep" aria-hidden>
+                ★★★★★
+              </span>
+              <span className="font-semibold text-ink">4.9</span>
+              <span aria-hidden>·</span>
+              <span>9,340+ verified reviews</span>
+            </div>
+
+            {product.description ? (
+              <p className="mt-7 max-w-xl text-[15px] leading-7 text-ink-soft sm:text-base sm:leading-8">
+                {product.description}
+              </p>
+            ) : null}
+
+            <ul className="mt-7 flex flex-wrap gap-2">
               {OUTCOMES.map((outcome) => (
-                <span key={outcome} className="rounded-full border border-line bg-white/70 px-4 py-2 text-xs font-semibold text-brand">
-                  ✓ {outcome}
-                </span>
+                <li
+                  key={outcome}
+                  className="rounded-full border border-line bg-white/70 px-3.5 py-1.5 text-[12px] tracking-wide text-ink"
+                >
+                  {outcome}
+                </li>
               ))}
-            </div>
+            </ul>
 
-            <div className="mt-8 rounded-[1.5rem] border border-line bg-white/70 p-5">
-              <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-ink-muted">Selected option</p>
-              <div className="mt-3 flex flex-wrap items-end justify-between gap-4">
-                <div>
-                  <p className="font-display text-2xl text-ink">{selectedVariant.title}</p>
-                  {selectedVariant.sku ? <p className="mt-1 text-xs uppercase tracking-[0.18em] text-ink-muted">SKU {selectedVariant.sku}</p> : null}
-                </div>
-                <div className="text-right font-display text-3xl text-brand">
-                  <Money data={selectedVariant.price} />
-                </div>
+            {/* Purchase panel — single editorial card, not a stack of cards */}
+            <div className="mt-10 rounded-[1.75rem] border border-line bg-white p-6 shadow-[0_22px_60px_rgba(31,26,20,0.08)] sm:p-7">
+              <div className="flex items-baseline justify-between gap-4">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-ink-muted">
+                  {selectedVariant?.title &&
+                  selectedVariant.title.toLowerCase() !== 'default title'
+                    ? selectedVariant.title
+                    : 'Single pack'}
+                </p>
+                {selectedVariant?.sku ? (
+                  <p className="text-[10px] uppercase tracking-[0.18em] text-ink-muted">
+                    SKU {selectedVariant.sku}
+                  </p>
+                ) : null}
               </div>
-            </div>
 
-            <div className="mt-8">
-              <ProductForm productOptions={productOptions} selectedVariant={selectedVariant} />
+              <div className="mt-3 flex items-baseline gap-3">
+                <span className="font-display text-[2.25rem] leading-none text-ink">
+                  <Money data={selectedVariant.price} />
+                </span>
+                {showCompare ? (
+                  <span className="text-base text-ink-muted line-through">
+                    <Money data={compareAt} />
+                  </span>
+                ) : null}
+                <span className="text-sm text-ink-muted">incl. taxes</span>
+              </div>
+
+              <div className="mt-7">
+                <ProductForm
+                  productOptions={productOptions}
+                  selectedVariant={selectedVariant}
+                />
+              </div>
+
+              <p className="mt-5 text-center text-[11px] uppercase tracking-[0.22em] text-ink-muted">
+                Free shipping over USD 60 · 30-day returns
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="border-y border-line bg-cream px-4 py-10 sm:px-6 lg:px-10 lg:py-14">
-        <div className="mx-auto grid max-w-7xl gap-4 md:grid-cols-3">
-          {PROOF_POINTS.map(([title, body]) => (
-            <article key={title} className="rounded-[1.6rem] border border-line bg-paper/82 p-6 shadow-[0_12px_40px_rgba(31,26,20,0.04)]">
-              <h2 className="font-display text-3xl text-ink">{title}</h2>
-              <p className="mt-3 text-sm leading-7 text-ink-muted">{body}</p>
-            </article>
+      {/* Trust strip — denser horizontal row of 4 facets, not card grid */}
+      <section className="border-b border-line bg-cream">
+        <div className="mx-auto grid max-w-7xl gap-x-10 gap-y-6 px-4 py-10 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-10 lg:py-14">
+          {TRUST_POINTS.map(([title, body]) => (
+            <div key={title}>
+              <h2 className="font-display text-lg text-ink sm:text-xl">
+                {title}
+              </h2>
+              <p className="mt-2 text-sm leading-6 text-ink-muted">{body}</p>
+            </div>
           ))}
         </div>
       </section>
 
-      <section className="bg-paper px-4 py-14 sm:px-6 lg:px-10 lg:py-24">
-        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.75fr_1.25fr]">
+      {/* Why it fits — editorial split with description-rich content */}
+      <section className="bg-paper">
+        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[0.7fr_1.3fr] lg:gap-16 lg:px-10 lg:py-24">
           <div>
-            <p className="text-[11px] uppercase tracking-[0.32em] text-brand">Why it fits</p>
-            <h2 className="mt-4 font-display text-4xl leading-[1] sm:text-6xl">Care details without the crowded pet-store feel.</h2>
+            <p className="text-[11px] uppercase tracking-[0.32em] text-brand">
+              Why it fits
+            </p>
+            <h2
+              className="mt-4 font-display leading-[0.98]"
+              style={{
+                fontSize: 'clamp(1.85rem, 3.6vw, 3.25rem)',
+                letterSpacing: '-0.012em',
+                textWrap: 'balance' as React.CSSProperties['textWrap'],
+              }}
+            >
+              Care details without the crowded pet-store feel.
+            </h2>
           </div>
-          <div className="rounded-[2rem] border border-line bg-white/76 p-6 text-base leading-8 text-ink-muted shadow-[0_20px_80px_rgba(31,26,20,0.05)] sm:p-8">
+          <div className="text-[15px] leading-8 text-ink-soft sm:text-base">
             {product.descriptionHtml ? (
-              <div className="prose max-w-none" dangerouslySetInnerHTML={{__html: product.descriptionHtml}} />
+              <div
+                className="ayur-prose"
+                dangerouslySetInnerHTML={{__html: product.descriptionHtml}}
+              />
             ) : (
               <p>{product.description}</p>
             )}

@@ -13,7 +13,25 @@ Body text (if present) shown as indented sub-bullets.
 
 ## 2026-05-01
 
-- **08:45 UTC** — auto-sync: 2026-05-01 08:45 UTC (`22e9a83`) — 10 files
+- **09:15 UTC** — auto-sync: 2026-05-01 09:15 UTC (`83f5979`) — 6 files
+        M	app/components/Footer.tsx
+        M	app/components/Header.tsx
+        M	app/components/ProductItem.tsx
+        M	app/routes/_index.tsx
+        M	app/routes/products.$handle.tsx
+        ... (+1 more)
+- **09:08 UTC** — chore: drop unused homepage components (`71b6310`) — 4 files
+    After Codex rebuilt the homepage in 062ab2a around an inline editorial
+    layout (gradient hero card + trust strip + 3 routines + ProductRange +
+    brand-deep CTA), the earlier Hero / StoryStrip / IngredientExplorer /
+    FinalCta components in app/components/home/ are no longer imported by
+    any route. Removing them so the tree reflects what's actually shipped.
+    Kept: app/components/home/ProductRange.tsx (still imported by _index.tsx).
+    If we want any of these patterns back later, they're recoverable from
+    the commit history (7296d74 added them; 154cc77 fixed the Hero
+    hydration mismatch).
+- **08:54 UTC** — hydrogen: sync storefront generated types (`e3e6a37`) — 2 files
+- **08:45 UTC** — auto-sync: 2026-05-01 08:45 UTC (`062ab2a`) — 11 files
         M	app/components/AddToCartButton.tsx
         M	app/components/Footer.tsx
         M	app/components/Header.tsx
