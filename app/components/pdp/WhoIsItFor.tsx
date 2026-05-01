@@ -23,14 +23,7 @@ export function WhoIsItFor() {
           <p className="text-[11px] uppercase tracking-[0.32em] text-brand">
             Honest about fit
           </p>
-          <h2
-            className="mt-4 font-display leading-[0.96] text-ink"
-            style={{
-              fontSize: 'clamp(1.85rem, 3.6vw, 3.25rem)',
-              letterSpacing: '-0.012em',
-              textWrap: 'balance' as React.CSSProperties['textWrap'],
-            }}
-          >
+          <h2 className="mt-4 break-words font-display text-3xl leading-[1.05] tracking-tight text-ink sm:text-4xl lg:text-5xl">
             Made for some dogs. Not for every dog.
           </h2>
         </div>

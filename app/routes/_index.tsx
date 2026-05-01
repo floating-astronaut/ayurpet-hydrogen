@@ -88,8 +88,8 @@ export default function Homepage() {
 
       <section className="relative overflow-hidden border-b border-line bg-[linear-gradient(135deg,#fdfaf2_0%,#f7f0e1_52%,#ebe0c9_100%)]">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(74,140,94,0.18),transparent_30%),radial-gradient(circle_at_82%_22%,rgba(217,148,65,0.18),transparent_26%)]" />
-        <div className="relative mx-auto grid min-h-[calc(100svh-76px)] max-w-7xl gap-10 px-4 py-10 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-end lg:px-10 lg:py-20">
-          <div className="max-w-5xl">
+        <div className="relative mx-auto grid min-h-[calc(100svh-76px)] max-w-7xl grid-cols-[minmax(0,1fr)] gap-10 px-4 py-10 sm:px-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-end lg:px-10 lg:py-20">
+          <div className="min-w-0 max-w-5xl">
             <div className="inline-flex flex-wrap items-center gap-3 rounded-full border border-line bg-white/70 px-4 py-2 text-[10px] uppercase tracking-[0.24em] text-ink-muted">
               Ayurveda × modern pet wellness
               <span className="h-1.5 w-1.5 rounded-full bg-clay" />
@@ -119,8 +119,8 @@ export default function Homepage() {
             </div>
           </div>
 
-          <div className="relative">
-            <div className="overflow-hidden rounded-[2.2rem] border border-white/60 bg-white/70 p-3 shadow-[0_32px_110px_rgba(31,26,20,0.14)] backdrop-blur sm:rounded-[2.8rem] sm:p-4">
+          <div className="relative min-w-0">
+            <div className="overflow-hidden rounded-[1.75rem] border border-white/60 bg-white/70 p-3 shadow-[0_32px_110px_rgba(31,26,20,0.14)] backdrop-blur sm:rounded-[2.8rem] sm:p-4">
               <div className="relative aspect-[4/5] overflow-hidden rounded-[1.7rem] bg-cream">
                 {heroImage ? (
                   <Image data={heroImage} aspectRatio="4/5" sizes="(min-width:1024px) 42vw, 92vw" className="h-full w-full object-cover" />
@@ -158,7 +158,7 @@ export default function Homepage() {
 
       {/* Routines — one editorial moment: photo on left, structured copy on right. */}
       <section className="bg-paper">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16 lg:px-10 lg:py-24">
+        <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-center lg:gap-16 lg:px-10 lg:py-24">
           <div className="relative overflow-hidden rounded-[1.75rem] bg-cream shadow-[0_30px_90px_rgba(31,26,20,0.10)] sm:rounded-[2.25rem]">
             <div className="relative aspect-[4/5] sm:aspect-[5/6]">
               <img

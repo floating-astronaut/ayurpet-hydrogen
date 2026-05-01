@@ -142,10 +142,10 @@ export default function Product() {
           aria-hidden
         />
 
-        <div className="relative mx-auto grid max-w-7xl gap-10 px-4 py-10 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:px-10 lg:py-16">
+        <div className="relative mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] gap-10 px-4 py-10 sm:px-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-16 lg:px-10 lg:py-16">
           {/* Gallery */}
-          <div className="lg:sticky lg:top-24 lg:self-start">
-            <div className="relative overflow-hidden rounded-[1.75rem] bg-white shadow-[0_30px_90px_rgba(31,26,20,0.10)] sm:rounded-[2.25rem]">
+          <div className="min-w-0 lg:sticky lg:top-24 lg:self-start">
+            <div className="relative overflow-hidden rounded-[1.5rem] bg-white shadow-[0_30px_90px_rgba(31,26,20,0.10)] sm:rounded-[2.25rem]">
               <div className="relative aspect-[4/5] overflow-hidden">
                 {activeImage ? (
                   <Image
@@ -165,7 +165,7 @@ export default function Product() {
 
             {galleryAll.length > 1 ? (
               <div
-                className="mt-4 flex snap-x snap-mandatory gap-3 overflow-x-auto pb-1 lg:flex-wrap lg:snap-none lg:overflow-visible"
+                className="-mx-4 mt-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-1 sm:-mx-6 sm:px-6 lg:mx-0 lg:flex-wrap lg:snap-none lg:overflow-visible lg:px-0"
                 aria-label="Product images"
               >
                 {galleryAll.slice(0, 8).map((image) => {
@@ -199,18 +199,11 @@ export default function Product() {
           </div>
 
           {/* Detail */}
-          <div>
+          <div className="min-w-0">
             <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-brand">
               {product.vendor || 'AyurPet Global'}
             </p>
-            <h1
-              className="mt-4 font-display leading-[0.96] text-ink"
-              style={{
-                fontSize: 'clamp(2.25rem, 4.5vw, 3.75rem)',
-                letterSpacing: '-0.015em',
-                textWrap: 'balance' as React.CSSProperties['textWrap'],
-              }}
-            >
+            <h1 className="mt-4 break-words font-display text-[1.875rem] leading-[1.05] tracking-tight text-ink sm:text-4xl lg:text-5xl xl:text-6xl">
               {displayTitle}
             </h1>
 
@@ -224,7 +217,7 @@ export default function Product() {
             </div>
 
             {product.description ? (
-              <p className="mt-7 max-w-xl text-[15px] leading-7 text-ink-soft sm:text-base sm:leading-8">
+              <p className="mt-7 max-w-xl break-words text-[15px] leading-7 text-ink-soft sm:text-base sm:leading-8">
                 {product.description}
               </p>
             ) : null}
@@ -241,9 +234,9 @@ export default function Product() {
             </ul>
 
             {/* Purchase panel — single editorial card, not a stack of cards */}
-            <div className="mt-10 rounded-[1.75rem] border border-line bg-white p-6 shadow-[0_22px_60px_rgba(31,26,20,0.08)] sm:p-7">
-              <div className="flex items-baseline justify-between gap-4">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-ink-muted">
+            <div className="mt-10 rounded-[1.5rem] border border-line bg-white p-5 shadow-[0_22px_60px_rgba(31,26,20,0.08)] sm:p-7">
+              <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-ink-muted">
                   {selectedVariant?.title &&
                   selectedVariant.title.toLowerCase() !== 'default title'
                     ? selectedVariant.title
@@ -256,8 +249,8 @@ export default function Product() {
                 ) : null}
               </div>
 
-              <div className="mt-3 flex items-baseline gap-3">
-                <span className="font-display text-[2.25rem] leading-none text-ink">
+              <div className="mt-3 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                <span className="font-display text-3xl leading-none text-ink sm:text-4xl">
                   <Money data={selectedVariant.price} />
                 </span>
                 {showCompare ? (
@@ -275,8 +268,8 @@ export default function Product() {
                 />
               </div>
 
-              <p className="mt-5 text-center text-[11px] uppercase tracking-[0.22em] text-ink-muted">
-                Free shipping over USD 60 · 30-day returns
+              <p className="mt-5 text-center text-[10px] uppercase tracking-[0.18em] text-ink-muted">
+                Free shipping over USD&nbsp;60 · 30-day returns
               </p>
 
               {/* Payment + secure-checkout strip directly under the CTA. */}
@@ -308,30 +301,23 @@ export default function Product() {
 
       {/* Why it fits — editorial split with description-rich content */}
       <section className="bg-paper">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[0.7fr_1.3fr] lg:gap-16 lg:px-10 lg:py-24">
-          <div>
+        <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1.3fr)] lg:gap-16 lg:px-10 lg:py-24">
+          <div className="min-w-0">
             <p className="text-[11px] uppercase tracking-[0.32em] text-brand">
               Why it fits
             </p>
-            <h2
-              className="mt-4 font-display leading-[0.98]"
-              style={{
-                fontSize: 'clamp(1.85rem, 3.6vw, 3.25rem)',
-                letterSpacing: '-0.012em',
-                textWrap: 'balance' as React.CSSProperties['textWrap'],
-              }}
-            >
+            <h2 className="mt-4 break-words font-display text-3xl leading-[1.05] tracking-tight text-ink sm:text-4xl lg:text-5xl">
               Care details without the crowded pet-store feel.
             </h2>
           </div>
-          <div className="text-[15px] leading-8 text-ink-soft sm:text-base">
+          <div className="min-w-0 text-[15px] leading-7 text-ink-soft sm:text-base sm:leading-8">
             {product.descriptionHtml ? (
               <div
                 className="ayur-prose"
                 dangerouslySetInnerHTML={{__html: product.descriptionHtml}}
               />
             ) : (
-              <p>{product.description}</p>
+              <p className="break-words">{product.description}</p>
             )}
           </div>
         </div>

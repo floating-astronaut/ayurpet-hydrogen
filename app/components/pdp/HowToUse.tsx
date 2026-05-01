@@ -21,19 +21,12 @@ const STEPS = [
 export function HowToUse() {
   return (
     <section className="border-y border-line bg-cream">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[0.7fr_1.3fr] lg:gap-16 lg:px-10 lg:py-24">
-        <div>
+      <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1.3fr)] lg:gap-16 lg:px-10 lg:py-24">
+        <div className="min-w-0">
           <p className="text-[11px] uppercase tracking-[0.32em] text-brand">
             How to use
           </p>
-          <h2
-            className="mt-4 font-display leading-[0.96] text-ink"
-            style={{
-              fontSize: 'clamp(1.85rem, 3.6vw, 3.25rem)',
-              letterSpacing: '-0.012em',
-              textWrap: 'balance' as React.CSSProperties['textWrap'],
-            }}
-          >
+          <h2 className="mt-4 break-words font-display text-3xl leading-[1.05] tracking-tight text-ink sm:text-4xl lg:text-5xl">
             Three steps. Two to three weeks to a real change.
           </h2>
         </div>
