@@ -7,6 +7,7 @@ import {ProductItem} from '~/components/ProductItem';
 import type {ProductItemFragment} from 'storefrontapi.generated';
 import {CollectionHero} from '~/components/collection/CollectionHero';
 import {ShopByNeed} from '~/components/collection/ShopByNeed';
+import {MerchSpotlight} from '~/components/collection/MerchSpotlight';
 import {ScrollReveal} from '~/components/motion/ScrollReveal';
 
 export const meta: Route.MetaFunction = ({data}) => {
@@ -57,7 +58,9 @@ export default function Collection() {
 
       <ShopByNeed activeHandle={collection.handle} />
 
-      <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-10 lg:py-16">
+      <MerchSpotlight />
+
+      <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-10 lg:px-10 lg:py-14">
         <ScrollReveal kind="fade">
           <PaginatedResourceSection<ProductItemFragment>
             connection={collection.products}

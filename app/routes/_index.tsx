@@ -86,119 +86,205 @@ export default function Homepage() {
       {data.isShopLinked ? null : <MockShopNotice />}
 
       <section className="relative overflow-hidden border-b border-line bg-[linear-gradient(135deg,#fdfaf2_0%,#f7f0e1_52%,#ebe0c9_100%)]">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(74,140,94,0.18),transparent_30%),radial-gradient(circle_at_82%_22%,rgba(217,148,65,0.18),transparent_26%)]" />
-        <div className="relative mx-auto grid min-h-[calc(100svh-76px)] max-w-7xl grid-cols-[minmax(0,1fr)] gap-10 px-4 py-10 sm:px-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-end lg:px-10 lg:py-20">
-          <div className="min-w-0 max-w-5xl">
-            <div className="inline-flex flex-wrap items-center gap-3 rounded-full border border-line bg-white/70 px-4 py-2 text-[10px] uppercase tracking-[0.24em] text-ink-muted">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_22%,rgba(74,140,94,0.22),transparent_36%),radial-gradient(circle_at_85%_18%,rgba(217,148,65,0.20),transparent_30%),radial-gradient(circle_at_50%_88%,rgba(184,94,62,0.10),transparent_42%)]"
+        />
+        <div className="relative mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] gap-8 px-4 pb-12 pt-10 sm:px-6 sm:pt-14 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-center lg:gap-14 lg:px-10 lg:pb-20 lg:pt-20">
+          <div className="min-w-0">
+            <div className="inline-flex flex-wrap items-center gap-3 rounded-full border border-line/80 bg-white/80 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-ink-muted backdrop-blur">
+              <span className="inline-flex h-1.5 w-1.5 rounded-full bg-brand" />
               Ayurveda × modern pet wellness
-              <span className="h-1.5 w-1.5 rounded-full bg-clay" />
-              Free shipping over USD 60
+              <span aria-hidden className="h-3 w-px bg-line" />
+              <span className="text-clay">Free shipping over USD 60</span>
             </div>
-            <p className="mt-10 text-[11px] uppercase tracking-[0.36em] text-brand">AyurPet Global</p>
+
             <HeroWordReveal
-              text="Daily rituals for calmer, healthier dogs."
-              className="ayur-hero-h1 mt-5 max-w-5xl break-words font-display text-[2.5rem] leading-[0.95] tracking-tight text-ink sm:text-6xl lg:text-[7.4rem]"
+              text="A calmer dog. A cleaner shelf."
+              className="ayur-hero-h1 mt-7 break-words font-display text-[2.75rem] font-medium leading-[0.92] tracking-[-0.015em] text-ink sm:text-[4.6rem] lg:text-[6.4rem]"
             />
-            <p className="mt-6 max-w-2xl text-[15px] leading-7 text-ink-muted sm:text-lg sm:leading-8 lg:text-xl">
-              Premium Ayurvedic supplements and Himalayan yak chews, designed like a clean wellness routine instead of another crowded pet aisle.
+
+            <p className="mt-5 max-w-xl text-[15px] leading-7 text-ink-soft sm:text-lg sm:leading-8">
+              Vet-informed Ayurvedic supplements and slow-aged Himalayan yak chews — built for daily wellness rituals, not the average pet aisle.
             </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link to="/collections/all" className="inline-flex min-h-12 items-center justify-center rounded-full bg-brand px-7 py-4 text-[12px] font-semibold uppercase tracking-[0.2em] text-paper transition hover:bg-brand-deep sm:text-sm">
+
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <Link
+                to="/collections/all"
+                prefetch="intent"
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-brand px-7 py-3.5 text-[12px] font-bold uppercase tracking-[0.22em] text-paper shadow-[0_14px_30px_rgba(45,90,61,0.28)] transition hover:bg-brand-deep sm:text-[13px]"
+              >
                 Shop the range
+                <span aria-hidden>→</span>
               </Link>
-              <Link to={`/products/${data.heroProduct?.handle ?? HERO_PRODUCT_HANDLE}`} className="inline-flex min-h-12 items-center justify-center rounded-full border border-line bg-white/70 px-7 py-4 text-[12px] font-semibold uppercase tracking-[0.2em] text-brand transition hover:bg-white sm:text-sm">
+              <Link
+                to={`/products/${data.heroProduct?.handle ?? HERO_PRODUCT_HANDLE}`}
+                prefetch="intent"
+                className="inline-flex min-h-12 items-center justify-center rounded-full border border-line bg-white/80 px-7 py-3.5 text-[12px] font-bold uppercase tracking-[0.22em] text-ink transition hover:border-brand hover:text-brand sm:text-[13px]"
+              >
                 View bestseller
               </Link>
             </div>
-          </div>
 
-          <div className="relative min-w-0">
-            <div className="overflow-hidden rounded-[1.75rem] border border-white/60 bg-white/70 p-3 shadow-[0_32px_110px_rgba(31,26,20,0.14)] backdrop-blur sm:rounded-[2.8rem] sm:p-4">
-              <div className="relative aspect-[4/5] overflow-hidden rounded-[1.7rem] bg-cream">
-                {heroImage ? (
-                  <Image data={heroImage} aspectRatio="4/5" sizes="(min-width:1024px) 42vw, 92vw" className="h-full w-full object-cover" />
-                ) : (
-                  <div className="grid h-full place-items-center font-display text-4xl text-brand">AyurPet</div>
-                )}
-                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(42,17,16,0.02)_35%,rgba(42,17,16,0.46)_100%)]" />
-                <div className="absolute inset-x-0 bottom-0 p-5 text-paper sm:p-6">
-                  <p className="text-[10px] uppercase tracking-[0.24em] text-paper/70">Featured ritual</p>
-                  <h2 className="mt-2 max-w-[14ch] font-display text-[1.75rem] leading-[0.98] sm:text-4xl lg:text-5xl">
-                    {(data.heroProduct?.title ?? 'Daily wellness').replace(/\s*\|\s*/g, ' — ')}
-                  </h2>
-                </div>
+            {/* Proof cues — surfaced inline near the CTA, not buried later. */}
+            <div className="mt-8 grid max-w-xl grid-cols-3 gap-4 border-t border-line/70 pt-6 sm:gap-6">
+              <div>
+                <p className="font-display text-[1.5rem] leading-none text-brand sm:text-[1.75rem]">
+                  4.9
+                  <span className="ml-1 text-[12px] font-medium text-saffron-deep">★</span>
+                </p>
+                <p className="mt-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-muted">
+                  9,340+ reviews
+                </p>
+              </div>
+              <div>
+                <p className="font-display text-[1.5rem] leading-none text-brand sm:text-[1.75rem]">
+                  6h+
+                </p>
+                <p className="mt-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-muted">
+                  Slow-aged chew
+                </p>
+              </div>
+              <div>
+                <p className="font-display text-[1.5rem] leading-none text-brand sm:text-[1.75rem]">
+                  100%
+                </p>
+                <p className="mt-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-muted">
+                  Vet-informed
+                </p>
               </div>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* Trust strip — eyebrow + count-up stat row, no flat cards. */}
-      <section className="relative border-b border-line bg-cream">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 [background-image:radial-gradient(circle_at_15%_50%,rgba(45,90,61,0.08),transparent_42%),radial-gradient(circle_at_85%_50%,rgba(217,148,65,0.08),transparent_42%)]"
-        />
-        <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-10 lg:py-20">
-          <ScrollReveal kind="rise-soft" className="mb-10 max-w-2xl">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-brand">
-              Made for pet parents who notice the small things
-            </p>
-            <p className="mt-3 font-display text-2xl leading-tight text-ink sm:text-3xl">
-              Vet-informed formulas. Ayurvedic actives. Daily, repeatable
-              rituals — not aisle-shelf filler.
-            </p>
-          </ScrollReveal>
+          {/* Hero product card — campaign frame with floating spec chips. */}
+          <div className="relative min-w-0">
+            <div className="relative overflow-hidden rounded-[1.5rem] border border-white/60 bg-white/60 p-2 shadow-[0_32px_110px_rgba(31,26,20,0.14)] backdrop-blur sm:rounded-[2rem] sm:p-3">
+              <div className="relative aspect-[4/5] overflow-hidden rounded-[1.4rem] bg-[linear-gradient(160deg,#ebe0c9_0%,#dccfb3_55%,#cdbf9a_100%)] sm:rounded-[1.85rem]">
+                {heroImage ? (
+                  <Image
+                    data={heroImage}
+                    aspectRatio="4/5"
+                    sizes="(min-width:1024px) 42vw, 92vw"
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />
+                ) : (
+                  <div className="absolute inset-0 grid place-items-center font-display text-4xl text-brand">
+                    AyurPet
+                  </div>
+                )}
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(42,17,16,0.0)_45%,rgba(42,17,16,0.55)_100%)]"
+                />
 
-          <ScrollReveal kind="rise-soft" stagger>
-            <ul className="grid grid-cols-2 gap-y-10 sm:grid-cols-4 sm:gap-x-2">
-              {[
-                {label: 'Average rating', value: 4.9, decimals: 1, caption: '★★★★★ verified buyers'},
-                {label: 'Reviews', value: 9340, suffix: '+', caption: 'Across the AyurPet shelf'},
-                {label: 'Hour chew', value: 6, suffix: '+', caption: 'Slow-aged Himalayan yak cheese'},
-                {label: 'Day returns', value: 30, caption: 'No-questions, full refund'},
-              ].map((s, i, arr) => (
-                <li
-                  key={s.label}
-                  className={
-                    'flex flex-col items-start' +
-                    (i % 2 === 0 ? ' border-r border-line pr-4 sm:pr-6' : ' pl-4 sm:pl-6') +
-                    (i < arr.length - 1 ? ' sm:border-r sm:border-line sm:pr-6' : '')
-                  }
-                >
-                  <p className="font-display text-[clamp(2.25rem,5vw,3.5rem)] leading-none tracking-tight text-ink">
-                    <CountUpStat
-                      value={s.value}
-                      decimals={s.decimals ?? 0}
-                      suffix={s.suffix}
-                    />
+                <div className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-paper/95 px-3 py-1 text-[9.5px] font-bold uppercase tracking-[0.22em] text-clay shadow-[0_6px_18px_rgba(31,26,20,0.10)] backdrop-blur">
+                  Bestseller
+                </div>
+
+                <div className="absolute inset-x-0 bottom-0 p-5 text-paper sm:p-6">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-paper/75">
+                    Featured ritual
                   </p>
-                  <p className="mt-3 text-[11px] font-bold uppercase tracking-[0.24em] text-brand">
-                    {s.label}
-                  </p>
-                  <p className="mt-1.5 text-[12px] leading-5 text-ink-muted">
-                    {s.caption}
-                  </p>
-                </li>
-              ))}
-            </ul>
-          </ScrollReveal>
+                  <h2 className="mt-2 max-w-[16ch] font-display text-[1.6rem] leading-[0.98] sm:text-[2rem] lg:text-[2.3rem]">
+                    {(data.heroProduct?.title ?? 'Daily wellness').replace(/\s*\|\s*/g, ' — ')}
+                  </h2>
+                  <Link
+                    to={`/products/${data.heroProduct?.handle ?? HERO_PRODUCT_HANDLE}`}
+                    prefetch="intent"
+                    className="mt-4 inline-flex items-center gap-2 rounded-full bg-paper/95 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.22em] text-ink transition hover:bg-paper"
+                  >
+                    Shop the chew
+                    <span aria-hidden>→</span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            {/* Floating spec chips — premium signal without crowding the photo. */}
+            <div
+              aria-hidden
+              className="absolute -left-3 top-8 hidden rounded-2xl border border-line/70 bg-paper/95 px-4 py-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-ink shadow-[0_18px_40px_rgba(31,26,20,0.14)] backdrop-blur lg:block"
+            >
+              <span className="block text-[9px] tracking-[0.32em] text-ink-muted">
+                Active
+              </span>
+              <span className="mt-1 block font-display text-[15px] tracking-tight normal-case text-brand">
+                Ashwagandha
+              </span>
+            </div>
+            <div
+              aria-hidden
+              className="absolute -right-3 bottom-12 hidden rounded-2xl border border-line/70 bg-paper/95 px-4 py-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-ink shadow-[0_18px_40px_rgba(31,26,20,0.14)] backdrop-blur lg:block"
+            >
+              <span className="block text-[9px] tracking-[0.32em] text-ink-muted">
+                Lasts
+              </span>
+              <span className="mt-1 block font-display text-[15px] tracking-tight normal-case text-saffron-deep">
+                6+ hours
+              </span>
+            </div>
+          </div>
         </div>
       </section>
 
       <FeaturedIn />
 
+      {/* Brand promise — short editorial dark band, alternating rhythm. */}
+      <section className="ayur-band-ink relative overflow-hidden border-y border-line/40 px-4 py-12 text-paper sm:px-6 lg:px-10 lg:py-16">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-[0.10] [background-image:radial-gradient(circle_at_18%_30%,#fdfaf2_0%,transparent_45%),radial-gradient(circle_at_82%_70%,#d99441_0%,transparent_50%)]"
+        />
+        <ScrollReveal
+          kind="rise-soft"
+          className="relative mx-auto flex max-w-7xl flex-col items-start gap-8 sm:flex-row sm:items-end sm:justify-between"
+        >
+          <div className="max-w-2xl">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-saffron-soft">
+              Why pet parents stay
+            </p>
+            <h2 className="mt-3 font-display text-[2rem] leading-[1.05] tracking-tight sm:text-[2.5rem] lg:text-[3rem]">
+              Vet-informed formulas. Ayurvedic actives. Daily, repeatable rituals — not aisle-shelf filler.
+            </h2>
+          </div>
+          <ul className="grid w-full grid-cols-2 gap-x-6 gap-y-6 sm:max-w-md sm:grid-cols-2">
+            {[
+              {label: 'Avg rating', value: 4.9, decimals: 1, caption: '★★★★★ verified'},
+              {label: 'Reviews', value: 9340, suffix: '+', caption: 'across the shelf'},
+              {label: 'Hour chew', value: 6, suffix: '+', caption: 'slow-aged'},
+              {label: 'Day returns', value: 30, caption: 'no questions'},
+            ].map((s) => (
+              <li key={s.label} className="border-l border-paper/15 pl-4">
+                <p className="font-display text-[clamp(1.75rem,3vw,2.5rem)] leading-none tracking-tight text-paper">
+                  <CountUpStat
+                    value={s.value}
+                    decimals={s.decimals ?? 0}
+                    suffix={s.suffix}
+                  />
+                </p>
+                <p className="mt-2 text-[10px] font-bold uppercase tracking-[0.22em] text-saffron-soft">
+                  {s.label}
+                </p>
+                <p className="mt-1 text-[11px] leading-4 text-paper/65">
+                  {s.caption}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </ScrollReveal>
+      </section>
+
       {/* Premium merchandising — five image-led routine tiles. */}
       <ShopTheShelf />
 
       {/* Kinetic interstitial — three lanes, mixed sizes/speeds/directions. */}
-      <section className="border-y border-line bg-paper py-6 sm:py-8">
+      <section className="border-y border-line bg-cream py-5 sm:py-7">
         <MultiRowMarquee />
       </section>
 
       {/* Routines — one editorial moment: photo on left, structured copy on right. */}
       <section className="bg-paper">
-        <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-center lg:gap-16 lg:px-10 lg:py-24">
+        <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-center lg:gap-16 lg:px-10 lg:py-20">
           <ScrollReveal kind="rise" className="ayur-card-frame relative overflow-hidden rounded-[1.75rem] shadow-[0_30px_90px_rgba(31,26,20,0.10)] sm:rounded-[2.25rem]">
             <div className="relative aspect-[4/5] sm:aspect-[5/6]">
               <img

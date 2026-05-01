@@ -33,7 +33,7 @@ export function ShopByNeed({
       className={`relative border-b border-line bg-paper ${className ?? ''}`}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
-        <div className="-mx-4 flex snap-x snap-mandatory gap-2.5 overflow-x-auto px-4 py-5 sm:-mx-6 sm:px-6 lg:mx-0 lg:flex-wrap lg:overflow-visible lg:px-0">
+        <div className="-mx-4 flex snap-x snap-mandatory gap-2.5 overflow-x-auto px-4 py-4 sm:-mx-6 sm:px-6 sm:py-5 lg:mx-0 lg:flex-wrap lg:overflow-visible lg:px-0">
           <p className="hidden shrink-0 self-center text-[11px] font-semibold uppercase tracking-[0.32em] text-ink-muted sm:inline-flex">
             Shop by need
           </p>

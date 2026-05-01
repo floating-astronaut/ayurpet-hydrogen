@@ -19,6 +19,32 @@ export default async function handleRequest(
       checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
       storeDomain: context.env.PUBLIC_STORE_DOMAIN,
     },
+    // Allow Google Fonts stylesheet + woff2 host so the premium Fraunces +
+    // Inter typography renders reliably in production. Without these,
+    // browsers block the @import in tailwind.css and fall back to system
+    // fonts — which is what made the storefront read as "plain" earlier.
+    styleSrc: [
+      "'self'",
+      "'unsafe-inline'",
+      'https://cdn.shopify.com',
+      'https://fonts.googleapis.com',
+      'http://localhost:*',
+    ],
+    fontSrc: [
+      "'self'",
+      'data:',
+      'https://fonts.gstatic.com',
+      'https://cdn.shopify.com',
+    ],
+    // Inline data: SVG is used for the subtle paper-grain texture under
+    // the .ayur-card-frame component. Allowing data: URIs alongside the
+    // existing img sources keeps that texture visible.
+    imgSrc: [
+      "'self'",
+      'data:',
+      'https://cdn.shopify.com',
+      'https://shopify.com',
+    ],
   });
 
   const body = await renderToReadableStream(

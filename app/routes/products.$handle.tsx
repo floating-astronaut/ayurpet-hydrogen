@@ -142,34 +142,47 @@ export default function Product() {
         />
 
         <div className="relative mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] gap-10 px-4 py-10 sm:px-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-16 lg:px-10 lg:py-16">
-          {/* Gallery */}
+          {/* Gallery — campaign-style image stage */}
           <div className="min-w-0 lg:sticky lg:top-24 lg:self-start">
-            <ScrollReveal kind="rise-soft" className="ayur-card-frame relative overflow-hidden rounded-[1.5rem] p-3 shadow-[0_30px_90px_rgba(31,26,20,0.10)] sm:rounded-[2.25rem] sm:p-4">
-              {/* Soft light-well behind the photo */}
+            <ScrollReveal
+              kind="rise-soft"
+              className="relative overflow-hidden rounded-[1.5rem] bg-[linear-gradient(160deg,#ebe0c9_0%,#dccfb3_50%,#c7b89a_100%)] p-2 shadow-[0_40px_120px_rgba(31,26,20,0.16)] sm:rounded-[2rem] sm:p-3"
+            >
+              {/* Brand color halo + subtle vignette so flat product packaging photographs reads as designed campaign art. */}
               <div
                 aria-hidden
-                className="pointer-events-none absolute inset-x-6 top-6 h-32 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.85)_0%,rgba(255,255,255,0)_70%)]"
+                className="pointer-events-none absolute inset-0 [background-image:radial-gradient(circle_at_22%_22%,rgba(74,140,94,0.18),transparent_42%),radial-gradient(circle_at_78%_85%,rgba(184,94,62,0.18),transparent_45%)]"
               />
-              <div className="relative aspect-[4/5] overflow-hidden rounded-[1.25rem] bg-paper sm:rounded-[1.85rem]">
+              <div className="relative aspect-[4/5] overflow-hidden rounded-[1.25rem] bg-[linear-gradient(180deg,#fdfaf2_0%,#f0e6d0_100%)] sm:rounded-[1.85rem]">
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-x-12 top-8 h-44 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.85)_0%,rgba(255,255,255,0)_70%)]"
+                />
                 {activeImage ? (
                   <Image
                     key={activeImage.id}
                     data={activeImage}
                     aspectRatio="4/5"
                     sizes="(min-width:1024px) 48vw, 92vw"
-                    className="ayur-gallery-image h-full w-full object-cover"
+                    className="ayur-gallery-image absolute inset-0 h-full w-full object-cover"
                   />
                 ) : (
-                  <div className="grid h-full place-items-center font-display text-5xl text-brand">
+                  <div className="absolute inset-0 grid place-items-center font-display text-5xl text-brand">
                     AyurPet
                   </div>
                 )}
+
+                {/* Subtle bottom shade so a sticky pill / chip reads against any photo */}
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-[linear-gradient(180deg,transparent,rgba(31,26,20,0.10))]"
+                />
               </div>
             </ScrollReveal>
 
             {galleryAll.length > 1 ? (
               <div
-                className="-mx-4 mt-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-1 sm:-mx-6 sm:px-6 lg:mx-0 lg:flex-wrap lg:snap-none lg:overflow-visible lg:px-0"
+                className="-mx-4 mt-5 flex snap-x snap-mandatory gap-2.5 overflow-x-auto px-4 pb-1 sm:-mx-6 sm:px-6 lg:mx-0 lg:flex-wrap lg:snap-none lg:overflow-visible lg:px-0"
                 aria-label="Product images"
               >
                 {galleryAll.slice(0, 8).map((image, idx) => {
@@ -183,10 +196,10 @@ export default function Product() {
                       onClick={() => {
                         if (image.id) setActiveImageId(image.id);
                       }}
-                      className={`relative h-[68px] w-[68px] shrink-0 snap-start overflow-hidden rounded-xl bg-white transition-all duration-300 sm:h-20 sm:w-20 ${
+                      className={`relative h-16 w-16 shrink-0 snap-start overflow-hidden rounded-[0.85rem] bg-cream transition-all duration-300 sm:h-[72px] sm:w-[72px] ${
                         isActive
-                          ? 'opacity-100 ring-[1.5px] ring-brand ring-offset-2 ring-offset-paper after:pointer-events-none after:absolute after:inset-x-3 after:bottom-1.5 after:h-px after:bg-brand'
-                          : 'opacity-60 hover:opacity-100'
+                          ? 'ring-2 ring-brand ring-offset-2 ring-offset-paper'
+                          : 'opacity-65 ring-1 ring-line hover:opacity-100 hover:ring-brand/40'
                       }`}
                     >
                       <Image
@@ -207,45 +220,47 @@ export default function Product() {
             <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-brand">
               {product.vendor || 'AyurPet Global'}
             </p>
-            <h1 className="mt-4 break-words font-display text-[1.875rem] leading-[1.05] tracking-tight text-ink sm:text-4xl lg:text-5xl xl:text-6xl">
+            <h1 className="mt-3 break-words font-display text-[1.85rem] leading-[1.04] tracking-[-0.01em] text-ink sm:mt-4 sm:text-[2.5rem] lg:text-[3.25rem] xl:text-[3.75rem]">
               {displayTitle}
             </h1>
 
-            <div className="mt-6 flex flex-wrap items-center gap-3 text-sm text-ink-muted">
-              <span className="tracking-[0.16em] text-saffron-deep" aria-hidden>
+            <div className="mt-5 flex flex-wrap items-center gap-2.5 text-[13px] text-ink-muted sm:mt-6 sm:gap-3 sm:text-sm">
+              <span className="tracking-[0.18em] text-saffron-deep" aria-hidden>
                 ★★★★★
               </span>
-              <span className="font-semibold text-ink">4.9</span>
-              <span aria-hidden>·</span>
+              <span className="font-bold text-ink">4.9</span>
+              <span aria-hidden className="text-ink-muted/60">
+                ·
+              </span>
               <span>9,340+ verified reviews</span>
             </div>
 
             {product.description ? (
-              <p className="mt-7 max-w-xl break-words text-[15px] leading-7 text-ink-soft sm:text-base sm:leading-8">
+              <p className="mt-5 max-w-xl break-words text-[14.5px] leading-7 text-ink-soft sm:mt-6 sm:text-[15.5px] sm:leading-8">
                 {product.description}
               </p>
             ) : null}
 
-            <ul className="mt-7 flex flex-wrap gap-2">
+            <ul className="mt-5 flex flex-wrap gap-1.5 sm:mt-6 sm:gap-2">
               {OUTCOMES.map((outcome) => (
                 <li
                   key={outcome}
-                  className="rounded-full border border-line bg-white/70 px-3.5 py-1.5 text-[12px] tracking-wide text-ink"
+                  className="rounded-full border border-line bg-white/80 px-3 py-1 text-[11.5px] font-medium tracking-wide text-ink-soft"
                 >
                   {outcome}
                 </li>
               ))}
             </ul>
 
-            {/* Purchase panel — single editorial card, not a stack of cards */}
+            {/* Purchase panel — tightened, conversion-focused. */}
             <div
               data-purchase-anchor
-              className="mt-10 overflow-hidden rounded-[1.5rem] border border-line bg-white shadow-[0_22px_60px_rgba(31,26,20,0.08)]"
+              className="mt-8 overflow-hidden rounded-[1.5rem] border border-line bg-white shadow-[0_22px_60px_rgba(31,26,20,0.08)] sm:mt-10"
             >
-              <div className="p-5 sm:p-7">
+              <div className="p-5 sm:p-6">
                 {/* Variant + SKU eyebrow row */}
-                <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b border-line pb-4">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-brand">
+                <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b border-line pb-3.5">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-brand">
                     {selectedVariant?.title &&
                     selectedVariant.title.toLowerCase() !== 'default title'
                       ? selectedVariant.title
@@ -258,17 +273,21 @@ export default function Product() {
                   ) : null}
                 </div>
 
-                {/* Price block — display weight, larger leading, savings pill */}
-                <div className="mt-5 flex flex-wrap items-baseline gap-x-3 gap-y-2">
-                  <span className="font-display text-[2.5rem] leading-[0.9] tracking-tight text-ink sm:text-[3rem]">
-                    <Money data={selectedVariant.price} />
-                  </span>
+                {/* Price block */}
+                <div className="mt-4 flex flex-wrap items-baseline gap-x-3 gap-y-1.5">
+                  <Money
+                    as="span"
+                    data={selectedVariant.price}
+                    className="font-display text-[2.25rem] leading-[0.9] tracking-tight text-ink sm:text-[2.75rem]"
+                  />
                   {showCompare ? (
                     <>
-                      <span className="text-lg text-ink-muted line-through">
-                        <Money data={compareAt} />
-                      </span>
-                      <span className="rounded-full bg-clay/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.22em] text-clay">
+                      <Money
+                        as="span"
+                        data={compareAt}
+                        className="text-lg text-ink-muted line-through"
+                      />
+                      <span className="rounded-full bg-clay/12 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.22em] text-clay">
                         Save{' '}
                         {Math.round(
                           ((Number(compareAt!.amount) -
@@ -281,10 +300,12 @@ export default function Product() {
                     </>
                   ) : null}
                 </div>
-                <p className="mt-1 text-xs text-ink-muted">Tax included · Calculated at checkout</p>
+                <p className="mt-1 text-[11.5px] text-ink-muted">
+                  Tax included · Calculated at checkout
+                </p>
 
                 {/* Variant picker + AddToCart */}
-                <div className="mt-7">
+                <div className="mt-5 sm:mt-6">
                   <ProductForm
                     productOptions={productOptions}
                     selectedVariant={selectedVariant}
@@ -293,17 +314,17 @@ export default function Product() {
               </div>
 
               {/* Microcopy strip under the CTA */}
-              <ul className="grid grid-cols-3 divide-x divide-line border-t border-line bg-cream/50 text-center">
+              <ul className="grid grid-cols-3 divide-x divide-line border-t border-line bg-cream/40 text-center">
                 {[
                   ['🚚', 'Ships same day', 'Before 14:00 IST'],
                   ['🔒', 'Secure Shopify', 'Trusted checkout'],
                   ['↩', '30-day returns', 'Unopened items'],
                 ].map(([emoji, title, sub]) => (
-                  <li key={title} className="px-2 py-3 sm:px-3 sm:py-4">
+                  <li key={title} className="px-2 py-3 sm:px-3">
                     <span aria-hidden className="block text-base sm:text-lg">
                       {emoji}
                     </span>
-                    <p className="mt-1 text-[11px] font-semibold leading-tight text-ink">
+                    <p className="mt-1 text-[11px] font-bold leading-tight text-ink">
                       {title}
                     </p>
                     <p className="mt-0.5 hidden text-[10px] leading-tight text-ink-muted sm:block">
@@ -314,7 +335,7 @@ export default function Product() {
               </ul>
 
               {/* Payment + secure-checkout strip */}
-              <div className="border-t border-line p-5 sm:p-7">
+              <div className="border-t border-line p-5 sm:p-6">
                 <PaymentTrust />
               </div>
             </div>

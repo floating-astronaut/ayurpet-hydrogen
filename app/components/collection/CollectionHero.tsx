@@ -34,10 +34,10 @@ export function CollectionHero({
         className="pointer-events-none absolute inset-0 -z-10 [background-image:radial-gradient(circle_at_18%_28%,rgba(74,140,94,0.14),transparent_38%),radial-gradient(circle_at_82%_22%,rgba(217,148,65,0.14),transparent_32%)]"
       />
 
-      <div className="relative mx-auto max-w-7xl px-4 pt-14 sm:px-6 lg:px-10 lg:pt-20">
+      <div className="relative mx-auto max-w-7xl px-4 pt-10 sm:px-6 sm:pt-14 lg:px-10 lg:pt-20">
         <ScrollReveal kind="rise-soft" className="max-w-4xl">
           {/* Breadcrumb-style eyebrow */}
-          <p className="flex flex-wrap items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.32em] text-brand">
+          <p className="flex flex-wrap items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.32em] text-brand sm:text-[11px]">
             <Link to="/" className="text-ink-muted transition hover:text-ink">
               AyurPet
             </Link>
@@ -47,12 +47,12 @@ export function CollectionHero({
             <span>{eyebrow}</span>
           </p>
 
-          <h1 className="mt-5 break-words font-display text-4xl leading-[1.0] tracking-tight text-ink sm:text-6xl lg:text-[5.25rem]">
+          <h1 className="mt-4 break-words font-display text-[2.4rem] leading-[1.0] tracking-tight text-ink sm:text-6xl sm:mt-5 lg:text-[5.25rem]">
             {title}
           </h1>
 
           {description ? (
-            <p className="mt-5 max-w-2xl text-[15px] leading-7 text-ink-muted sm:text-base sm:leading-8">
+            <p className="mt-4 max-w-2xl text-[14px] leading-6 text-ink-muted sm:mt-5 sm:text-base sm:leading-8">
               {description}
             </p>
           ) : null}
@@ -60,7 +60,7 @@ export function CollectionHero({
       </div>
 
       {/* Merchandising sub-bar: live product count + current sort */}
-      <div className="relative mx-auto mt-12 max-w-7xl border-t border-line/70 px-4 sm:px-6 lg:px-10">
+      <div className="relative mx-auto mt-8 max-w-7xl border-t border-line/70 px-4 sm:mt-12 sm:px-6 lg:px-10">
         <div className="flex items-baseline justify-between gap-4 py-4">
           <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-ink-muted">
             {typeof productCount === 'number' && productCount > 0
