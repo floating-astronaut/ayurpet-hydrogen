@@ -49,6 +49,11 @@ export function MadeForNotFor() {
                 </li>
               ))}
             </ul>
+            <p className="mt-5 rounded-xl bg-cream/80 p-3 text-[12px] leading-[1.55] text-ink-soft">
+              Best given as part of a daily routine &mdash; most pets show
+              calmer digestion within 7&ndash;10 days, and the 28-day mark is
+              when stool, energy, and skin really turn around.
+            </p>
           </LandingCard>
         </ScrollReveal>
 
