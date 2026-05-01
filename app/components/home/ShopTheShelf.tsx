@@ -1,9 +1,7 @@
-// Premium "Shop by routine" merchandising block. Five image-led editorial
-// tiles, each linking into a curated collection. The first tile is taller
-// (lg:row-span-2) to break the rhythm and feel intentional rather than a
-// generated grid. Static art direction (gradient + glyph + headline) means
-// it ships even before real lifestyle photography is plugged in — when art
-// arrives, swap the gradient block for an <Image>.
+// "Shop by routine" tile rail. Each tile is a real link into the matching
+// curated collection, with a distinct AyurPet-shot lifestyle or product
+// visual so no packshot is repeated across the row. Calming is featured
+// (lg:row-span-2) so the rhythm reads intentional.
 import {Link} from 'react-router';
 import {ScrollReveal} from '~/components/motion/ScrollReveal';
 
@@ -12,55 +10,56 @@ type Tile = {
   title: string;
   body: string;
   to: string;
-  /** Tailwind gradient classes for the art block until real imagery lands. */
-  art: string;
-  /** Decorative initial behind the headline — sets the tile's character. */
-  glyph: string;
-  /** When true, this tile pops up taller in the lg layout. */
+  /** Public path stem — `/brand/{img}.{webp|jpg}`. */
+  img: string;
+  imgAlt: string;
   feature?: boolean;
+  /** Object-position for the tile photo. */
+  pos?: string;
 };
 
 const TILES: Tile[] = [
   {
     label: 'For anxious dogs',
     title: 'Calming routines',
-    body: 'Ashwagandha-led rituals for fireworks, travel, vet visits, and quiet evenings.',
+    body: 'Ashwagandha-led rituals for fireworks, travel, vet visits, anxious nights.',
     to: '/collections/calming',
-    art: 'bg-[linear-gradient(140deg,#2d5a3d_0%,#3d6f4d_50%,#1a3a26_100%)]',
-    glyph: '☾',
+    img: 'ashwa-lifestyle',
+    imgAlt: 'Calming chew lifestyle — golden dog smiling in a green field',
     feature: true,
+    pos: 'object-center',
   },
   {
     label: 'Gut · skin · coat',
     title: 'Daily wellness',
     body: 'Turmeric and gut-support formulas for itchy skin, tear stains, and sensitive bellies.',
     to: '/collections/gut-support',
-    art: 'bg-[linear-gradient(140deg,#d99441_0%,#e9a85a_55%,#b8772f_100%)]',
-    glyph: '✿',
+    img: 'turmeric-lifestyle',
+    imgAlt: 'Healing turmeric chew lifestyle',
   },
   {
     label: 'Chew · enrich',
     title: 'Yak chew rituals',
     body: 'Slow-aged Himalayan yak cheese chews — six hours of dental engagement, no fillers.',
     to: '/collections/yak-chews',
-    art: 'bg-[linear-gradient(140deg,#b85e3e_0%,#cc7252_55%,#8a3f24_100%)]',
-    glyph: '✦',
+    img: 'lifestyle-kelpie-resting',
+    imgAlt: 'Brown kelpie resting with a yak cheese chew',
   },
   {
     label: 'For senior dogs',
     title: 'Joint support',
-    body: 'Turmeric, boswellia, and ghee-based blends to keep stairs, walks, and zoomies easy.',
+    body: 'Turmeric, boswellia, and ghee-based blends to keep stairs and walks easy.',
     to: '/collections/joint-care',
-    art: 'bg-[linear-gradient(140deg,#3d3526_0%,#5a4d36_55%,#2a2419_100%)]',
-    glyph: '◈',
+    img: 'lifestyle-corgi-chew',
+    imgAlt: 'Corgi running with a chew',
   },
   {
     label: 'Save & simplify',
     title: 'Routine bundles',
-    body: 'Curated three-product kits at a single bundled price — calm, gut, and chew in one box.',
+    body: 'Curated three-product kits at a single bundled price.',
     to: '/collections/bundles',
-    art: 'bg-[linear-gradient(140deg,#f0d29e_0%,#e6bf76_55%,#c79747_100%)]',
-    glyph: '✧',
+    img: 'original-sizes',
+    imgAlt: 'Three pack sizes of Original Himalayan yak cheese chews',
   },
 ];
 
@@ -91,55 +90,53 @@ export function ShopTheShelf() {
           <div className="grid gap-5 lg:grid-cols-3 lg:gap-6">
             {TILES.map((t) => (
               <Link
-                key={t.label}
+                key={t.title}
                 to={t.to}
                 prefetch="intent"
                 className={
-                  'group relative flex flex-col overflow-hidden rounded-[1.5rem] border border-line/60 shadow-[0_18px_50px_rgba(31,26,20,0.08)] transition-shadow duration-500 hover:shadow-[0_30px_80px_rgba(31,26,20,0.16)]' +
-                  (t.feature ? ' lg:row-span-2' : '')
+                  'group relative flex min-h-[260px] flex-col justify-end overflow-hidden rounded-[1.5rem] text-paper shadow-[0_18px_50px_rgba(31,26,20,0.08)] ring-1 ring-line/40 transition-all duration-500 hover:shadow-[0_30px_80px_rgba(31,26,20,0.16)]' +
+                  (t.feature ? ' lg:row-span-2 lg:min-h-[440px]' : '')
                 }
               >
-                <div
-                  className={
-                    'relative flex flex-1 flex-col justify-between p-7 text-paper sm:p-9 ' +
-                    t.art +
-                    (t.feature ? ' min-h-[440px]' : ' min-h-[260px]')
-                  }
-                >
-                  <div
-                    aria-hidden
-                    className="pointer-events-none absolute inset-0 opacity-[0.10] [background-image:radial-gradient(circle_at_20%_20%,#fdfaf2_0%,transparent_45%),radial-gradient(circle_at_80%_85%,#000_0%,transparent_55%)]"
+                {/* Real photo */}
+                <picture>
+                  <source srcSet={`/brand/${t.img}.webp`} type="image/webp" />
+                  <img
+                    src={`/brand/${t.img}.jpg`}
+                    alt={t.imgAlt}
+                    className={`absolute inset-0 h-full w-full object-cover transition-transform duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04] ${t.pos ?? 'object-center'}`}
+                    loading="lazy"
+                    width={1200}
+                    height={t.feature ? 1500 : 800}
                   />
-                  <span
-                    aria-hidden
-                    className="pointer-events-none absolute right-6 top-4 select-none font-display text-[8rem] leading-none text-paper/15 sm:text-[10rem]"
-                  >
-                    {t.glyph}
-                  </span>
+                </picture>
+                {/* Brand-color overlay so copy stays legible regardless of photo */}
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(31,26,20,0.05)_30%,rgba(31,26,20,0.55)_75%,rgba(31,26,20,0.78)_100%)]"
+                />
 
-                  <p className="relative text-[10px] font-semibold uppercase tracking-[0.32em] text-paper/75">
+                <div className="relative p-6 sm:p-7">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-paper/75">
                     {t.label}
                   </p>
-
-                  <div className="relative">
-                    <h3
-                      className={
-                        'font-display leading-[0.95] tracking-tight text-paper ' +
-                        (t.feature
-                          ? 'text-[2.4rem] sm:text-[3rem] lg:text-[3.6rem]'
-                          : 'text-[1.85rem] sm:text-[2.2rem]')
-                      }
-                    >
-                      {t.title}
-                    </h3>
-                    <p className="mt-3 max-w-md text-[13px] leading-7 text-paper/80 sm:text-[14px]">
-                      {t.body}
-                    </p>
-                    <span className="mt-6 inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.22em] text-paper transition group-hover:gap-3">
-                      Shop the routine
-                      <span aria-hidden>→</span>
-                    </span>
-                  </div>
+                  <h3
+                    className={
+                      'mt-2 font-display leading-[0.95] tracking-tight text-paper ' +
+                      (t.feature
+                        ? 'text-[2.4rem] sm:text-[3rem] lg:text-[3.4rem]'
+                        : 'text-[1.85rem] sm:text-[2.1rem]')
+                    }
+                  >
+                    {t.title}
+                  </h3>
+                  <p className="mt-2 max-w-md text-[13px] leading-6 text-paper/80 sm:text-[14px]">
+                    {t.body}
+                  </p>
+                  <span className="mt-5 inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.22em] text-paper transition group-hover:gap-3">
+                    Shop the routine
+                    <span aria-hidden>→</span>
+                  </span>
                 </div>
               </Link>
             ))}

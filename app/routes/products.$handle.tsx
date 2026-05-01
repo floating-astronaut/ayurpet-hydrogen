@@ -20,6 +20,7 @@ import {ShippingReturns} from '~/components/pdp/ShippingReturns';
 import {PaymentTrust} from '~/components/pdp/PaymentTrust';
 import {StickyAtc} from '~/components/pdp/StickyAtc';
 import {RichTrustBand} from '~/components/pdp/RichTrustBand';
+import {BrandStrip} from '~/components/pdp/BrandStrip';
 import {WhyThisWorks} from '~/components/pdp/WhyThisWorks';
 import {Reviews} from '~/components/pdp/Reviews';
 import {FaqAccordion} from '~/components/pdp/FaqAccordion';
@@ -344,6 +345,8 @@ export default function Product() {
       </section>
 
       <RichTrustBand />
+
+      <BrandStrip />
 
       <WhyThisWorks />
       <HowItWorksTimeline />

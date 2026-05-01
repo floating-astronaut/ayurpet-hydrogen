@@ -32,12 +32,16 @@ export function Header({header, isLoggedIn, cart}: HeaderProps) {
         <Link
           prefetch="intent"
           to="/"
-          className="flex min-w-0 items-baseline gap-3"
+          className="flex min-w-0 items-center gap-3"
           aria-label={`${shop.name} home`}
         >
-          <span className="font-display text-[1.75rem] leading-none tracking-[-0.01em] text-ink">
-            AyurPet
-          </span>
+          <img
+            src="/brand/logo-color.svg"
+            alt="AyurPet"
+            width={140}
+            height={32}
+            className="h-7 w-auto sm:h-8"
+          />
           <span className="hidden text-[10px] uppercase tracking-[0.32em] text-ink-muted sm:inline">
             Global
           </span>

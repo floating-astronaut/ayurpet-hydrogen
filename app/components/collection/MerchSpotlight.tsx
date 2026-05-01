@@ -1,8 +1,7 @@
-// Merchandising spotlight rail — sits above the product grid on collection
-// pages. Four editorial tiles ("Best for calming", "Best for dental chew",
-// "Bundle value", "Daily gut support") guide the visitor into a routine
-// before they look at the grid. Each tile is a real link into the matching
-// curated collection.
+// Merchandising spotlight rail above the collection grid. Four tiles —
+// each with its own real lifestyle / product visual so the row reads as a
+// curated shelf, not generic gradient boxes. Active overlay keeps the
+// copy legible across photo subjects.
 import {Link} from 'react-router';
 import {ScrollReveal} from '~/components/motion/ScrollReveal';
 
@@ -12,9 +11,8 @@ type Tile = {
   body: string;
   cta: string;
   to: string;
-  /** Tailwind gradient classes for the art block. */
-  art: string;
-  glyph: string;
+  img: string;
+  imgAlt: string;
 };
 
 const TILES: Tile[] = [
@@ -24,8 +22,8 @@ const TILES: Tile[] = [
     body: 'Ashwagandha-led chews & drops for fireworks, vet visits, anxious nights.',
     cta: 'Shop calming',
     to: '/collections/calming',
-    art: 'bg-[linear-gradient(140deg,#2d5a3d_0%,#3d6f4d_55%,#1a3a26_100%)]',
-    glyph: '☾',
+    img: 'ashwa-lifestyle',
+    imgAlt: 'Calming chew lifestyle',
   },
   {
     eyebrow: 'Six-hour ritual',
@@ -33,8 +31,8 @@ const TILES: Tile[] = [
     body: 'Slow-aged Himalayan yak cheese — single ingredient, no fillers, 6h+.',
     cta: 'Shop chews',
     to: '/collections/yak-chews',
-    art: 'bg-[linear-gradient(140deg,#b85e3e_0%,#cc7252_55%,#8a3f24_100%)]',
-    glyph: '✦',
+    img: 'lifestyle-kelpie-chewing',
+    imgAlt: 'A dog chewing a yak cheese chew',
   },
   {
     eyebrow: 'Save & simplify',
@@ -42,8 +40,8 @@ const TILES: Tile[] = [
     body: 'Three-product kits — calm + gut + chew at one bundled price.',
     cta: 'Shop bundles',
     to: '/collections/bundles',
-    art: 'bg-[linear-gradient(140deg,#d99441_0%,#e9a85a_55%,#b8772f_100%)]',
-    glyph: '✧',
+    img: 'original-sizes',
+    imgAlt: 'Three pack sizes of yak cheese chews',
   },
   {
     eyebrow: 'Skin & coat',
@@ -51,8 +49,8 @@ const TILES: Tile[] = [
     body: 'Turmeric and digestive blends for itchy skin, tear stains, sensitive bellies.',
     cta: 'Shop wellness',
     to: '/collections/gut-support',
-    art: 'bg-[linear-gradient(140deg,#3d3526_0%,#5a4d36_55%,#2a2419_100%)]',
-    glyph: '✿',
+    img: 'turmeric-lifestyle',
+    imgAlt: 'Healing turmeric chew lifestyle',
   },
 ];
 
@@ -67,32 +65,35 @@ export function MerchSpotlight() {
                 key={t.title}
                 to={t.to}
                 prefetch="intent"
-                className="group relative flex min-h-[200px] flex-col justify-between overflow-hidden rounded-[1.25rem] p-5 text-paper shadow-[0_14px_40px_rgba(31,26,20,0.08)] ring-1 ring-line/40 transition-all duration-500 hover:shadow-[0_24px_60px_rgba(31,26,20,0.18)] hover:ring-line/0 sm:p-6"
+                className="group relative flex min-h-[220px] flex-col justify-end overflow-hidden rounded-[1.25rem] p-5 text-paper shadow-[0_14px_40px_rgba(31,26,20,0.08)] ring-1 ring-line/40 transition-all duration-500 hover:shadow-[0_24px_60px_rgba(31,26,20,0.18)] sm:p-6"
               >
-                <div className={'pointer-events-none absolute inset-0 ' + t.art} />
+                <picture>
+                  <source srcSet={`/brand/${t.img}.webp`} type="image/webp" />
+                  <img
+                    src={`/brand/${t.img}.jpg`}
+                    alt={t.imgAlt}
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-[700ms] ease-out group-hover:scale-[1.05]"
+                    loading="lazy"
+                    width={1080}
+                    height={1080}
+                  />
+                </picture>
                 <div
                   aria-hidden
-                  className="pointer-events-none absolute inset-0 opacity-[0.10] [background-image:radial-gradient(circle_at_20%_20%,#fdfaf2_0%,transparent_45%),radial-gradient(circle_at_80%_85%,#000_0%,transparent_55%)]"
+                  className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(31,26,20,0.0)_30%,rgba(31,26,20,0.55)_75%,rgba(31,26,20,0.82)_100%)]"
                 />
-                <span
-                  aria-hidden
-                  className="pointer-events-none absolute right-3 top-1 select-none font-display text-[6.5rem] leading-none text-paper/15"
-                >
-                  {t.glyph}
-                </span>
-
-                <p className="relative text-[10px] font-bold uppercase tracking-[0.28em] text-paper/70">
-                  {t.eyebrow}
-                </p>
 
                 <div className="relative">
-                  <h3 className="font-display text-[1.5rem] leading-[1.05] tracking-tight text-paper sm:text-[1.7rem]">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-paper/75">
+                    {t.eyebrow}
+                  </p>
+                  <h3 className="mt-1.5 font-display text-[1.5rem] leading-[1.05] tracking-tight text-paper sm:text-[1.7rem]">
                     {t.title}
                   </h3>
-                  <p className="mt-2 line-clamp-2 text-[12px] leading-5 text-paper/75 sm:text-[13px]">
+                  <p className="mt-1.5 line-clamp-2 text-[12px] leading-5 text-paper/80 sm:text-[13px]">
                     {t.body}
                   </p>
-                  <span className="mt-4 inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.22em] text-paper transition group-hover:gap-2.5">
+                  <span className="mt-3 inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.22em] text-paper transition group-hover:gap-2.5">
                     {t.cta}
                     <span aria-hidden>→</span>
                   </span>

@@ -7,6 +7,8 @@ import {FeaturedIn} from '~/components/home/FeaturedIn';
 import {HeroWordReveal} from '~/components/home/HeroWordReveal';
 import {ShopTheShelf} from '~/components/home/ShopTheShelf';
 import {MissionBand} from '~/components/home/MissionBand';
+import {RealDogsVideo} from '~/components/home/RealDogsVideo';
+import {ProofStrip} from '~/components/home/ProofStrip';
 import {MultiRowMarquee} from '~/components/MultiRowMarquee';
 import {ScrollReveal} from '~/components/motion/ScrollReveal';
 import {CountUpStat} from '~/components/motion/CountUpStat';
@@ -156,25 +158,30 @@ export default function Homepage() {
             </div>
           </div>
 
-          {/* Hero product card — campaign frame with floating spec chips. */}
+          {/* Hero campaign visual — real lifestyle photo of a dog with the
+              chew, with the actual designed packshot floating as an inset.
+              Drives the campaign feeling away from one isolated packshot. */}
           <div className="relative min-w-0">
-            <div className="relative overflow-hidden rounded-[1.5rem] border border-white/60 bg-white/60 p-2 shadow-[0_32px_110px_rgba(31,26,20,0.14)] backdrop-blur sm:rounded-[2rem] sm:p-3">
-              <div className="relative aspect-[4/5] overflow-hidden rounded-[1.4rem] bg-[linear-gradient(160deg,#ebe0c9_0%,#dccfb3_55%,#cdbf9a_100%)] sm:rounded-[1.85rem]">
-                {heroImage ? (
-                  <Image
-                    data={heroImage}
-                    aspectRatio="4/5"
-                    sizes="(min-width:1024px) 42vw, 92vw"
-                    className="absolute inset-0 h-full w-full object-cover"
+            <div className="relative overflow-hidden rounded-[1.5rem] border border-white/60 bg-white/40 p-2 shadow-[0_32px_110px_rgba(31,26,20,0.14)] backdrop-blur sm:rounded-[2rem] sm:p-3">
+              <div className="relative aspect-[4/5] overflow-hidden rounded-[1.4rem] bg-cream-deep sm:rounded-[1.85rem]">
+                <picture>
+                  <source
+                    srcSet="/brand/lifestyle-kelpie-chewing-1200.webp"
+                    type="image/webp"
                   />
-                ) : (
-                  <div className="absolute inset-0 grid place-items-center font-display text-4xl text-brand">
-                    AyurPet
-                  </div>
-                )}
+                  <img
+                    src="/brand/lifestyle-kelpie-chewing-1200.jpg"
+                    alt="A brown kelpie lying down chewing a Himalayan yak cheese chew"
+                    className="absolute inset-0 h-full w-full object-cover"
+                    width={1200}
+                    height={800}
+                    loading="eager"
+                    fetchPriority="high"
+                  />
+                </picture>
                 <div
                   aria-hidden
-                  className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(42,17,16,0.0)_45%,rgba(42,17,16,0.55)_100%)]"
+                  className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(42,17,16,0.0)_55%,rgba(42,17,16,0.45)_100%)]"
                 />
 
                 <div className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-paper/95 px-3 py-1 text-[9.5px] font-bold uppercase tracking-[0.22em] text-clay shadow-[0_6px_18px_rgba(31,26,20,0.10)] backdrop-blur">
@@ -200,21 +207,27 @@ export default function Homepage() {
               </div>
             </div>
 
-            {/* Floating spec chips — premium signal without crowding the photo. */}
-            <div
-              aria-hidden
-              className="absolute -left-3 top-8 hidden rounded-2xl border border-line/70 bg-paper/95 px-4 py-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-ink shadow-[0_18px_40px_rgba(31,26,20,0.14)] backdrop-blur lg:block"
-            >
-              <span className="block text-[9px] tracking-[0.32em] text-ink-muted">
-                Active
-              </span>
-              <span className="mt-1 block font-display text-[15px] tracking-tight normal-case text-brand">
-                Ashwagandha
-              </span>
+            {/* Floating packshot inset — the real designed pack art so the
+                hero shows both lifestyle AND product without repeating one
+                packshot across the whole page. */}
+            <div className="absolute -left-2 top-6 hidden w-[42%] max-w-[200px] overflow-hidden rounded-2xl bg-white shadow-[0_18px_40px_rgba(31,26,20,0.18)] ring-1 ring-line/60 lg:block">
+              <picture>
+                <source srcSet="/brand/original-pack.webp" type="image/webp" />
+                <img
+                  src="/brand/original-pack.jpg"
+                  alt="Original Himalayan Yak Cheese Chews pack"
+                  className="block h-auto w-full"
+                  width={400}
+                  height={400}
+                  loading="lazy"
+                />
+              </picture>
             </div>
+
+            {/* Floating spec chip — small premium signal */}
             <div
               aria-hidden
-              className="absolute -right-3 bottom-12 hidden rounded-2xl border border-line/70 bg-paper/95 px-4 py-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-ink shadow-[0_18px_40px_rgba(31,26,20,0.14)] backdrop-blur lg:block"
+              className="absolute -right-2 bottom-8 hidden rounded-2xl border border-line/70 bg-paper/95 px-4 py-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-ink shadow-[0_18px_40px_rgba(31,26,20,0.14)] backdrop-blur lg:block"
             >
               <span className="block text-[9px] tracking-[0.32em] text-ink-muted">
                 Lasts
@@ -282,20 +295,30 @@ export default function Homepage() {
         <MultiRowMarquee />
       </section>
 
+      <RealDogsVideo />
+
       {/* Routines — one editorial moment: photo on left, structured copy on right. */}
       <section className="bg-paper">
         <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-center lg:gap-16 lg:px-10 lg:py-20">
-          <ScrollReveal kind="rise" className="ayur-card-frame relative overflow-hidden rounded-[1.75rem] shadow-[0_30px_90px_rgba(31,26,20,0.10)] sm:rounded-[2.25rem]">
+          <ScrollReveal kind="rise" className="relative overflow-hidden rounded-[1.75rem] shadow-[0_30px_90px_rgba(31,26,20,0.10)] sm:rounded-[2.25rem]">
             <div className="relative aspect-[4/5] sm:aspect-[5/6]">
-              <img
-                src={ROUTINE_IMAGE}
-                alt=""
-                className="h-full w-full object-cover"
-                loading="lazy"
-              />
+              <picture>
+                <source
+                  srcSet="/brand/lifestyle-two-dogs-1200.webp"
+                  type="image/webp"
+                />
+                <img
+                  src="/brand/lifestyle-two-dogs-1200.jpg"
+                  alt="Two dogs being offered a yak cheese chew"
+                  className="h-full w-full object-cover"
+                  loading="lazy"
+                  width={1200}
+                  height={1500}
+                />
+              </picture>
               <div
                 aria-hidden
-                className="absolute inset-0 bg-[linear-gradient(180deg,transparent_55%,rgba(42,17,16,0.45))]"
+                className="absolute inset-0 bg-[linear-gradient(180deg,transparent_55%,rgba(42,17,16,0.55))]"
               />
               <div className="absolute inset-x-0 bottom-0 p-6 text-paper sm:p-8">
                 <p className="text-[10px] uppercase tracking-[0.28em] text-paper/75">
@@ -360,6 +383,8 @@ export default function Homepage() {
           }
         </Await>
       </Suspense>
+
+      <ProofStrip />
 
       <MissionBand />
 
