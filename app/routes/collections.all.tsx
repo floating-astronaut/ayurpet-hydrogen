@@ -32,7 +32,7 @@ export default function Collection() {
   const count = products?.nodes?.length ?? 0;
 
   return (
-    <main className="bg-paper text-ink">
+    <main className="overflow-x-clip bg-paper text-ink">
       <section className="border-b border-line bg-[linear-gradient(135deg,#fdfaf2,#ebe0c9)]">
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-10 lg:py-24">
           <p className="text-[11px] uppercase tracking-[0.32em] text-brand">

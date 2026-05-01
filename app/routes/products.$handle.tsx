@@ -133,7 +133,7 @@ export default function Product() {
   const displayTitle = cleanTitle(product.title);
 
   return (
-    <main className="bg-paper text-ink">
+    <main className="overflow-x-clip bg-paper pb-24 text-ink lg:pb-0">
       {/* Hero: split editorial layout. Sticky gallery on desktop, stacked on mobile. */}
       <section className="relative overflow-hidden border-b border-line">
         <div className="absolute inset-0 -z-10 bg-[linear-gradient(155deg,#ebe0c9_0%,#fdfaf2_45%,#f7f0e1_100%)]" />

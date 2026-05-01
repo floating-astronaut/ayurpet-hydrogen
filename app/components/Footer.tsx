@@ -37,17 +37,20 @@ export function Footer({footer: footerPromise}: FooterProps) {
 function FooterFrame({extraLinks}: {extraLinks?: FooterMenuItem[] | null}) {
   return (
     <footer className="mt-16 border-t border-line bg-paper">
-      <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 lg:grid-cols-[1.5fr_0.7fr_0.7fr_1fr] lg:px-10 lg:py-20">
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:gap-12 sm:px-6 sm:py-16 lg:grid-cols-[1.5fr_0.7fr_0.7fr_1fr] lg:px-10 lg:py-20">
         <div>
           <Link to="/" className="block">
-            <span className="font-display text-[2.5rem] leading-none tracking-[-0.01em] text-ink">
+            <span
+              className="block font-display leading-none tracking-[-0.015em] text-ink"
+              style={{fontSize: 'clamp(2rem, 6vw, 2.5rem)'}}
+            >
               AyurPet
             </span>
             <span className="mt-3 block text-[10px] uppercase tracking-[0.32em] text-ink-muted">
               Ayurveda for modern pets
             </span>
           </Link>
-          <p className="mt-6 max-w-md text-[15px] leading-7 text-ink-muted">
+          <p className="mt-5 max-w-md text-[14px] leading-6 text-ink-muted sm:text-[15px] sm:leading-7">
             Functional pet wellness built around Ayurvedic actives, clean
             routines, and Shopify-native checkout.
           </p>

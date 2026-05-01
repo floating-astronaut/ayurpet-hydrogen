@@ -36,7 +36,8 @@ export function StickyAtc({
   return (
     <div
       aria-hidden={!visible}
-      className={`fixed inset-x-0 bottom-0 z-30 border-t border-line bg-paper/95 px-3 py-3 shadow-[0_-12px_40px_rgba(31,26,20,0.12)] backdrop-blur transition-transform duration-300 lg:hidden ${
+      style={{paddingBottom: 'max(env(safe-area-inset-bottom), 0.75rem)'}}
+      className={`fixed inset-x-0 bottom-0 z-30 border-t border-line bg-paper/95 px-3 pt-3 shadow-[0_-12px_40px_rgba(31,26,20,0.12)] backdrop-blur transition-transform duration-300 lg:hidden ${
         visible ? 'translate-y-0' : 'translate-y-full pointer-events-none'
       }`}
     >

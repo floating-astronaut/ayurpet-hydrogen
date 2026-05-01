@@ -129,7 +129,7 @@ function HeaderMenuMobileToggle() {
   const {open} = useAside();
   return (
     <button
-      className="inline-flex h-10 w-10 items-center justify-center rounded-full text-ink transition hover:bg-cream lg:hidden"
+      className="inline-flex h-11 w-11 items-center justify-center rounded-full text-ink transition hover:bg-cream lg:hidden"
       onClick={() => open('mobile')}
       aria-label="Open menu"
       type="button"
@@ -147,7 +147,7 @@ function SearchToggle() {
   const {open} = useAside();
   return (
     <button
-      className="inline-flex h-10 w-10 items-center justify-center rounded-full text-ink transition hover:bg-cream"
+      className="inline-flex h-11 w-11 items-center justify-center rounded-full text-ink transition hover:bg-cream"
       onClick={() => open('search')}
       aria-label="Search"
       type="button"
@@ -173,7 +173,7 @@ function CartIcon({count}: {count: number}) {
     <a
       href="/cart"
       aria-label={`Cart, ${count} items`}
-      className="relative inline-flex h-10 w-10 items-center justify-center rounded-full text-ink transition hover:bg-cream"
+      className="relative inline-flex h-11 w-11 items-center justify-center rounded-full text-ink transition hover:bg-cream"
       onClick={(e) => {
         e.preventDefault();
         open('cart');

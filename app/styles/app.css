@@ -672,3 +672,28 @@ button.reset:hover:not(:has(> *)) {
 .ayur-prose strong { color: var(--color-ink, #1f1a14); }
 .ayur-prose img { border-radius: 0.75rem; }
 .ayur-prose hr { border: 0; border-top: 1px solid var(--color-line, #dccfb3); margin: 2rem 0; }
+
+/* ---- AYUR mobile defaults --------------------------------------------- */
+/* iOS auto-zooms inputs unless their text >=16px AND prevents text inflation
+   on rotation; -webkit-text-size-adjust:100% pins it. */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+/* Quiet the iOS gray tap highlight on interactive elements; we have our own
+   hover/active states already. */
+a, button, [role='button'] {
+  -webkit-tap-highlight-color: transparent;
+}
+/* Native checkbox/radio/range still need real cursors on desktop, but block
+   the iOS callout on long-press images/links. */
+img, a {
+  -webkit-touch-callout: none;
+}
+/* Inputs default to 16px so iOS doesn't auto-zoom into them on focus. */
+input, select, textarea {
+  font-size: 16px;
+}
+@media (min-width: 640px) {
+  input, select, textarea { font-size: inherit; }
+}

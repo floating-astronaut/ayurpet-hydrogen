@@ -83,7 +83,7 @@ export default function Homepage() {
   const heroImage = data.heroProduct?.featuredImage ?? null;
 
   return (
-    <main className="bg-paper text-ink">
+    <main className="overflow-x-clip bg-paper text-ink">
       {data.isShopLinked ? null : <MockShopNotice />}
 
       <section className="relative overflow-hidden border-b border-line bg-[linear-gradient(135deg,#fdfaf2_0%,#f7f0e1_52%,#ebe0c9_100%)]">
@@ -96,17 +96,24 @@ export default function Homepage() {
               Free shipping over USD 60
             </div>
             <p className="mt-10 text-[11px] uppercase tracking-[0.36em] text-brand">AyurPet Global</p>
-            <h1 className="mt-5 max-w-5xl font-display text-[3.35rem] leading-[0.92] text-ink sm:text-6xl lg:text-[7.4rem]">
+            <h1
+              className="mt-5 max-w-5xl font-display leading-[0.93] text-ink"
+              style={{
+                fontSize: 'clamp(2.5rem, 9vw, 7.4rem)',
+                letterSpacing: '-0.015em',
+                textWrap: 'balance' as React.CSSProperties['textWrap'],
+              }}
+            >
               Daily rituals for calmer, healthier dogs.
             </h1>
-            <p className="mt-6 max-w-2xl text-base leading-8 text-ink-muted sm:text-lg lg:text-xl">
+            <p className="mt-6 max-w-2xl text-[15px] leading-7 text-ink-muted sm:text-lg sm:leading-8 lg:text-xl">
               Premium Ayurvedic supplements and Himalayan yak chews, designed like a clean wellness routine instead of another crowded pet aisle.
             </p>
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <Link to="/collections/all" className="inline-flex min-h-12 items-center justify-center rounded-full bg-brand px-7 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-paper transition hover:bg-brand-deep">
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Link to="/collections/all" className="inline-flex min-h-12 items-center justify-center rounded-full bg-brand px-7 py-4 text-[12px] font-semibold uppercase tracking-[0.2em] text-paper transition hover:bg-brand-deep sm:text-sm">
                 Shop the range
               </Link>
-              <Link to={`/products/${data.heroProduct?.handle ?? HERO_PRODUCT_HANDLE}`} className="inline-flex min-h-12 items-center justify-center rounded-full border border-line bg-white/70 px-7 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-brand transition hover:bg-white">
+              <Link to={`/products/${data.heroProduct?.handle ?? HERO_PRODUCT_HANDLE}`} className="inline-flex min-h-12 items-center justify-center rounded-full border border-line bg-white/70 px-7 py-4 text-[12px] font-semibold uppercase tracking-[0.2em] text-brand transition hover:bg-white sm:text-sm">
                 View bestseller
               </Link>
             </div>
@@ -121,9 +128,11 @@ export default function Homepage() {
                   <div className="grid h-full place-items-center font-display text-4xl text-brand">AyurPet</div>
                 )}
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(42,17,16,0.02)_35%,rgba(42,17,16,0.46)_100%)]" />
-                <div className="absolute inset-x-0 bottom-0 p-6 text-paper">
+                <div className="absolute inset-x-0 bottom-0 p-5 text-paper sm:p-6">
                   <p className="text-[10px] uppercase tracking-[0.24em] text-paper/70">Featured ritual</p>
-                  <h2 className="mt-2 max-w-[12ch] font-display text-4xl leading-[0.95] sm:text-5xl">{data.heroProduct?.title ?? 'Daily wellness'}</h2>
+                  <h2 className="mt-2 max-w-[14ch] font-display text-[1.75rem] leading-[0.98] sm:text-4xl lg:text-5xl">
+                    {(data.heroProduct?.title ?? 'Daily wellness').replace(/\s*\|\s*/g, ' — ')}
+                  </h2>
                 </div>
               </div>
             </div>

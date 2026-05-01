@@ -28,7 +28,7 @@ export function ProductForm({
               <h3 className="text-[11px] font-bold uppercase tracking-[0.28em] text-brand">{option.name}</h3>
               <p className="text-xs text-ink-muted">Choose what fits your routine</p>
             </div>
-            <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
+            <div className="flex flex-wrap gap-2.5">
               {option.optionValues.map((value) => {
                 const {
                   name,
@@ -41,8 +41,8 @@ export function ProductForm({
                   swatch,
                 } = value;
                 const itemClass = selected
-                  ? 'rounded-2xl border-2 border-clay bg-clay/10 px-3 py-4 text-left text-brand shadow-[0_12px_30px_rgba(184,94,62,0.12)]'
-                  : 'rounded-2xl border border-line bg-white/80 px-3 py-4 text-left text-ink transition hover:border-clay hover:bg-white';
+                  ? 'min-h-12 min-w-[5.5rem] flex-1 basis-[7rem] rounded-2xl border-2 border-clay bg-clay/10 px-3 py-3 text-left text-brand shadow-[0_12px_30px_rgba(184,94,62,0.12)] sm:flex-initial'
+                  : 'min-h-12 min-w-[5.5rem] flex-1 basis-[7rem] rounded-2xl border border-line bg-white/80 px-3 py-3 text-left text-ink transition hover:border-clay hover:bg-white sm:flex-initial';
 
                 if (isDifferentProduct) {
                   return (
