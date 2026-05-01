@@ -13,7 +13,20 @@ Body text (if present) shown as indented sub-bullets.
 
 ## 2026-05-01
 
-- **20:15 UTC** — auto-sync: 2026-05-01 20:15 UTC (`79c90b4`) — 1 file
+- **21:00 UTC** — auto-sync: 2026-05-01 21:00 UTC (`1f01a67`) — 1 file
+        A	.drive-staging/folder-listing.json
+- **20:27 UTC** — quality: hydration fix, CSP for fonts, retail tile redesign, premium cart (`807a584`) — 14 files
+    Technical
+    - StickyAtc no longer renders Money's <div> inside a <p>; both labels are
+      spans, with Money as="span" so SSR HTML matches the React tree.
+    - entry.server.tsx extends CSP styleSrc/fontSrc/imgSrc so Google Fonts
+      (Fraunces + Inter) load reliably and the inline data:image SVG card
+      texture renders without being blocked.
+    Collection
+    - ProductItem rebuilt as image-dominant retail tile: 4:5 stage, compact
+      badges top-left, hover "View product" pill (desktop), 2-line title,
+      smaller benefit, conversion-leading price row, sans-bold pricing.
+- **20:15 UTC** — auto-sync: 2026-05-01 20:15 UTC (`6f9fa4e`) — 2 files
         M	app/components/pdp/StickyAtc.tsx
 - **19:30 UTC** — auto-sync: 2026-05-01 19:30 UTC (`0f01255`) — 5 files
         A	app/components/home/MissionBand.tsx
