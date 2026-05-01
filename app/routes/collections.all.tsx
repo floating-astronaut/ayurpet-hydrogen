@@ -90,6 +90,8 @@ const COLLECTION_ITEM_FRAGMENT = `#graphql
     id
     handle
     title
+    vendor
+    tags
     featuredImage {
       id
       altText
@@ -107,6 +109,14 @@ const COLLECTION_ITEM_FRAGMENT = `#graphql
       }
     }
     priceRange {
+      minVariantPrice {
+        ...MoneyCollectionItem
+      }
+      maxVariantPrice {
+        ...MoneyCollectionItem
+      }
+    }
+    compareAtPriceRange {
       minVariantPrice {
         ...MoneyCollectionItem
       }

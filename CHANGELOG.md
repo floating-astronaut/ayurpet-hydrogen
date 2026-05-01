@@ -13,7 +13,25 @@ Body text (if present) shown as indented sub-bullets.
 
 ## 2026-05-01
 
-- **18:45 UTC** — auto-sync: 2026-05-01 18:45 UTC (`78e5fc5`) — 8 files
+- **19:15 UTC** — auto-sync: 2026-05-01 19:15 UTC (`9021529`) — 6 files
+        M	app/components/ProductItem.tsx
+        A	app/components/collection/CollectionHero.tsx
+        A	app/components/collection/ShopByNeed.tsx
+        M	app/routes/collections.$handle.tsx
+        M	app/routes/collections.all.tsx
+        ... (+1 more)
+- **18:48 UTC** — polish pass: scroll-reveal + count-up + richer trust/timeline + product-card refinement (`3558dd4`) — 1 file
+    A focused round on making sections feel finished, not just animated.
+    Introduces two reusable motion primitives, replaces the flat trust /
+    how-to blocks with richer composed modules, and tightens product card
+    visuals + homepage section rhythm.
+    New reusable motion primitives
+      app/components/motion/ScrollReveal.tsx
+        SSR-safe wrapper that renders children visible by default. After
+        hydration, an IntersectionObserver toggles a [data-reveal-ready]
+        attribute and CSS handles the transition. Four kinds: fade, rise,
+        rise-soft, mask-up. Optional [data-reveal-stagger] flag staggers
+- **18:45 UTC** — auto-sync: 2026-05-01 18:45 UTC (`d15d382`) — 9 files
         M	app/components/ProductItem.tsx
         A	app/components/motion/CountUpStat.tsx
         A	app/components/motion/ScrollReveal.tsx

@@ -101,6 +101,8 @@ const PRODUCT_ITEM_FRAGMENT = `#graphql
     id
     handle
     title
+    vendor
+    tags
     featuredImage {
       id
       altText
@@ -118,6 +120,14 @@ const PRODUCT_ITEM_FRAGMENT = `#graphql
       }
     }
     priceRange {
+      minVariantPrice {
+        ...MoneyProductItem
+      }
+      maxVariantPrice {
+        ...MoneyProductItem
+      }
+    }
+    compareAtPriceRange {
       minVariantPrice {
         ...MoneyProductItem
       }
