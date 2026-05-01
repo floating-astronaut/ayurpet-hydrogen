@@ -20,6 +20,10 @@ import {ShippingReturns} from '~/components/pdp/ShippingReturns';
 import {PaymentTrust} from '~/components/pdp/PaymentTrust';
 import {StickyAtc} from '~/components/pdp/StickyAtc';
 import {RichTrustBand} from '~/components/pdp/RichTrustBand';
+import {WhyThisWorks} from '~/components/pdp/WhyThisWorks';
+import {Reviews} from '~/components/pdp/Reviews';
+import {FaqAccordion} from '~/components/pdp/FaqAccordion';
+import {ClosingCta} from '~/components/pdp/ClosingCta';
 import {ScrollReveal} from '~/components/motion/ScrollReveal';
 
 export const meta: Route.MetaFunction = ({data}) => {
@@ -234,7 +238,10 @@ export default function Product() {
             </ul>
 
             {/* Purchase panel — single editorial card, not a stack of cards */}
-            <div className="mt-10 overflow-hidden rounded-[1.5rem] border border-line bg-white shadow-[0_22px_60px_rgba(31,26,20,0.08)]">
+            <div
+              data-purchase-anchor
+              className="mt-10 overflow-hidden rounded-[1.5rem] border border-line bg-white shadow-[0_22px_60px_rgba(31,26,20,0.08)]"
+            >
               <div className="p-5 sm:p-7">
                 {/* Variant + SKU eyebrow row */}
                 <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b border-line pb-4">
@@ -317,33 +324,53 @@ export default function Product() {
 
       <RichTrustBand />
 
+      <WhyThisWorks />
       <HowItWorksTimeline />
       <WhoIsItFor />
+      <Reviews />
       <ShippingReturns />
+      <FaqAccordion />
 
       {/* Why it fits — editorial split with description-rich content */}
-      <section className="bg-paper">
-        <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1.3fr)] lg:gap-16 lg:px-10 lg:py-24">
-          <div className="min-w-0">
-            <p className="text-[11px] uppercase tracking-[0.32em] text-brand">
-              Why it fits
-            </p>
-            <h2 className="mt-4 break-words font-display text-3xl leading-[1.05] tracking-tight text-ink sm:text-4xl lg:text-5xl">
-              Care details without the crowded pet-store feel.
-            </h2>
+      {product.descriptionHtml || product.description ? (
+        <section className="bg-cream">
+          <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1.3fr)] lg:gap-16 lg:px-10 lg:py-24">
+            <ScrollReveal kind="rise-soft" className="min-w-0">
+              <p className="text-[11px] uppercase tracking-[0.32em] text-brand">
+                The full story
+              </p>
+              <h2 className="mt-4 break-words font-display text-3xl leading-[1.05] tracking-tight text-ink sm:text-4xl lg:text-5xl">
+                Care details, written for pet parents.
+              </h2>
+              <p className="mt-5 max-w-md text-[15px] leading-7 text-ink-muted sm:text-base sm:leading-8">
+                Lifted directly from the product source-of-truth in Shopify, so
+                what you read here is what merchandising actually wrote.
+              </p>
+            </ScrollReveal>
+            <ScrollReveal
+              kind="rise-soft"
+              className="min-w-0 rounded-[1.25rem] border border-line bg-paper p-6 text-[15px] leading-7 text-ink-soft shadow-[0_18px_60px_rgba(31,26,20,0.06)] sm:p-8 sm:text-base sm:leading-8"
+            >
+              {product.descriptionHtml ? (
+                <div
+                  className="ayur-prose"
+                  dangerouslySetInnerHTML={{__html: product.descriptionHtml}}
+                />
+              ) : (
+                <p className="break-words">{product.description}</p>
+              )}
+            </ScrollReveal>
           </div>
-          <div className="min-w-0 text-[15px] leading-7 text-ink-soft sm:text-base sm:leading-8">
-            {product.descriptionHtml ? (
-              <div
-                className="ayur-prose"
-                dangerouslySetInnerHTML={{__html: product.descriptionHtml}}
-              />
-            ) : (
-              <p className="break-words">{product.description}</p>
-            )}
-          </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
+
+      <ClosingCta
+        productTitle={displayTitle}
+        imageUrl={
+          (activeImage as StorefrontImage | null)?.url ??
+          'https://cdn.shopify.com/s/files/1/0782/4657/6363/files/WhatsApp_Image_2025-04-23_at_21.19.22.jpg?v=1757964471'
+        }
+      />
 
       <StickyAtc
         productTitle={displayTitle}

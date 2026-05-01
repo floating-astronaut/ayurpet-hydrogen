@@ -830,3 +830,22 @@ input, select, textarea {
 @media (prefers-reduced-motion: reduce) {
   .ayur-gallery-image { animation: none; }
 }
+
+/* ---- AYUR FAQ accordion --------------------------------------------- */
+.ayur-faq[open] .ayur-faq__toggle {
+  transform: rotate(45deg);
+  background: var(--color-brand, #2d5a3d);
+  border-color: var(--color-brand, #2d5a3d);
+  color: var(--color-paper, #fdfaf2);
+}
+.ayur-faq__body {
+  overflow: hidden;
+  animation: ayur-faq-open 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes ayur-faq-open {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ayur-faq__toggle, .ayur-faq__body { animation: none; transition: none; }
+}
