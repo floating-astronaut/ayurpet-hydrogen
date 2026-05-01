@@ -5,6 +5,8 @@ import {Image} from '@shopify/hydrogen';
 import {ProductRange} from '~/components/home/ProductRange';
 import {FeaturedIn} from '~/components/home/FeaturedIn';
 import {HeroWordReveal} from '~/components/home/HeroWordReveal';
+import {ShopTheShelf} from '~/components/home/ShopTheShelf';
+import {MissionBand} from '~/components/home/MissionBand';
 import {MultiRowMarquee} from '~/components/MultiRowMarquee';
 import {ScrollReveal} from '~/components/motion/ScrollReveal';
 import {CountUpStat} from '~/components/motion/CountUpStat';
@@ -186,6 +188,9 @@ export default function Homepage() {
 
       <FeaturedIn />
 
+      {/* Premium merchandising — five image-led routine tiles. */}
+      <ShopTheShelf />
+
       {/* Kinetic interstitial — three lanes, mixed sizes/speeds/directions. */}
       <section className="border-y border-line bg-paper py-6 sm:py-8">
         <MultiRowMarquee />
@@ -269,6 +274,8 @@ export default function Homepage() {
           }
         </Await>
       </Suspense>
+
+      <MissionBand />
 
       <section className="ayur-band-ink relative overflow-hidden px-4 py-20 text-paper sm:px-6 lg:px-10 lg:py-28">
         <div

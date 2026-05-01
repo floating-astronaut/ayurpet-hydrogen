@@ -13,7 +13,23 @@ Body text (if present) shown as indented sub-bullets.
 
 ## 2026-05-01
 
-- **19:15 UTC** — auto-sync: 2026-05-01 19:15 UTC (`9021529`) — 6 files
+- **19:30 UTC** — auto-sync: 2026-05-01 19:30 UTC (`e2877a2`) — 4 files
+        A	app/components/home/MissionBand.tsx
+        A	app/components/home/ShopTheShelf.tsx
+        M	app/routes/_index.tsx
+        M	tsconfig.tsbuildinfo
+- **19:23 UTC** — quality: premium collection page + full PDP landing flow (`1683443`) — 9 files
+    A focused round on collection + PDP page quality. Strips away anything
+    that read as "raw Shopify grid" and replaces it with composed,
+    merchandised retail moments. Adds the missing PDP middle-band content
+    (why-this-works, reviews, faq, closing cta) so the route reads as a
+    landing page, not just a product detail.
+    Collection page (/collections/all + /collections/:handle)
+      app/components/collection/CollectionHero.tsx
+        Premium hero on a layered cream gradient + dual radial green/saffron
+        glow. Breadcrumb-style eyebrow ("AyurPet / Shop all"). Big editorial
+        title (text-4xl → text-[5.25rem]) with break-words. Optional
+- **19:15 UTC** — auto-sync: 2026-05-01 19:15 UTC (`c194780`) — 7 files
         M	app/components/ProductItem.tsx
         A	app/components/collection/CollectionHero.tsx
         A	app/components/collection/ShopByNeed.tsx
