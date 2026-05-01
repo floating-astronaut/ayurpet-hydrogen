@@ -26,6 +26,12 @@ import {Reviews} from '~/components/pdp/Reviews';
 import {FaqAccordion} from '~/components/pdp/FaqAccordion';
 import {ClosingCta} from '~/components/pdp/ClosingCta';
 import {ScrollReveal} from '~/components/motion/ScrollReveal';
+import {GoodGutLanding} from '~/components/pdp/goodgut/GoodGutLanding';
+
+// Handle-based custom landing pages. Add a handle here to render a
+// dedicated landing component instead of the generic PDP flow.
+const GOODGUT_HANDLE =
+  'goodgut-digestive-enzyme-drops-for-dog-natural-ayurvedic-formula';
 
 export const meta: Route.MetaFunction = ({data}) => {
   const product = data?.product;
@@ -104,7 +110,10 @@ export default function Product() {
     selectedOrFirstAvailableVariant: selectedVariant,
   });
 
-  // Build a stable gallery: dedupe by id, prefer variant image first.
+  // Gallery state lives here at the top of the component so React's
+  // rules-of-hooks are satisfied even when the GoodGut+ branch returns
+  // early below. The GoodGut landing builds its own gallery internally
+  // and this state simply goes unused for that handle.
   const galleryAll: StorefrontImage[] = (() => {
     const acc: StorefrontImage[] = [];
     const seen = new Set<string>();
@@ -119,10 +128,40 @@ export default function Product() {
     product.images.nodes.forEach((n) => push(n as StorefrontImage));
     return acc;
   })();
-
   const [activeImageId, setActiveImageId] = useState<string | undefined>(
     () => galleryAll[0]?.id ?? undefined,
   );
+
+  // Custom landing pages keyed by product handle.
+  // GoodGut+ gets its own symptom-led page; the generic PDP keeps
+  // serving every other product unchanged.
+  if (product.handle === GOODGUT_HANDLE) {
+    return (
+      <>
+        <GoodGutLanding
+          product={product}
+          productOptions={productOptions}
+          selectedVariant={selectedVariant}
+        />
+        <Analytics.ProductView
+          data={{
+            products: [
+              {
+                id: product.id,
+                title: product.title,
+                price: selectedVariant?.price.amount || '0',
+                vendor: product.vendor,
+                variantId: selectedVariant?.id || '',
+                variantTitle: selectedVariant?.title || '',
+                quantity: 1,
+              },
+            ],
+          }}
+        />
+      </>
+    );
+  }
+
   const activeImage =
     galleryAll.find((i) => i.id === activeImageId) ?? galleryAll[0] ?? null;
 
