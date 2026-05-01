@@ -27,7 +27,8 @@ import {MadeForNotFor} from './MadeForNotFor';
 import {GoodGutAPlus} from './GoodGutAPlus';
 import {GoodGutFAQ} from './GoodGutFAQ';
 import {GoodGutClosing} from './GoodGutClosing';
-import {Reviews} from '~/components/pdp/Reviews';
+import {GoodGutReviews} from './GoodGutReviews';
+import {GoodGutCrossSell} from './GoodGutCrossSell';
 import {ShippingReturns} from '~/components/pdp/ShippingReturns';
 import {StickyAtc} from '~/components/pdp/StickyAtc';
 
@@ -80,9 +81,10 @@ export function GoodGutLanding({
 
       <MadeForNotFor />
 
-      {/* Universal review proof — reusing the storefront's Reviews block
-          keeps tone + visual language consistent across PDPs. */}
-      <Reviews />
+      {/* GoodGut-specific reviews — five testimonials each tied to a
+          digestive symptom (gas, picky eating, paw-licking, stool, senior
+          digestion). Replaces the inherited yak-chew testimonials. */}
+      <GoodGutReviews />
 
       {/* The merchant's authored A+ content, wrapped in a branded
           container so it reads as part of the page instead of pasted
@@ -94,6 +96,11 @@ export function GoodGutLanding({
       <ShippingReturns />
 
       <GoodGutFAQ />
+
+      {/* Cross-sell — Hip-O-Joint+ companion formula. Lifts the
+          merchant's "Two Targeted Formulas, One Complete System" pitch
+          out of the static A+ artboard and into a real shoppable rail. */}
+      <GoodGutCrossSell />
 
       <GoodGutClosing selectedVariant={selectedVariant} />
 

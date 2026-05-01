@@ -61,19 +61,31 @@ export function SymptomChecker() {
 
         <ScrollReveal kind="rise-soft" stagger className="mt-10">
           <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
-            {SYMPTOMS.map((s) => (
+            {SYMPTOMS.map((s, i) => (
               <li
                 key={s.label}
-                className="flex items-start gap-4 rounded-2xl border border-line/70 bg-paper p-4 shadow-[0_10px_30px_rgba(31,26,20,0.04)] transition hover:shadow-[0_18px_46px_rgba(31,26,20,0.08)] sm:p-5"
+                className="group relative flex items-start gap-4 overflow-hidden rounded-2xl border border-line/70 bg-paper p-5 shadow-[0_10px_30px_rgba(31,26,20,0.04)] transition-all duration-500 hover:-translate-y-0.5 hover:border-brand/40 hover:shadow-[0_22px_52px_rgba(31,26,20,0.10)] sm:p-6"
               >
+                {/* Quiet brand wash on hover so the card has a sense of action */}
                 <span
                   aria-hidden
-                  className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-cream text-xl ring-1 ring-line/60 sm:h-12 sm:w-12"
+                  className="pointer-events-none absolute inset-x-0 -bottom-12 h-12 bg-gradient-to-t from-brand/[0.08] to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                />
+                {/* Counter chip — small editorial signal that the strip is a checklist */}
+                <span
+                  aria-hidden
+                  className="absolute right-4 top-4 text-[10px] font-bold uppercase tracking-[0.22em] text-ink-muted/70"
+                >
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <span
+                  aria-hidden
+                  className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-cream text-xl ring-1 ring-line/60 transition group-hover:bg-brand/10 group-hover:ring-brand/30 sm:h-12 sm:w-12"
                 >
                   {s.emoji}
                 </span>
-                <div className="min-w-0">
-                  <p className="font-display text-[16px] leading-tight text-ink sm:text-[17px]">
+                <div className="min-w-0 pr-6">
+                  <p className="font-display text-[16px] leading-tight text-ink sm:text-[17.5px]">
                     {s.label}
                   </p>
                   <p

@@ -10,9 +10,11 @@
 import {Money, Image} from '@shopify/hydrogen';
 import type {ProductFragment} from 'storefrontapi.generated';
 import type {Image as StorefrontImage} from '@shopify/hydrogen/storefront-api-types';
-import {ProductForm} from '~/components/ProductForm';
+import type {ProductForm} from '~/components/ProductForm';
 import {ScrollReveal} from '~/components/motion/ScrollReveal';
 import {PaymentTrust} from '~/components/pdp/PaymentTrust';
+import {GoodGutTrustChips} from './GoodGutTrustChips';
+import {GoodGutVariantPicker} from './GoodGutVariantPicker';
 
 type Props = {
   product: ProductFragment;
@@ -118,12 +120,14 @@ export function GoodGutHero({
           </p>
 
           {/* Symptom-led headline */}
-          <h1 className="mt-5 break-words font-display text-[2.1rem] font-medium leading-[0.95] tracking-[-0.015em] text-ink sm:text-[3rem] lg:text-[3.6rem]">
-            Your dog can&rsquo;t say
-            <span className="block text-brand">my stomach hurts.</span>
+          <h1 className="mt-5 break-words font-display text-[2.25rem] font-medium leading-[0.95] tracking-[-0.018em] text-ink sm:text-[3.2rem] lg:text-[3.9rem] xl:text-[4.4rem]">
+            Your dog can&rsquo;t say{' '}
+            <em className="not-italic text-brand [text-decoration:underline] [text-decoration-color:var(--color-saffron)] [text-decoration-thickness:3px] [text-underline-offset:6px]">
+              my stomach hurts.
+            </em>
           </h1>
 
-          <p className="mt-5 max-w-xl break-words text-[14.5px] leading-7 text-ink-soft sm:text-[15.5px] sm:leading-8">
+          <p className="mt-6 max-w-xl break-words text-[14.5px] leading-7 text-ink-soft sm:text-[16px] sm:leading-8">
             So they show it &mdash; itching, licking, tear stains, gas, picky
             eating. <strong className="text-ink">GoodGut+</strong> supports
             gut balance at the source for calmer digestion and everyday
@@ -131,7 +135,7 @@ export function GoodGutHero({
           </p>
 
           {/* Benefit chips — communicate format & ingredients before scrolling */}
-          <ul className="mt-6 grid grid-cols-2 gap-2 sm:max-w-md">
+          <ul className="mt-6 grid grid-cols-2 gap-2 sm:max-w-xl">
             {HERO_CHIPS.map((c) => (
               <li
                 key={c}
@@ -149,6 +153,13 @@ export function GoodGutHero({
               </li>
             ))}
           </ul>
+
+          {/* Native trust chips — FDA-registered facility / ISO 22000 /
+              HACCP / Vet-formulated. Lifted out of the merchant artboards
+              so they crawl + read above the fold. */}
+          <div className="mt-5 sm:max-w-xl">
+            <GoodGutTrustChips />
+          </div>
 
           {/* Rating row */}
           <div className="mt-6 flex flex-wrap items-center gap-2.5 text-[13px] text-ink-muted sm:gap-3 sm:text-sm">
@@ -213,18 +224,35 @@ export function GoodGutHero({
               </p>
 
               <div className="mt-5 sm:mt-6">
-                <ProductForm
+                <GoodGutVariantPicker
                   productOptions={productOptions}
                   selectedVariant={selectedVariant}
                 />
               </div>
+
+              {/* Global storefront shipping line — DDP customs +
+                  Made in India provenance, surfaced near the CTA where
+                  cross-border buyers actually need it. */}
+              <p className="mt-4 inline-flex items-center gap-2 text-[11.5px] leading-snug text-ink-muted">
+                <span
+                  aria-hidden
+                  className="grid h-4 w-4 shrink-0 place-items-center rounded-full bg-brand/10 text-brand"
+                >
+                  <svg width="9" height="9" viewBox="0 0 12 12" fill="none">
+                    <circle cx="6" cy="6" r="4.5" stroke="currentColor" strokeWidth="1.2" />
+                    <path d="M1.5 6h9M6 1.5c1.5 1.5 1.5 7.5 0 9M6 1.5c-1.5 1.5-1.5 7.5 0 9" stroke="currentColor" strokeWidth="1.2" />
+                  </svg>
+                </span>
+                Crafted in India · Ships worldwide · Duties calculated at
+                checkout (DDP)
+              </p>
             </div>
 
             <ul className="grid grid-cols-3 divide-x divide-line border-t border-line bg-cream/40 text-center">
               {[
-                ['🚚', 'Ships same day', 'Before 14:00 IST'],
-                ['🔒', 'Secure Shopify', 'Trusted checkout'],
-                ['↩', '30-day returns', 'Unopened items'],
+                ['🚚', 'Free over USD 60', 'Tracked global shipping'],
+                ['🔒', 'Secure checkout', 'PCI-compliant Shopify'],
+                ['↩', '30-day returns', 'Unopened bottles'],
               ].map(([emoji, title, sub]) => (
                 <li key={title} className="px-2 py-3 sm:px-3">
                   <span aria-hidden className="block text-base sm:text-lg">
