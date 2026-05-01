@@ -1,54 +1,66 @@
 // "Real dogs" video block. One short muted autoplay clip on the right,
-// editorial copy on the left. The poster JPG renders before the video
-// plays so the section never reads as an empty box; loading the mp4 is
-// deferred via preload="metadata" so it doesn't compete with critical
-// hero assets.
+// editorial copy + 4 spec stats on the left. The poster JPG renders
+// before the video plays so the section never reads as an empty box;
+// the mp4 is preload="metadata" so it doesn't compete with the hero.
 //
-// Source clip is a 6s 720x1280 portrait — 1MB after the ffmpeg pass —
+// Source clip is a 6s 720x1280 portrait — ~1MB after the ffmpeg pass —
 // so this lands well under the page's image budget.
 import {ScrollReveal} from '~/components/motion/ScrollReveal';
 
 export function RealDogsVideo() {
   return (
     <section className="bg-cream">
-      <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)] lg:items-center lg:gap-16 lg:px-10 lg:py-20">
+      <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] gap-8 px-4 py-12 sm:gap-10 sm:px-6 sm:py-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)] lg:items-center lg:gap-16 lg:px-10 lg:py-20">
         <ScrollReveal kind="rise-soft" className="min-w-0">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-clay">
-            Real dogs · real chew
+          <p className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.28em] text-clay">
+            <span aria-hidden className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-clay opacity-70" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-clay" />
+            </span>
+            Real customer clip
           </p>
-          <h2 className="mt-4 break-words font-display text-3xl leading-[1.05] tracking-tight text-ink sm:text-4xl lg:text-[3rem]">
+          <h2 className="mt-4 break-words font-display text-[2rem] leading-[1.05] tracking-tight text-ink sm:text-[2.5rem] lg:text-[3.1rem]">
             Six hours of quiet. The kitchen finally gets the morning back.
           </h2>
-          <p className="mt-5 max-w-md text-[14.5px] leading-7 text-ink-soft sm:text-base sm:leading-8">
-            No edits. No food styling. A single AyurPet yak cheese chew, and a
-            dog who&rsquo;s genuinely into it. We send these home daily — this
-            is what they look like once they get there.
+          <p className="mt-4 max-w-md text-[14.5px] leading-7 text-ink-soft sm:mt-5 sm:text-[15.5px] sm:leading-8">
+            One AyurPet yak cheese chew, no edits, no food styling. This is
+            what the chew looks like once it&rsquo;s home.
           </p>
-          <ul className="mt-7 grid grid-cols-2 gap-4 border-t border-line/70 pt-5 text-[12px] text-ink-soft sm:max-w-md">
-            <li className="flex items-baseline gap-2">
-              <span className="font-display text-[1.25rem] leading-none text-brand">6h+</span>
-              <span>average chew time</span>
-            </li>
-            <li className="flex items-baseline gap-2">
-              <span className="font-display text-[1.25rem] leading-none text-brand">1</span>
-              <span>ingredient · yak cheese</span>
-            </li>
-            <li className="flex items-baseline gap-2">
-              <span className="font-display text-[1.25rem] leading-none text-brand">0</span>
-              <span>preservatives, fillers</span>
-            </li>
-            <li className="flex items-baseline gap-2">
-              <span className="font-display text-[1.25rem] leading-none text-brand">100%</span>
-              <span>vet-approved</span>
-            </li>
+          <ul className="mt-6 grid grid-cols-2 gap-x-6 gap-y-4 border-t border-line/70 pt-5 sm:max-w-md sm:gap-y-5">
+            {[
+              ['6h+', 'average chew time'],
+              ['1', 'ingredient · yak cheese'],
+              ['0', 'preservatives · fillers'],
+              ['100%', 'vet-approved'],
+            ].map(([n, label]) => (
+              <li key={String(label)} className="flex items-baseline gap-2.5">
+                <span className="font-display text-[1.4rem] leading-none text-brand">
+                  {n}
+                </span>
+                <span className="text-[12.5px] leading-snug text-ink-soft">
+                  {label}
+                </span>
+              </li>
+            ))}
           </ul>
         </ScrollReveal>
 
         <ScrollReveal
           kind="rise"
-          className="relative mx-auto w-full max-w-md min-w-0 overflow-hidden rounded-[1.5rem] bg-ink shadow-[0_30px_90px_rgba(31,26,20,0.18)] sm:rounded-[2rem]"
+          className="relative mx-auto w-full max-w-[400px] min-w-0 overflow-hidden rounded-[1.5rem] bg-ink shadow-[0_30px_90px_rgba(31,26,20,0.18)] sm:rounded-[2rem]"
         >
           <div className="relative aspect-[9/16]">
+            {/* Poster image renders immediately so the section never reads
+                as an empty card while the video loads. */}
+            <img
+              src="/brand/dog-eating-chew-poster.jpg"
+              alt=""
+              aria-hidden
+              className="absolute inset-0 h-full w-full object-cover"
+              loading="lazy"
+              width={720}
+              height={1280}
+            />
             <video
               className="absolute inset-0 h-full w-full object-cover"
               autoPlay
@@ -57,20 +69,35 @@ export function RealDogsVideo() {
               playsInline
               preload="metadata"
               poster="/brand/dog-eating-chew-poster.jpg"
-              aria-label="Dog enjoying an AyurPet yak cheese chew"
+              aria-label="A dog enjoying an AyurPet yak cheese chew"
             >
               <source src="/brand/dog-eating-chew.webm" type="video/webm" />
               <source src="/brand/dog-eating-chew.mp4" type="video/mp4" />
             </video>
             <div
               aria-hidden
-              className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(31,26,20,0)_55%,rgba(31,26,20,0.5)_100%)]"
+              className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(31,26,20,0)_55%,rgba(31,26,20,0.55)_100%)]"
             />
-            <div className="absolute inset-x-0 bottom-0 p-5 text-paper sm:p-6">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-paper/75">
+
+            {/* Loop indicator — small UI tag so the muted autoplay is legible */}
+            <div className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-ink/70 px-2.5 py-1 text-[9.5px] font-bold uppercase tracking-[0.22em] text-paper backdrop-blur">
+              <svg width="9" height="9" viewBox="0 0 12 12" fill="none" aria-hidden>
+                <path
+                  d="M3 3h4l-1.2-1.2M9 9H5l1.2 1.2M9 5V3a1 1 0 0 0-1-1H5M3 7v2a1 1 0 0 0 1 1h3"
+                  stroke="currentColor"
+                  strokeWidth="1.2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+              Looped · muted
+            </div>
+
+            <div className="absolute inset-x-0 bottom-0 p-4 text-paper sm:p-5">
+              <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-paper/80">
                 Filmed at home · @theayurpet
               </p>
-              <p className="mt-2 font-display text-xl leading-tight sm:text-2xl">
+              <p className="mt-1.5 font-display text-lg leading-tight sm:text-xl">
                 He loves the Himalayan yak cheese chew.
               </p>
             </div>
