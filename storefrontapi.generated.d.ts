@@ -20,6 +20,12 @@ export type CartLineFragment = Pick<
       Pick<StorefrontAPI.MoneyV2, 'currencyCode' | 'amount'>
     >;
   };
+  sellingPlanAllocation?: StorefrontAPI.Maybe<{
+    sellingPlan: Pick<
+      StorefrontAPI.SellingPlan,
+      'id' | 'name' | 'description' | 'recurringDeliveries'
+    >;
+  }>;
   merchandise: Pick<
     StorefrontAPI.ProductVariant,
     'id' | 'availableForSale' | 'requiresShipping' | 'title'
@@ -53,6 +59,12 @@ export type CartLineComponentFragment = Pick<
       Pick<StorefrontAPI.MoneyV2, 'currencyCode' | 'amount'>
     >;
   };
+  sellingPlanAllocation?: StorefrontAPI.Maybe<{
+    sellingPlan: Pick<
+      StorefrontAPI.SellingPlan,
+      'id' | 'name' | 'description' | 'recurringDeliveries'
+    >;
+  }>;
   merchandise: Pick<
     StorefrontAPI.ProductVariant,
     'id' | 'availableForSale' | 'requiresShipping' | 'title'
@@ -82,6 +94,12 @@ export type CartLineComponentFragment = Pick<
           Pick<StorefrontAPI.MoneyV2, 'currencyCode' | 'amount'>
         >;
       };
+      sellingPlanAllocation?: StorefrontAPI.Maybe<{
+        sellingPlan: Pick<
+          StorefrontAPI.SellingPlan,
+          'id' | 'name' | 'description' | 'recurringDeliveries'
+        >;
+      }>;
       merchandise: Pick<
         StorefrontAPI.ProductVariant,
         'id' | 'availableForSale' | 'requiresShipping' | 'title'
@@ -145,6 +163,12 @@ export type CartApiQueryFragment = Pick<
               Pick<StorefrontAPI.MoneyV2, 'currencyCode' | 'amount'>
             >;
           };
+          sellingPlanAllocation?: StorefrontAPI.Maybe<{
+            sellingPlan: Pick<
+              StorefrontAPI.SellingPlan,
+              'id' | 'name' | 'description' | 'recurringDeliveries'
+            >;
+          }>;
           merchandise: Pick<
             StorefrontAPI.ProductVariant,
             'id' | 'availableForSale' | 'requiresShipping' | 'title'
@@ -183,6 +207,12 @@ export type CartApiQueryFragment = Pick<
               Pick<StorefrontAPI.MoneyV2, 'currencyCode' | 'amount'>
             >;
           };
+          sellingPlanAllocation?: StorefrontAPI.Maybe<{
+            sellingPlan: Pick<
+              StorefrontAPI.SellingPlan,
+              'id' | 'name' | 'description' | 'recurringDeliveries'
+            >;
+          }>;
           merchandise: Pick<
             StorefrontAPI.ProductVariant,
             'id' | 'availableForSale' | 'requiresShipping' | 'title'
@@ -221,6 +251,12 @@ export type CartApiQueryFragment = Pick<
                   Pick<StorefrontAPI.MoneyV2, 'currencyCode' | 'amount'>
                 >;
               };
+              sellingPlanAllocation?: StorefrontAPI.Maybe<{
+                sellingPlan: Pick<
+                  StorefrontAPI.SellingPlan,
+                  'id' | 'name' | 'description' | 'recurringDeliveries'
+                >;
+              }>;
               merchandise: Pick<
                 StorefrontAPI.ProductVariant,
                 'id' | 'availableForSale' | 'requiresShipping' | 'title'
@@ -887,6 +923,15 @@ export type ProductVariantFragment = Pick<
   unitPrice?: StorefrontAPI.Maybe<
     Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>
   >;
+  sellingPlanAllocations: {
+    nodes: Array<{
+      sellingPlan: Pick<StorefrontAPI.SellingPlan, 'id' | 'name'>;
+      priceAdjustments: Array<{
+        price: Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>;
+        compareAtPrice: Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>;
+      }>;
+    }>;
+  };
 };
 
 export type ProductFragment = Pick<
@@ -934,6 +979,21 @@ export type ProductFragment = Pick<
               unitPrice?: StorefrontAPI.Maybe<
                 Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>
               >;
+              sellingPlanAllocations: {
+                nodes: Array<{
+                  sellingPlan: Pick<StorefrontAPI.SellingPlan, 'id' | 'name'>;
+                  priceAdjustments: Array<{
+                    price: Pick<
+                      StorefrontAPI.MoneyV2,
+                      'amount' | 'currencyCode'
+                    >;
+                    compareAtPrice: Pick<
+                      StorefrontAPI.MoneyV2,
+                      'amount' | 'currencyCode'
+                    >;
+                  }>;
+                }>;
+              };
             }
           >;
           swatch?: StorefrontAPI.Maybe<
@@ -971,6 +1031,18 @@ export type ProductFragment = Pick<
       unitPrice?: StorefrontAPI.Maybe<
         Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>
       >;
+      sellingPlanAllocations: {
+        nodes: Array<{
+          sellingPlan: Pick<StorefrontAPI.SellingPlan, 'id' | 'name'>;
+          priceAdjustments: Array<{
+            price: Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>;
+            compareAtPrice: Pick<
+              StorefrontAPI.MoneyV2,
+              'amount' | 'currencyCode'
+            >;
+          }>;
+        }>;
+      };
     }
   >;
   adjacentVariants: Array<
@@ -995,8 +1067,59 @@ export type ProductFragment = Pick<
       unitPrice?: StorefrontAPI.Maybe<
         Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>
       >;
+      sellingPlanAllocations: {
+        nodes: Array<{
+          sellingPlan: Pick<StorefrontAPI.SellingPlan, 'id' | 'name'>;
+          priceAdjustments: Array<{
+            price: Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>;
+            compareAtPrice: Pick<
+              StorefrontAPI.MoneyV2,
+              'amount' | 'currencyCode'
+            >;
+          }>;
+        }>;
+      };
     }
   >;
+  sellingPlanGroups: {
+    nodes: Array<
+      Pick<StorefrontAPI.SellingPlanGroup, 'name'> & {
+        options: Array<
+          Pick<StorefrontAPI.SellingPlanGroupOption, 'name' | 'values'>
+        >;
+        sellingPlans: {
+          nodes: Array<
+            Pick<
+              StorefrontAPI.SellingPlan,
+              'id' | 'name' | 'description' | 'recurringDeliveries'
+            > & {
+              priceAdjustments: Array<
+                Pick<StorefrontAPI.SellingPlanPriceAdjustment, 'orderCount'> & {
+                  adjustmentValue:
+                    | {
+                        adjustmentAmount: Pick<
+                          StorefrontAPI.MoneyV2,
+                          'amount' | 'currencyCode'
+                        >;
+                      }
+                    | {
+                        price: Pick<
+                          StorefrontAPI.MoneyV2,
+                          'amount' | 'currencyCode'
+                        >;
+                      }
+                    | Pick<
+                        StorefrontAPI.SellingPlanPercentagePriceAdjustment,
+                        'adjustmentPercentage'
+                      >;
+                }
+              >;
+            }
+          >;
+        };
+      }
+    >;
+  };
   seo: Pick<StorefrontAPI.Seo, 'description' | 'title'>;
 };
 
@@ -1059,6 +1182,24 @@ export type ProductQuery = {
                   unitPrice?: StorefrontAPI.Maybe<
                     Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>
                   >;
+                  sellingPlanAllocations: {
+                    nodes: Array<{
+                      sellingPlan: Pick<
+                        StorefrontAPI.SellingPlan,
+                        'id' | 'name'
+                      >;
+                      priceAdjustments: Array<{
+                        price: Pick<
+                          StorefrontAPI.MoneyV2,
+                          'amount' | 'currencyCode'
+                        >;
+                        compareAtPrice: Pick<
+                          StorefrontAPI.MoneyV2,
+                          'amount' | 'currencyCode'
+                        >;
+                      }>;
+                    }>;
+                  };
                 }
               >;
               swatch?: StorefrontAPI.Maybe<
@@ -1096,6 +1237,18 @@ export type ProductQuery = {
           unitPrice?: StorefrontAPI.Maybe<
             Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>
           >;
+          sellingPlanAllocations: {
+            nodes: Array<{
+              sellingPlan: Pick<StorefrontAPI.SellingPlan, 'id' | 'name'>;
+              priceAdjustments: Array<{
+                price: Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>;
+                compareAtPrice: Pick<
+                  StorefrontAPI.MoneyV2,
+                  'amount' | 'currencyCode'
+                >;
+              }>;
+            }>;
+          };
         }
       >;
       adjacentVariants: Array<
@@ -1120,8 +1273,62 @@ export type ProductQuery = {
           unitPrice?: StorefrontAPI.Maybe<
             Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>
           >;
+          sellingPlanAllocations: {
+            nodes: Array<{
+              sellingPlan: Pick<StorefrontAPI.SellingPlan, 'id' | 'name'>;
+              priceAdjustments: Array<{
+                price: Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>;
+                compareAtPrice: Pick<
+                  StorefrontAPI.MoneyV2,
+                  'amount' | 'currencyCode'
+                >;
+              }>;
+            }>;
+          };
         }
       >;
+      sellingPlanGroups: {
+        nodes: Array<
+          Pick<StorefrontAPI.SellingPlanGroup, 'name'> & {
+            options: Array<
+              Pick<StorefrontAPI.SellingPlanGroupOption, 'name' | 'values'>
+            >;
+            sellingPlans: {
+              nodes: Array<
+                Pick<
+                  StorefrontAPI.SellingPlan,
+                  'id' | 'name' | 'description' | 'recurringDeliveries'
+                > & {
+                  priceAdjustments: Array<
+                    Pick<
+                      StorefrontAPI.SellingPlanPriceAdjustment,
+                      'orderCount'
+                    > & {
+                      adjustmentValue:
+                        | {
+                            adjustmentAmount: Pick<
+                              StorefrontAPI.MoneyV2,
+                              'amount' | 'currencyCode'
+                            >;
+                          }
+                        | {
+                            price: Pick<
+                              StorefrontAPI.MoneyV2,
+                              'amount' | 'currencyCode'
+                            >;
+                          }
+                        | Pick<
+                            StorefrontAPI.SellingPlanPercentagePriceAdjustment,
+                            'adjustmentPercentage'
+                          >;
+                    }
+                  >;
+                }
+              >;
+            };
+          }
+        >;
+      };
       seo: Pick<StorefrontAPI.Seo, 'description' | 'title'>;
     }
   >;
@@ -1398,7 +1605,7 @@ interface GeneratedQueryTypes {
     return: PoliciesQuery;
     variables: PoliciesQueryVariables;
   };
-  '#graphql\n  query Product(\n    $country: CountryCode\n    $handle: String!\n    $language: LanguageCode\n    $selectedOptions: [SelectedOptionInput!]!\n  ) @inContext(country: $country, language: $language) {\n    product(handle: $handle) {\n      ...Product\n    }\n  }\n  #graphql\n  fragment Product on Product {\n    id\n    title\n    vendor\n    handle\n    descriptionHtml\n    description\n    encodedVariantExistence\n    encodedVariantAvailability\n    featuredImage {\n      id\n      url\n      altText\n      width\n      height\n    }\n    images(first: 8) {\n      nodes {\n        id\n        url\n        altText\n        width\n        height\n      }\n    }\n    options {\n      name\n      optionValues {\n        name\n        firstSelectableVariant {\n          ...ProductVariant\n        }\n        swatch {\n          color\n          image {\n            previewImage {\n              url\n            }\n          }\n        }\n      }\n    }\n    selectedOrFirstAvailableVariant(selectedOptions: $selectedOptions, ignoreUnknownOptions: true, caseInsensitiveMatch: true) {\n      ...ProductVariant\n    }\n    adjacentVariants (selectedOptions: $selectedOptions) {\n      ...ProductVariant\n    }\n    seo {\n      description\n      title\n    }\n  }\n  #graphql\n  fragment ProductVariant on ProductVariant {\n    availableForSale\n    compareAtPrice {\n      amount\n      currencyCode\n    }\n    id\n    image {\n      __typename\n      id\n      url\n      altText\n      width\n      height\n    }\n    price {\n      amount\n      currencyCode\n    }\n    product {\n      title\n      handle\n    }\n    selectedOptions {\n      name\n      value\n    }\n    sku\n    title\n    unitPrice {\n      amount\n      currencyCode\n    }\n  }\n\n\n': {
+  '#graphql\n  query Product(\n    $country: CountryCode\n    $handle: String!\n    $language: LanguageCode\n    $selectedOptions: [SelectedOptionInput!]!\n  ) @inContext(country: $country, language: $language) {\n    product(handle: $handle) {\n      ...Product\n    }\n  }\n  #graphql\n  fragment Product on Product {\n    id\n    title\n    vendor\n    handle\n    descriptionHtml\n    description\n    encodedVariantExistence\n    encodedVariantAvailability\n    featuredImage {\n      id\n      url\n      altText\n      width\n      height\n    }\n    images(first: 8) {\n      nodes {\n        id\n        url\n        altText\n        width\n        height\n      }\n    }\n    options {\n      name\n      optionValues {\n        name\n        firstSelectableVariant {\n          ...ProductVariant\n        }\n        swatch {\n          color\n          image {\n            previewImage {\n              url\n            }\n          }\n        }\n      }\n    }\n    selectedOrFirstAvailableVariant(selectedOptions: $selectedOptions, ignoreUnknownOptions: true, caseInsensitiveMatch: true) {\n      ...ProductVariant\n    }\n    adjacentVariants (selectedOptions: $selectedOptions) {\n      ...ProductVariant\n    }\n    sellingPlanGroups(first: 10) {\n      nodes {\n        name\n        options {\n          name\n          values\n        }\n        sellingPlans(first: 10) {\n          nodes {\n            id\n            name\n            description\n            recurringDeliveries\n            priceAdjustments {\n              orderCount\n              adjustmentValue {\n                ... on SellingPlanFixedAmountPriceAdjustment {\n                  adjustmentAmount {\n                    amount\n                    currencyCode\n                  }\n                }\n                ... on SellingPlanPercentagePriceAdjustment {\n                  adjustmentPercentage\n                }\n                ... on SellingPlanFixedPriceAdjustment {\n                  price {\n                    amount\n                    currencyCode\n                  }\n                }\n              }\n            }\n          }\n        }\n      }\n    }\n    seo {\n      description\n      title\n    }\n  }\n  #graphql\n  fragment ProductVariant on ProductVariant {\n    availableForSale\n    compareAtPrice {\n      amount\n      currencyCode\n    }\n    id\n    image {\n      __typename\n      id\n      url\n      altText\n      width\n      height\n    }\n    price {\n      amount\n      currencyCode\n    }\n    product {\n      title\n      handle\n    }\n    selectedOptions {\n      name\n      value\n    }\n    sku\n    title\n    unitPrice {\n      amount\n      currencyCode\n    }\n    sellingPlanAllocations(first: 10) {\n      nodes {\n        sellingPlan {\n          id\n          name\n        }\n        priceAdjustments {\n          price {\n            amount\n            currencyCode\n          }\n          compareAtPrice {\n            amount\n            currencyCode\n          }\n        }\n      }\n    }\n  }\n\n\n': {
     return: ProductQuery;
     variables: ProductQueryVariables;
   };

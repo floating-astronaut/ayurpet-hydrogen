@@ -494,6 +494,24 @@ const PRODUCT_VARIANT_FRAGMENT = `#graphql
       amount
       currencyCode
     }
+    sellingPlanAllocations(first: 10) {
+      nodes {
+        sellingPlan {
+          id
+          name
+        }
+        priceAdjustments {
+          price {
+            amount
+            currencyCode
+          }
+          compareAtPrice {
+            amount
+            currencyCode
+          }
+        }
+      }
+    }
   }
 ` as const;
 
@@ -545,6 +563,43 @@ const PRODUCT_FRAGMENT = `#graphql
     }
     adjacentVariants (selectedOptions: $selectedOptions) {
       ...ProductVariant
+    }
+    sellingPlanGroups(first: 10) {
+      nodes {
+        name
+        options {
+          name
+          values
+        }
+        sellingPlans(first: 10) {
+          nodes {
+            id
+            name
+            description
+            recurringDeliveries
+            priceAdjustments {
+              orderCount
+              adjustmentValue {
+                ... on SellingPlanFixedAmountPriceAdjustment {
+                  adjustmentAmount {
+                    amount
+                    currencyCode
+                  }
+                }
+                ... on SellingPlanPercentagePriceAdjustment {
+                  adjustmentPercentage
+                }
+                ... on SellingPlanFixedPriceAdjustment {
+                  price {
+                    amount
+                    currencyCode
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
     seo {
       description

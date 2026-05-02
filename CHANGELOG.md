@@ -13,7 +13,23 @@ Body text (if present) shown as indented sub-bullets.
 
 ## 2026-05-02
 
-- **02:45 UTC** — auto-sync: 2026-05-02 02:45 UTC (`d27b614`) — 5 files
+- **03:15 UTC** — auto-sync: 2026-05-02 03:15 UTC (`a61f014`) — 4 files
+        M	app/components/pdp/goodgut/GoodGutVariantPicker.tsx
+        M	app/lib/fragments.ts
+        M	app/routes/products.$handle.tsx
+        M	storefrontapi.generated.d.ts
+- **02:51 UTC** — goodgut: real ingredient photography (Unsplash) + 'us vs them' compare + 'we refuse' clean blocks (`86f499f`) — 3 files
+    Three structural moves lifted from the Native Pet "The Daily" PDP
+    (nativepet.com/products/the-daily) — that page was the closest direct
+    reference (herbal pet supplement, similar audience, premium DTC feel)
+    and the founder confirmed it as the visual target.
+    1. GoodGutCompare — "GoodGut+ vs. the typical multi-supplement
+       routine". Six-row head-to-head comparison: Format, Daily ritual,
+       Approach, Sourcing, Taste battle, Guarantee. Brand-green ✓ column
+       on the left, clay ✗ column on the right. Mobile stacks; desktop
+       is side-by-side with a vertical line divider. Pure editorial
+       block — no asset dependency.
+- **02:45 UTC** — auto-sync: 2026-05-02 02:45 UTC (`def12a7`) — 6 files
         A	app/components/pdp/goodgut/GoodGutClean.tsx
         A	app/components/pdp/goodgut/GoodGutCompare.tsx
         M	app/components/pdp/goodgut/GoodGutIngredients.tsx
