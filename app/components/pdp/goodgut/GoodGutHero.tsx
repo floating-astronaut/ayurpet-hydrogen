@@ -25,7 +25,6 @@
 // On desktop (lg+) the layout collapses to a 2-column split where the
 // gallery sits left and the same purchase decision sits right — no
 // duplicated content.
-import {Image} from '@shopify/hydrogen';
 import type {ProductFragment} from 'storefrontapi.generated';
 import type {Image as StorefrontImage} from '@shopify/hydrogen/storefront-api-types';
 import type {ProductForm} from '~/components/ProductForm';
@@ -35,6 +34,7 @@ import {ScrollReveal} from '~/components/motion/ScrollReveal';
 import {ShopPayExpress} from '~/components/ShopPayExpress';
 import {ExpressCheckoutButton} from '~/components/ExpressCheckoutButton';
 import {GoodGutVariantPicker} from './GoodGutVariantPicker';
+import {GoodGutHeroGallery} from './GoodGutHeroGallery';
 
 type Props = {
   product: ProductFragment;
@@ -52,8 +52,6 @@ export function GoodGutHero({
   const showCompare =
     compareAt &&
     Number(compareAt.amount) > Number(selectedVariant?.price.amount);
-  const heroImage = galleryImages[0] ?? null;
-
   const variantTitle =
     selectedVariant?.title &&
     selectedVariant.title.toLowerCase() !== 'default title'
@@ -116,11 +114,13 @@ export function GoodGutHero({
             <span>2,840+ verified reviews</span>
           </div>
 
-          {/* MOBILE-ONLY hero image — sits between paragraph and purchase
-              card so the first viewport stack reads:
-              eyebrow → H1 → promise → stars → image → purchase. */}
+          {/* MOBILE — swipe-able gallery with click-to-zoom lightbox.
+              Sits between paragraph and purchase card so the first
+              viewport stack reads: eyebrow → H1 → promise → stars →
+              gallery → purchase. The lg:hidden lives inside
+              GoodGutHeroGallery itself. */}
           <div className="mt-6 lg:hidden">
-            <HeroGalleryStage image={heroImage} priority />
+            <GoodGutHeroGallery images={galleryImages} priority />
           </div>
 
           {/* Single purchase card — same on mobile and desktop. The
@@ -139,57 +139,17 @@ export function GoodGutHero({
           </div>
         </div>
 
-        {/* Desktop-only gallery column. Mobile shows the image inline
-            inside the text column above. */}
+        {/* Desktop-only gallery column — single hero stage with click-
+            to-zoom that opens the same fullscreen lightbox as mobile.
+            Mobile shows the swipe gallery inline inside the text column
+            above. */}
         <div className="hidden min-w-0 lg:order-1 lg:block">
           <ScrollReveal kind="rise-soft" className="lg:sticky lg:top-24">
-            <HeroGalleryStage image={heroImage} priority />
+            <GoodGutHeroGallery images={galleryImages} priority />
           </ScrollReveal>
         </div>
       </div>
     </section>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// HERO IMAGE STAGE — campaign frame around the packshot.
-// ---------------------------------------------------------------------------
-function HeroGalleryStage({
-  image,
-  priority,
-}: {
-  image: StorefrontImage | null;
-  priority?: boolean;
-}) {
-  return (
-    <div className="relative overflow-hidden rounded-3xl bg-[linear-gradient(160deg,#ebe0c9_0%,#dccfb3_55%,#c7b89a_100%)] p-2.5 shadow-[0_30px_90px_rgba(31,26,20,0.14)] sm:p-3">
-      <div className="relative aspect-[4/5] overflow-hidden rounded-[1.1rem] bg-[linear-gradient(180deg,#fdfaf2_0%,#f0e6d0_100%)] sm:rounded-[1.35rem]">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-12 top-8 h-44 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.85)_0%,rgba(255,255,255,0)_70%)]"
-        />
-        {image ? (
-          <Image
-            data={image}
-            aspectRatio="4/5"
-            sizes="(min-width: 1024px) 48vw, 92vw"
-            loading={priority ? 'eager' : undefined}
-            className="absolute inset-0 h-full w-full object-cover"
-          />
-        ) : null}
-        <div className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-paper/95 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.22em] text-brand shadow-[0_6px_18px_rgba(31,26,20,0.10)] backdrop-blur">
-          <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden>
-            <path
-              d="M6 1c1.5 2 3 4 3 6a3 3 0 0 1-6 0c0-2 1.5-4 3-6z"
-              stroke="currentColor"
-              strokeWidth="1.4"
-              strokeLinejoin="round"
-            />
-          </svg>
-          Liquid drops · daily
-        </div>
-      </div>
-    </div>
   );
 }
 
