@@ -1,4 +1,5 @@
 import {Analytics, getShopAnalytics, useNonce} from '@shopify/hydrogen';
+import {GA4Events} from '~/components/analytics/GA4Events';
 import {
   Outlet,
   useRouteError,
@@ -79,6 +80,7 @@ export async function loader(args: Route.LoaderArgs) {
     ...deferredData,
     ...criticalData,
     publicStoreDomain: env.PUBLIC_STORE_DOMAIN,
+    ga4TagId: env.PUBLIC_GA4_TAG_ID ?? '',
     shop: getShopAnalytics({
       storefront,
       publicStorefrontId: env.PUBLIC_STOREFRONT_ID,
@@ -178,6 +180,7 @@ export default function App() {
       shop={data.shop}
       consent={data.consent}
     >
+      <GA4Events tagId={data.ga4TagId} />
       <PageLayout {...data}>
         <Outlet />
       </PageLayout>
