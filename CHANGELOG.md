@@ -13,7 +13,75 @@ Body text (if present) shown as indented sub-bullets.
 
 ## 2026-05-02
 
-- **03:15 UTC** — auto-sync: 2026-05-02 03:15 UTC (`a61f014`) — 4 files
+- **05:30 UTC** — auto-sync: 2026-05-02 05:30 UTC (`6763d05`) — 1 file
+        M	storefrontapi.generated.d.ts
+- **05:20 UTC** — preview: smooth Native Pet hero on top of the image grid (`4551e8d`) — 3 files
+    Step 3 of the design-lab build. Drops a centered editorial hero on
+    top of the existing /preview image grid so the page reads as:
+      ▶ HERO  (narrow centered column)
+        eyebrow → big H1 → stars + reviews → trust pill row →
+        value prop body → variant picker card (size + subscribe + ATC) →
+        free-shipping reassurance line
+      ▶ IMAGE GRID  (full-bleed mobile, two-up desktop)
+    The image grid carries every product detail that would normally be
+    text — ingredients, packaging, dosage, the bottle in context — so
+    this is everything the page needs.
+- **04:38 UTC** — preview: fill canvas with all GoodGut+ product images (`eb848f0`) — 3 files
+    Step 2 of the design-lab build. The /preview canvas is now filled
+    with every image attached to the GoodGut+ product on Shopify, laid
+    out as:
+    - mobile  (default)   — one image per row, edge-to-edge full frame
+    - desktop (lg+)       — two images per row, square pair, no gap
+    Images are square so we don't crop; the grid lets each image speak
+    at its native aspect ratio.
+    Wiring
+    - Loader queries product(handle: GOODGUT_HANDLE) for images(first: 20)
+      via a tight new PreviewImages query — only id/url/altText/width/
+- **04:33 UTC** — preview: blank /preview route as design-lab canvas (`abfdb26`) — 2 files
+    New /preview route to iterate on a fresh layout step by step under
+    direction. Empty <main> with bg-paper/text-ink so the brand tokens
+    are already in scope, but no sections, no copy, no decorative
+    chrome — every visible thing on this page going forward is added
+    deliberately one step at a time.
+    Inherits the standard PageLayout (header, footer, cart drawer,
+    StickyAtc helpers) so the canvas renders inside the real storefront
+    chrome rather than as a stripped iframe. Marked
+    noindex,nofollow + not linked from any navigation, so it's
+    discoverable only by direct URL while in development.
+- **04:17 UTC** — goodgut: editorial image breaks between sections, drop GalleryStrip (`fa8bb2d`) — 4 files
+    The page felt info-heavy because every section was a card grid or a
+    text-led block. Native Pet's PDP solves this with full-bleed product
+    photography injected between content seams — the page breathes.
+    Doing the same thing here, using the merchant's own product gallery
+    (no Unsplash, no asset cost) so the imagery stays on-brand.
+    New component
+    - app/components/pdp/goodgut/EditorialImageBreak.tsx — full-bleed
+      cinematic image break with optional eyebrow + caption overlay,
+      soft ink-to-transparent gradient at the bottom for legibility,
+      rounded-3xl frame inside the standard 7xl container, two aspect-
+- **03:44 UTC** — cart: drop buyerIdentity.customer block (missing storefront scope → 500) (`2f859fb`) — 3 files
+    Adding a subscription line to the cart was failing with 500 because
+    the cart fragment queried buyerIdentity.customer { id email ... }
+    which requires the unauthenticated_read_customers Storefront API
+    access scope. The token configured in PUBLIC_STOREFRONT_API_TOKEN
+    does not have that scope, so the API returned:
+      "Access denied for customer field. Required access:
+       `unauthenticated_read_customers` access scope."
+    Hydrogen's storefront client surfaces that as a thrown error in some
+    code paths (cart create, cart fetch after mutation), which the
+    react-router action then bubbles up as a 500 to the client. The
+- **03:18 UTC** — goodgut: subscribe & save picker (Seal-driven, Native Pet pattern) (`1b0e244`) — 2 files
+    Wires Shopify-native selling plans into the GoodGut+ purchase card so
+    the merchant's Seal Subscriptions config actually surfaces on the
+    storefront. Previously the cart only accepted one-time purchases —
+    Seal's plans were invisible because the variant picker never read or
+    forwarded sellingPlanAllocations.
+    GraphQL (already on remote via auto-sync 03:15 UTC)
+    - ProductVariant fragment now pulls sellingPlanAllocations(first: 10)
+      with each plan's id/name + priceAdjustments (price + compareAtPrice).
+    - Product fragment pulls sellingPlanGroups(first: 10) with full plan
+      metadata (recurringDeliveries, three priceAdjustment value types).
+- **03:15 UTC** — auto-sync: 2026-05-02 03:15 UTC (`38e1958`) — 5 files
         M	app/components/pdp/goodgut/GoodGutVariantPicker.tsx
         M	app/lib/fragments.ts
         M	app/routes/products.$handle.tsx
