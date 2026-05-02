@@ -24,7 +24,7 @@ import {
 import {useLoaderData} from 'react-router';
 import type {Route} from './+types/preview';
 import {PRODUCT_QUERY} from './products.$handle';
-import {GoodGutVariantPicker} from '~/components/pdp/goodgut/GoodGutVariantPicker';
+import {PreviewPicker} from '~/components/preview/PreviewPicker';
 
 const GOODGUT_HANDLE =
   'goodgut-digestive-enzyme-drops-for-dog-natural-ayurvedic-formula';
@@ -133,7 +133,7 @@ export default function Preview() {
           id="picker"
           className="mt-9 overflow-hidden rounded-3xl border border-line bg-white p-6 shadow-[0_22px_60px_rgba(31,26,20,0.08)] sm:mt-10 sm:p-7 lg:p-8"
         >
-          <GoodGutVariantPicker
+          <PreviewPicker
             productOptions={productOptions}
             selectedVariant={selectedVariant}
           />
