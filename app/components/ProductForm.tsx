@@ -5,6 +5,7 @@ import type {
   ProductOptionValueSwatch,
 } from '@shopify/hydrogen/storefront-api-types';
 import {AddToCartButton} from './AddToCartButton';
+import {ShopPayExpress} from './ShopPayExpress';
 import {useAside} from './Aside';
 import type {ProductFragment} from 'storefrontapi.generated';
 
@@ -102,6 +103,8 @@ export function ProductForm({
       >
         {selectedVariant?.availableForSale ? 'Add to cart' : 'Sold out'}
       </AddToCartButton>
+
+      <ShopPayExpress selectedVariant={selectedVariant} />
     </div>
   );
 }

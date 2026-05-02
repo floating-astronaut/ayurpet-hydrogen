@@ -32,6 +32,7 @@ import type {ProductForm} from '~/components/ProductForm';
 import {AddToCartButton} from '~/components/AddToCartButton';
 import {useAside} from '~/components/Aside';
 import {ScrollReveal} from '~/components/motion/ScrollReveal';
+import {ShopPayExpress} from '~/components/ShopPayExpress';
 import {GoodGutVariantPicker} from './GoodGutVariantPicker';
 
 type Props = {
@@ -253,6 +254,8 @@ function PurchaseCard({
             selectedVariant={selectedVariant}
           />
         </div>
+
+        <ShopPayExpress selectedVariant={selectedVariant} />
 
         {/* If the picker doesn't render its own ATC for some reason, we
             still expose one at the card level. The picker DOES render

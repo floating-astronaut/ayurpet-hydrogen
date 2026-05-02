@@ -45,6 +45,27 @@ export default async function handleRequest(
       'https://cdn.shopify.com',
       'https://shopify.com',
     ],
+    // Shop Pay accelerated checkout — the <ShopPayButton> web component
+    // loads its <shop-pay-button> script from cdn.shopify.com and renders
+    // an iframe served by shop.app. Without these directives the browser
+    // blocks the wallet button on the PDPs.
+    scriptSrc: [
+      "'self'",
+      'https://cdn.shopify.com',
+      'https://shop.app',
+    ],
+    frameSrc: [
+      "'self'",
+      'https://cdn.shopify.com',
+      'https://shop.app',
+      `https://${context.env.PUBLIC_CHECKOUT_DOMAIN}`,
+    ],
+    connectSrc: [
+      "'self'",
+      'https://cdn.shopify.com',
+      'https://shop.app',
+      'https://monorail-edge.shopifysvc.com',
+    ],
   });
 
   const body = await renderToReadableStream(
