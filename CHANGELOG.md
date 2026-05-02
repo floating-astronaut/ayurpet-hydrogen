@@ -13,7 +13,24 @@ Body text (if present) shown as indented sub-bullets.
 
 ## 2026-05-02
 
-- **01:15 UTC** — auto-sync: 2026-05-02 01:15 UTC (`6fff246`) — 8 files
+- **02:45 UTC** — auto-sync: 2026-05-02 02:45 UTC (`d27b614`) — 5 files
+        A	app/components/pdp/goodgut/GoodGutClean.tsx
+        A	app/components/pdp/goodgut/GoodGutCompare.tsx
+        M	app/components/pdp/goodgut/GoodGutIngredients.tsx
+        M	app/components/pdp/goodgut/GoodGutLanding.tsx
+        M	tsconfig.tsbuildinfo
+- **02:24 UTC** — goodgut: swipe gallery + click-to-zoom lightbox on the hero (`d6b08c3`) — 3 files
+    Biggest single visible upgrade for the GoodGut+ PDP. Replaces the
+    static HeroGalleryStage (single 4:5 packshot, no interaction) with a
+    proper premium-DTC gallery — swipe carousel on mobile, click-to-zoom
+    lightbox on every breakpoint. Uses Swiper + framer-motion (both
+    already in the project), no new deps.
+    New component
+    - app/components/pdp/goodgut/GoodGutHeroGallery.tsx — three internal
+      pieces:
+      * MobileSwipeGallery: Swiper carousel of every gallery image,
+        keyboard + a11y modules enabled, custom slim pagination strip
+- **01:15 UTC** — auto-sync: 2026-05-02 01:15 UTC (`adc7a02`) — 9 files
         M	app/components/pdp/goodgut/GoodGutHero.tsx
         M	app/components/pdp/goodgut/GoodGutIngredients.tsx
         M	app/components/pdp/goodgut/GoodGutTrustChips.tsx

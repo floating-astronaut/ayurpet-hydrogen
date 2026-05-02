@@ -5,6 +5,8 @@
 //   ↓ symptom checker
 //   ↓ ingredients + liquid-format pillar
 //   ↓ trial results
+//   ↓ us vs the typical multi-supplement routine (compare block)
+//   ↓ what's NOT in the drops (clean block)
 //   ↓ how to use + dosage table
 //   ↓ made for / not for
 //   ↓ digestion-specific reviews (3 visible + Read-more reveal)
@@ -31,6 +33,8 @@ import {GoodGutFAQ} from './GoodGutFAQ';
 import {GoodGutClosing} from './GoodGutClosing';
 import {GoodGutReviews} from './GoodGutReviews';
 import {GoodGutCrossSell} from './GoodGutCrossSell';
+import {GoodGutCompare} from './GoodGutCompare';
+import {GoodGutClean} from './GoodGutClean';
 import {GoodGutTrustStrip} from './GoodGutTrustStrip';
 import {GoodGutGalleryStrip} from './GoodGutGalleryStrip';
 import {ShippingReturns} from '~/components/pdp/ShippingReturns';
@@ -94,6 +98,10 @@ export function GoodGutLanding({
       <GoodGutIngredients />
 
       <TrialResults />
+
+      <GoodGutCompare />
+
+      <GoodGutClean />
 
       <GoodGutHowToUse />
 

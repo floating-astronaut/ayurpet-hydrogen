@@ -9,6 +9,11 @@ type Ingredient = {
   role: string;
   body: string;
   source: string;
+  /** Optional editorial photo of the herb / source. When present,
+   * replaces the abstract SVG droplet icon. Drop a CDN-hosted JPG/WEBP
+   * URL here (Shopify-files, Cloudinary, Bunny CDN). */
+  imageUrl?: string;
+  imageAlt?: string;
 };
 
 const INGREDIENTS: Ingredient[] = [
@@ -18,6 +23,8 @@ const INGREDIENTS: Ingredient[] = [
     role: 'Liver + gut detox',
     body: 'Silymarin compounds support liver function and bile flow — the cleanup crew that keeps digestion smooth.',
     source: 'Hill-grown · cold-pressed extract',
+    // imageUrl: 'https://cdn.shopify.com/.../milk-thistle.jpg',
+    // imageAlt: 'Milk thistle flowers in hand-styled daylight',
   },
   {
     name: 'Prebiotics',
@@ -49,52 +56,72 @@ export function GoodGutIngredients() {
       <ScrollReveal kind="rise-soft" stagger className="mt-9 sm:mt-10">
         <ul className="grid grid-cols-1 gap-4 sm:gap-5 lg:grid-cols-3">
           {INGREDIENTS.map((it) => (
-            <LandingCard as="li" key={it.name} className="flex h-full flex-col">
-              <div className="flex items-start justify-between gap-3">
-                <div className="min-w-0">
-                  <h3 className="font-display text-[1.35rem] leading-tight text-ink sm:text-[1.5rem]">
-                    {it.name}
-                  </h3>
-                  {it.latin ? (
-                    <p className="mt-1 text-[12px] italic leading-snug text-ink-muted">
-                      {it.latin}
-                    </p>
-                  ) : null}
+            <LandingCard
+              as="li"
+              key={it.name}
+              bleed={!!it.imageUrl}
+              className="flex h-full flex-col"
+            >
+              {it.imageUrl ? (
+                <div className="relative aspect-[4/3] w-full overflow-hidden bg-cream">
+                  <img
+                    src={it.imageUrl}
+                    alt={it.imageAlt ?? `${it.name} — ${it.role}`}
+                    loading="lazy"
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />
                 </div>
-                <span
-                  aria-hidden
-                  className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-brand/10 text-brand"
-                >
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <path
-                      d="M7 1c1.7 1.8 3 3.6 3 5.5a3 3 0 0 1-6 0C4 4.6 5.3 2.8 7 1z"
-                      stroke="currentColor"
-                      strokeWidth="1.4"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M7 8v5"
-                      stroke="currentColor"
-                      strokeWidth="1.4"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                </span>
+              ) : null}
+
+              <div className={it.imageUrl ? 'flex flex-1 flex-col p-6 sm:p-7 lg:p-8' : 'flex flex-1 flex-col'}>
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <h3 className="font-display text-[1.35rem] leading-tight text-ink sm:text-[1.5rem]">
+                      {it.name}
+                    </h3>
+                    {it.latin ? (
+                      <p className="mt-1 text-[12px] italic leading-snug text-ink-muted">
+                        {it.latin}
+                      </p>
+                    ) : null}
+                  </div>
+                  {it.imageUrl ? null : (
+                    <span
+                      aria-hidden
+                      className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-brand/10 text-brand"
+                    >
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                        <path
+                          d="M7 1c1.7 1.8 3 3.6 3 5.5a3 3 0 0 1-6 0C4 4.6 5.3 2.8 7 1z"
+                          stroke="currentColor"
+                          strokeWidth="1.4"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M7 8v5"
+                          stroke="currentColor"
+                          strokeWidth="1.4"
+                          strokeLinecap="round"
+                        />
+                      </svg>
+                    </span>
+                  )}
+                </div>
+
+                <p className="mt-4 text-[10.5px] font-bold uppercase tracking-[0.22em] text-brand">
+                  {it.role}
+                </p>
+                <p className="mt-2 flex-1 text-[14px] leading-[1.65] text-ink-soft">
+                  {it.body}
+                </p>
+
+                <p className="mt-5 border-t border-line/70 pt-3 text-[11px] uppercase tracking-[0.18em] text-ink-muted">
+                  Source ·{' '}
+                  <span className="normal-case tracking-normal text-ink-soft">
+                    {it.source}
+                  </span>
+                </p>
               </div>
-
-              <p className="mt-4 text-[10.5px] font-bold uppercase tracking-[0.22em] text-brand">
-                {it.role}
-              </p>
-              <p className="mt-2 flex-1 text-[14px] leading-[1.65] text-ink-soft">
-                {it.body}
-              </p>
-
-              <p className="mt-5 border-t border-line/70 pt-3 text-[11px] uppercase tracking-[0.18em] text-ink-muted">
-                Source ·{' '}
-                <span className="normal-case tracking-normal text-ink-soft">
-                  {it.source}
-                </span>
-              </p>
             </LandingCard>
           ))}
         </ul>
