@@ -162,8 +162,8 @@ function HeroGalleryStage({
   priority?: boolean;
 }) {
   return (
-    <div className="relative overflow-hidden rounded-[1.5rem] bg-[linear-gradient(160deg,#ebe0c9_0%,#dccfb3_55%,#c7b89a_100%)] p-2 shadow-[0_30px_90px_rgba(31,26,20,0.14)] sm:rounded-[1.85rem] sm:p-3">
-      <div className="relative aspect-[4/5] overflow-hidden rounded-[1.25rem] bg-[linear-gradient(180deg,#fdfaf2_0%,#f0e6d0_100%)] sm:rounded-[1.7rem]">
+    <div className="relative overflow-hidden rounded-3xl bg-[linear-gradient(160deg,#ebe0c9_0%,#dccfb3_55%,#c7b89a_100%)] p-2.5 shadow-[0_30px_90px_rgba(31,26,20,0.14)] sm:p-3">
+      <div className="relative aspect-[4/5] overflow-hidden rounded-[1.1rem] bg-[linear-gradient(180deg,#fdfaf2_0%,#f0e6d0_100%)] sm:rounded-[1.35rem]">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-x-12 top-8 h-44 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.85)_0%,rgba(255,255,255,0)_70%)]"
@@ -218,9 +218,9 @@ function PurchaseCard({
     <div
       data-purchase-anchor
       id="picker"
-      className="overflow-hidden rounded-[1.5rem] border border-line bg-white shadow-[0_22px_60px_rgba(31,26,20,0.08)]"
+      className="overflow-hidden rounded-3xl border border-line bg-white shadow-[0_22px_60px_rgba(31,26,20,0.08)]"
     >
-      <div className="p-5 sm:p-6">
+      <div className="p-6 sm:p-7 lg:p-8">
         <div className="flex items-baseline justify-between gap-4 border-b border-line pb-3.5">
           <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-brand">
             {variantTitle}

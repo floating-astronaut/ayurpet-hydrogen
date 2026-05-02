@@ -97,7 +97,7 @@ export function GoodGutVariantPicker({
               const selected = !!v.selected;
 
               const wrapClass =
-                'group relative flex w-full items-center gap-3 rounded-2xl border px-4 py-3.5 text-left transition sm:px-5 sm:py-4 ' +
+                'group relative flex w-full items-center gap-3.5 rounded-2xl border px-5 py-4 text-left transition ' +
                 (selected
                   ? 'border-brand bg-brand/[0.06] shadow-[0_14px_30px_rgba(45,90,61,0.10)]'
                   : 'border-line bg-paper/80 hover:border-brand/40 hover:bg-paper');

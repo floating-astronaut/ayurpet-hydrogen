@@ -66,9 +66,9 @@ export function GoodGutTrustChips() {
       {CHIPS.map((c) => (
         <li
           key={c.label}
-          className="group flex items-center gap-2.5 rounded-xl border border-line/80 bg-paper/80 px-3 py-2.5 backdrop-blur transition hover:border-brand/40 hover:bg-paper sm:flex-col sm:items-start sm:gap-1 sm:px-3.5 sm:py-3"
+          className="group flex items-center gap-3 rounded-2xl border border-line/80 bg-paper/80 px-4 py-3.5 backdrop-blur transition hover:border-brand/40 hover:bg-paper sm:flex-col sm:items-start sm:gap-1.5 sm:px-4 sm:py-3.5"
         >
-          <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand/10 text-brand sm:h-8 sm:w-8">
+          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-brand/10 text-brand sm:h-9 sm:w-9">
             <Icon kind={c.icon} />
           </span>
           <span className="min-w-0">

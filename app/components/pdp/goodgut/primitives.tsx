@@ -10,10 +10,12 @@
 //   - stat cards (number + caption)
 //   - review cards (rating row + symptom + body + author footer)
 //
-// Padding scale used everywhere on this page:
-//   mobile    p-5  (20px)
-//   sm/tablet p-6  (24px)
-//   lg+       p-7  (28px)
+// Padding scale used everywhere on this page (production-grade rhythm):
+//   mobile    p-6  (24px)
+//   sm/tablet p-7  (28px)
+//   lg+       p-8  (32px)
+// Corner radius is rounded-3xl (24px) for major cards, rounded-2xl (16px)
+// for medium chips/tiles, rounded-xl (12px) for small inline pills.
 // Sections use py-12 / sm:py-14 / lg:py-20 unless intentionally edge-to-edge.
 // Inner gap rhythm:  mt-3 / mt-4 between header → body, mt-6 / mt-7 to CTA.
 import {forwardRef, type ReactNode} from 'react';
@@ -40,12 +42,12 @@ export const LandingCard = forwardRef<HTMLDivElement, LandingCardProps>(
         : tone === 'ink'
           ? 'bg-ink text-paper'
           : 'bg-paper';
-    const padding = bleed ? '' : 'p-5 sm:p-6 lg:p-7';
+    const padding = bleed ? '' : 'p-6 sm:p-7 lg:p-8';
     const TagComponent = Tag as React.ElementType;
     return (
       <TagComponent
         ref={ref}
-        className={`relative overflow-hidden rounded-[1.25rem] border border-line/70 ${toneClass} ${padding} shadow-[0_10px_30px_rgba(31,26,20,0.04)] ${className}`}
+        className={`relative overflow-hidden rounded-3xl border border-line/70 ${toneClass} ${padding} shadow-[0_10px_30px_rgba(31,26,20,0.04)] ${className}`}
       >
         {children}
       </TagComponent>

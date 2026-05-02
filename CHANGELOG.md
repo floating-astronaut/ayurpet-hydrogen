@@ -13,7 +13,14 @@ Body text (if present) shown as indented sub-bullets.
 
 ## 2026-05-02
 
-- **00:49 UTC** — checkout: add Buy-it-now express button as Shop Pay fallback (`33642fa`) — 4 files
+- **01:15 UTC** — auto-sync: 2026-05-02 01:15 UTC (`6fff246`) — 8 files
+        M	app/components/pdp/goodgut/GoodGutHero.tsx
+        M	app/components/pdp/goodgut/GoodGutIngredients.tsx
+        M	app/components/pdp/goodgut/GoodGutTrustChips.tsx
+        M	app/components/pdp/goodgut/GoodGutVariantPicker.tsx
+        M	app/components/pdp/goodgut/MadeForNotFor.tsx
+        ... (+3 more)
+- **01:00 UTC** — checkout: add Buy-it-now express button as Shop Pay fallback (`ba0984b`) — 5 files
     The <ShopPayButton> we wired earlier renders fine but its click flow
     silently does nothing on stores that don't have Shop Pay enabled or
     haven't authorised the headless storefront URL — that's the failure

@@ -63,11 +63,11 @@ export function SymptomChecker() {
             <LandingCard
               as="li"
               key={s.label}
-              className="group flex items-start gap-4 transition-all duration-500 hover:-translate-y-0.5 hover:border-brand/40 hover:shadow-[0_22px_52px_rgba(31,26,20,0.10)]"
+              className="group flex h-full items-start gap-4 transition-all duration-500 hover:-translate-y-0.5 hover:border-brand/40 hover:shadow-[0_22px_52px_rgba(31,26,20,0.10)]"
             >
               <span
                 aria-hidden
-                className="absolute right-5 top-5 text-[10px] font-bold uppercase tracking-[0.22em] text-ink-muted/70"
+                className="absolute right-6 top-6 font-display text-[11px] tracking-[0.32em] text-ink-muted/55 sm:text-[11.5px]"
               >
                 {String(i + 1).padStart(2, '0')}
               </span>
@@ -77,12 +77,12 @@ export function SymptomChecker() {
               >
                 {s.emoji}
               </span>
-              <div className="min-w-0 pr-7">
+              <div className="min-w-0 pr-9">
                 <p className="font-display text-[16px] leading-tight text-ink sm:text-[17.5px]">
                   {s.label}
                 </p>
                 <p
-                  className="mt-1.5 text-[13px] leading-[1.55] text-ink-soft"
+                  className="mt-2 text-[13px] leading-[1.6] text-ink-soft sm:text-[13.5px]"
                   dangerouslySetInnerHTML={{__html: s.body}}
                 />
               </div>

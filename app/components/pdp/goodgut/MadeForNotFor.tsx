@@ -49,7 +49,7 @@ export function MadeForNotFor() {
                 </li>
               ))}
             </ul>
-            <p className="mt-5 rounded-xl bg-cream/80 p-3 text-[12px] leading-[1.55] text-ink-soft">
+            <p className="mt-6 rounded-2xl bg-cream/80 p-4 text-[12.5px] leading-[1.6] text-ink-soft">
               Best given as part of a daily routine &mdash; most pets show
               calmer digestion within 7&ndash;10 days, and the 28-day mark is
               when stool, energy, and skin really turn around.
@@ -75,7 +75,7 @@ export function MadeForNotFor() {
                 </li>
               ))}
             </ul>
-            <p className="mt-5 rounded-xl bg-cream/80 p-3 text-[12px] leading-[1.55] text-ink-soft">
+            <p className="mt-6 rounded-2xl bg-cream/80 p-4 text-[12.5px] leading-[1.6] text-ink-soft">
               If your dog has any acute symptom, please call your vet first.
               Supplements support routines &mdash; they don&rsquo;t replace
               diagnosis.

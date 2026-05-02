@@ -131,7 +131,7 @@ export function GoodGutIngredients() {
           ].map((line) => (
             <li
               key={line}
-              className="flex h-full items-center gap-2.5 rounded-xl border border-paper/15 bg-paper/5 px-3 py-2.5 text-[12.5px] leading-[1.5] text-paper/90"
+              className="flex h-full items-center gap-3 rounded-2xl border border-paper/15 bg-paper/5 px-4 py-3 text-[12.5px] leading-[1.5] text-paper/90 sm:text-[13px]"
             >
               <span aria-hidden className="shrink-0 text-saffron-soft">✓</span>
               <span>{line}</span>
