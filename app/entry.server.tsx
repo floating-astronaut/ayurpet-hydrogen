@@ -39,11 +39,16 @@ export default async function handleRequest(
     // Inline data: SVG is used for the subtle paper-grain texture under
     // the .ayur-card-frame component. Allowing data: URIs alongside the
     // existing img sources keeps that texture visible.
+    // images.unsplash.com is hot-linked for the GoodGut+ ingredient
+    // cards; the editorial photography is sourced from Unsplash with
+    // photographer attribution rendered next to each photo. Swap to
+    // brand-owned photography on the Shopify CDN when available.
     imgSrc: [
       "'self'",
       'data:',
       'https://cdn.shopify.com',
       'https://shopify.com',
+      'https://images.unsplash.com',
     ],
     // Shop Pay accelerated checkout — the <ShopPayButton> web component
     // loads its <shop-pay-button> script from cdn.shopify.com and renders

@@ -3,19 +3,35 @@
 import {ScrollReveal} from '~/components/motion/ScrollReveal';
 import {LandingCard, LandingSection, SectionHeader} from './primitives';
 
+type ImageCredit = {
+  photographer: string;
+  photographerUrl: string;
+  photoUrl: string;
+  source: 'unsplash';
+};
+
 type Ingredient = {
   name: string;
   latin?: string;
   role: string;
   body: string;
   source: string;
-  /** Optional editorial photo of the herb / source. When present,
-   * replaces the abstract SVG droplet icon. Drop a CDN-hosted JPG/WEBP
-   * URL here (Shopify-files, Cloudinary, Bunny CDN). */
+  /** Editorial photo of the herb / source. When present, replaces the
+   * abstract SVG droplet icon. Drop a CDN-hosted JPG/WEBP URL here
+   * (Shopify-files, Cloudinary, Bunny CDN, or Unsplash hot-link). */
   imageUrl?: string;
   imageAlt?: string;
+  /** Required if imageUrl is sourced from Unsplash — renders the
+   * "Photo by [name] on Unsplash" attribution line under the card. */
+  imageCredit?: ImageCredit;
 };
 
+// Unsplash hot-link URLs include w=900 for responsive sizing and the
+// auto=format / fit=crop / q=80 params Unsplash recommends. Each photo
+// has a corresponding download-tracking ping fired when the URLs were
+// added (Unsplash TOS requirement). Replace with brand-shot photography
+// on Shopify CDN when available — the ingredient card layout adapts to
+// either source automatically.
 const INGREDIENTS: Ingredient[] = [
   {
     name: 'Milk thistle',
@@ -23,8 +39,17 @@ const INGREDIENTS: Ingredient[] = [
     role: 'Liver + gut detox',
     body: 'Silymarin compounds support liver function and bile flow — the cleanup crew that keeps digestion smooth.',
     source: 'Hill-grown · cold-pressed extract',
-    // imageUrl: 'https://cdn.shopify.com/.../milk-thistle.jpg',
-    // imageAlt: 'Milk thistle flowers in hand-styled daylight',
+    imageUrl:
+      'https://images.unsplash.com/photo-1688845606840-cebd361a102c?w=900&auto=format&fit=crop&q=80&fm=jpg',
+    imageAlt: 'Milk thistle flower with a bee on its purple bloom',
+    imageCredit: {
+      photographer: 'alksndra',
+      photographerUrl:
+        'https://unsplash.com/@alksndra?utm_source=ayurpet&utm_medium=referral',
+      photoUrl:
+        'https://unsplash.com/photos/a-bee-is-sitting-on-a-purple-flower-y3kevII1TT8?utm_source=ayurpet&utm_medium=referral',
+      source: 'unsplash',
+    },
   },
   {
     name: 'Prebiotics',
@@ -32,6 +57,17 @@ const INGREDIENTS: Ingredient[] = [
     role: 'Feeds beneficial bacteria',
     body: 'Soluble fibre that the good gut microbes feed on — without it, probiotics have nothing to grow.',
     source: 'Plant-derived, vegetarian',
+    imageUrl:
+      'https://images.unsplash.com/photo-1774177953595-0460fb38287d?w=900&auto=format&fit=crop&q=80&fm=jpg',
+    imageAlt: 'Various plant parts arranged on a light background',
+    imageCredit: {
+      photographer: 'Danielle Suijkerbuijk',
+      photographerUrl:
+        'https://unsplash.com/@vandaantje?utm_source=ayurpet&utm_medium=referral',
+      photoUrl:
+        'https://unsplash.com/photos/various-plant-parts-arranged-on-a-light-background-oQbno2kU4Lw?utm_source=ayurpet&utm_medium=referral',
+      source: 'unsplash',
+    },
   },
   {
     name: '6 Ayurvedic herbs',
@@ -39,6 +75,17 @@ const INGREDIENTS: Ingredient[] = [
     role: 'Soothes & rebalances',
     body: 'A classical Ayurvedic blend used for centuries to calm the digestive tract and ease bloating.',
     source: 'Wild-harvested in India',
+    imageUrl:
+      'https://images.unsplash.com/photo-1768729340925-2749ecdc211c?w=900&auto=format&fit=crop&q=80&fm=jpg',
+    imageAlt: 'Turmeric root, dried pieces, and powder on a wooden background',
+    imageCredit: {
+      photographer: 'iKshana Productions',
+      photographerUrl:
+        'https://unsplash.com/@ikshanaproductions?utm_source=ayurpet&utm_medium=referral',
+      photoUrl:
+        'https://unsplash.com/photos/turmeric-root-dried-pieces-and-powder-on-a-wooden-background-X9OFBvUxW78?utm_source=ayurpet&utm_medium=referral',
+      source: 'unsplash',
+    },
   },
 ];
 
@@ -121,6 +168,28 @@ export function GoodGutIngredients() {
                     {it.source}
                   </span>
                 </p>
+                {it.imageCredit ? (
+                  <p className="mt-2 text-[10px] leading-snug text-ink-muted/70">
+                    Photo:{' '}
+                    <a
+                      href={it.imageCredit.photographerUrl}
+                      target="_blank"
+                      rel="noopener noreferrer nofollow"
+                      className="underline decoration-line/60 underline-offset-2 transition hover:text-ink-soft hover:decoration-brand"
+                    >
+                      {it.imageCredit.photographer}
+                    </a>{' '}
+                    on{' '}
+                    <a
+                      href={it.imageCredit.photoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer nofollow"
+                      className="underline decoration-line/60 underline-offset-2 transition hover:text-ink-soft hover:decoration-brand"
+                    >
+                      Unsplash
+                    </a>
+                  </p>
+                ) : null}
               </div>
             </LandingCard>
           ))}
