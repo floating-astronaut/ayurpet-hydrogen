@@ -11,9 +11,40 @@ Body text (if present) shown as indented sub-bullets.
 
 ---
 
+## 2026-05-02
+
+- **00:00 UTC** — auto-sync: 2026-05-02 00:00 UTC (`e988b9a`) — 5 files
+        M	app/components/home/ProductRange.tsx
+        M	app/components/home/RealDogsVideo.tsx
+        M	app/components/home/ShopTheShelf.tsx
+        M	app/routes/_index.tsx
+        M	tsconfig.tsbuildinfo
+
 ## 2026-05-01
 
-- **23:30 UTC** — auto-sync: 2026-05-01 23:30 UTC (`b54f88a`) — 17 files
+- **23:53 UTC** — goodgut: balance chip and card vertical alignment (`bd0573d`) — 3 files
+    Two adjacent fixes for the "text floats to the top of the box"
+    imbalance the user flagged in mobile QA.
+    1. GoodGutIngredients liquid-format callout (the dark green band):
+       the 4 checkmark chips sit in a 2x2 grid on mobile, where one chip
+       wraps to two lines and its row neighbour wraps to one. CSS Grid
+       stretches both cells to the taller height, and `items-start` was
+       pinning the shorter chip's text to the top, leaving an empty
+       bottom half. Switched the chip li to `flex h-full items-center`,
+       removed the `mt-0.5` nudge on the checkmark, and added `shrink-0`
+       to the checkmark so it can't get squeezed when text is long.
+- **23:44 UTC** — goodgut: drop cat-formula tease, reinforce per-day in closing CTA (`93eed9b`) — 4 files
+    Two small tightening passes on the GoodGut+ landing page based on a
+    fresh audit (no other gaps surfaced — typecheck + lint stayed green
+    throughout).
+    1. MadeForNotFor — the "Not a substitute for" column listed
+       "Cats (we have a separate formula coming soon)". That line is the
+       only reference to a future product on the entire conversion page,
+       and it diverts cat-and-dog households into a wait posture instead
+       of booking the dog purchase. Reframed to a clean exclusion:
+       "Cats — formulated for canine digestion only".
+    2. GoodGutClosing — the bottom-of-page CTA already showed the
+- **23:30 UTC** — auto-sync: 2026-05-01 23:30 UTC (`b06faff`) — 18 files
         M	app/components/pdp/StickyAtc.tsx
         M	app/components/pdp/goodgut/GoodGutAPlus.tsx
         M	app/components/pdp/goodgut/GoodGutClosing.tsx

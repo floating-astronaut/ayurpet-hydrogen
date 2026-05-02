@@ -110,33 +110,36 @@ export function ShopTheShelf() {
                     height={t.feature ? 1500 : 800}
                   />
                 </picture>
-                {/* Brand-color overlay so copy stays legible regardless of photo */}
+                {/* Dark edge wash plus an actual copy plate. Copy should feel
+                    placed in a designed container, not pasted over busy art. */}
                 <div
                   aria-hidden
-                  className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(31,26,20,0.10)_0%,rgba(31,26,20,0.30)_45%,rgba(31,26,20,0.78)_85%,rgba(31,26,20,0.92)_100%)]"
+                  className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(31,26,20,0.04)_0%,rgba(31,26,20,0.10)_42%,rgba(31,26,20,0.55)_100%)]"
                 />
 
-                <div className="relative p-6 sm:p-7">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-paper/75">
-                    {t.label}
-                  </p>
-                  <h3
-                    className={
-                      'mt-2 font-display leading-[0.95] tracking-tight text-paper ' +
-                      (t.feature
-                        ? 'text-[2.4rem] sm:text-[3rem] lg:text-[3.4rem]'
-                        : 'text-[1.85rem] sm:text-[2.1rem]')
-                    }
-                  >
-                    {t.title}
-                  </h3>
-                  <p className="mt-2 max-w-md text-[13px] leading-6 text-paper/80 sm:text-[14px]">
-                    {t.body}
-                  </p>
-                  <span className="mt-5 inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.22em] text-paper transition group-hover:gap-3">
-                    Shop the routine
-                    <span aria-hidden>→</span>
-                  </span>
+                <div className="relative p-4 sm:p-5">
+                  <div className="max-w-[26rem] rounded-[1.1rem] border border-paper/15 bg-ink/62 p-4 shadow-[0_18px_44px_rgba(0,0,0,0.18)] backdrop-blur-md sm:p-5">
+                    <p className="text-[9px] font-bold uppercase leading-none tracking-[0.24em] text-saffron-soft sm:text-[10px]">
+                      {t.label}
+                    </p>
+                    <h3
+                      className={
+                        'mt-2 font-display leading-[0.98] tracking-tight text-paper ' +
+                        (t.feature
+                          ? 'text-[2rem] sm:text-[2.7rem] lg:text-[3.15rem]'
+                          : 'text-[1.55rem] sm:text-[1.9rem]')
+                      }
+                    >
+                      {t.title}
+                    </h3>
+                    <p className="mt-2 max-w-md text-[12.5px] leading-5 text-paper/82 sm:text-[13.5px] sm:leading-6">
+                      {t.body}
+                    </p>
+                    <span className="mt-4 inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-paper transition group-hover:gap-3 sm:text-[11px]">
+                      Shop the routine
+                      <span aria-hidden>→</span>
+                    </span>
+                  </div>
                 </div>
               </Link>
             ))}

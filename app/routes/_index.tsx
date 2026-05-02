@@ -129,30 +129,30 @@ export default function Homepage() {
             </div>
 
             {/* Proof cues — surfaced inline near the CTA, not buried later. */}
-            <div className="mt-8 grid max-w-xl grid-cols-3 gap-4 border-t border-line/70 pt-6 sm:gap-6">
-              <div>
-                <p className="font-display text-[1.5rem] leading-none text-brand sm:text-[1.75rem]">
+            <div className="mt-7 grid max-w-xl grid-cols-3 gap-2 border-t border-line/70 pt-5 sm:mt-8 sm:gap-3 sm:pt-6">
+              <div className="rounded-2xl border border-white/70 bg-white/55 p-3 shadow-[0_10px_24px_rgba(31,26,20,0.04)] backdrop-blur sm:p-4">
+                <p className="whitespace-nowrap font-display text-[1.35rem] leading-none text-brand sm:text-[1.75rem]">
                   4.9
                   <span className="ml-1 text-[12px] font-medium text-saffron-deep">★</span>
                 </p>
-                <p className="mt-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-muted">
-                  9,340+ reviews
+                <p className="mt-2 text-[9px] font-bold uppercase leading-[1.35] tracking-[0.16em] text-ink-muted sm:text-[10px]">
+                  9,340+<br className="sm:hidden" /> reviews
                 </p>
               </div>
-              <div>
-                <p className="font-display text-[1.5rem] leading-none text-brand sm:text-[1.75rem]">
+              <div className="rounded-2xl border border-white/70 bg-white/55 p-3 shadow-[0_10px_24px_rgba(31,26,20,0.04)] backdrop-blur sm:p-4">
+                <p className="whitespace-nowrap font-display text-[1.35rem] leading-none text-brand sm:text-[1.75rem]">
                   6h+
                 </p>
-                <p className="mt-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-muted">
-                  Slow-aged chew
+                <p className="mt-2 text-[9px] font-bold uppercase leading-[1.35] tracking-[0.16em] text-ink-muted sm:text-[10px]">
+                  Slow chew
                 </p>
               </div>
-              <div>
-                <p className="font-display text-[1.5rem] leading-none text-brand sm:text-[1.75rem]">
+              <div className="rounded-2xl border border-white/70 bg-white/55 p-3 shadow-[0_10px_24px_rgba(31,26,20,0.04)] backdrop-blur sm:p-4">
+                <p className="whitespace-nowrap font-display text-[1.35rem] leading-none text-brand sm:text-[1.75rem]">
                   100%
                 </p>
-                <p className="mt-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-muted">
-                  Vet-informed
+                <p className="mt-2 text-[9px] font-bold uppercase leading-[1.35] tracking-[0.16em] text-ink-muted sm:text-[10px]">
+                  Vet-led
                 </p>
               </div>
             </div>
@@ -163,7 +163,7 @@ export default function Homepage() {
               Drives the campaign feeling away from one isolated packshot. */}
           <div className="relative min-w-0">
             <div className="relative overflow-hidden rounded-[1.5rem] border border-white/60 bg-white/40 p-2 shadow-[0_32px_110px_rgba(31,26,20,0.14)] backdrop-blur sm:rounded-[2rem] sm:p-3">
-              <div className="relative aspect-[4/5] overflow-hidden rounded-[1.4rem] bg-cream-deep sm:rounded-[1.85rem]">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-[1.4rem] bg-cream-deep sm:aspect-[4/5] sm:rounded-[1.85rem]">
                 <picture>
                   <source
                     srcSet="/brand/lifestyle-kelpie-chewing-1200.webp"

@@ -22,6 +22,24 @@ type Props = {
   products: ProductLite[];
 };
 
+
+function benefitFor(p: ProductLite): string | null {
+  const handle = p.handle.toLowerCase();
+  const title = p.title.toLowerCase();
+  if (handle.includes('goodgut') || title.includes('digestive')) return 'Digestive enzyme drops';
+  if (handle.includes('ashwagandha') || title.includes('ashwagandha')) return 'Calming chew ritual';
+  if (handle.includes('turmeric') || title.includes('turmeric')) return 'Joint + skin support';
+  if (handle.includes('himalayan') || title.includes('himalayan')) return 'Single-ingredient yak chew';
+  if (handle.includes('pack-of-3') || handle.includes('combo')) return 'Routine bundle';
+  return null;
+}
+
+function cleanTitle(title: string): string {
+  return title
+    .replace(/\s*\|\s*/g, ' · ')
+    .replace(/\s*Advanced Ayurveda \+ Science Backed Formulation\s*/i, '')
+    .replace(/\s*6-Hour Long Lasting Dental Chew\s*/i, '');
+}
 function badgeFor(p: ProductLite): string | null {
   const tags = (p.tags ?? []).map((t) => t.toLowerCase());
   if (tags.includes('bestseller')) return 'Bestseller';
@@ -104,6 +122,7 @@ export function ProductRange({
       >
         {products.map((p, i) => {
           const badge = badgeFor(p);
+          const benefit = benefitFor(p);
           return (
             <SwiperSlide key={p.id}>
               <motion.div
@@ -132,17 +151,28 @@ export function ProductRange({
                       </span>
                     )}
                   </div>
-                  <div className="mt-5 flex items-baseline justify-between gap-3">
-                    <h3 className="font-display text-lg text-ink">{p.title}</h3>
-                    <span className="shrink-0 text-sm text-ink-soft">
-                      <Money data={p.priceRange.minVariantPrice} />
-                    </span>
+                  <div className="mt-4 rounded-[1.1rem] border border-line/70 bg-paper/82 p-4 shadow-[0_12px_30px_rgba(31,26,20,0.04)]">
+                    <div className="flex items-start justify-between gap-3">
+                      <h3 className="line-clamp-2 font-display text-[1.05rem] leading-[1.15] tracking-tight text-ink sm:text-[1.15rem]">
+                        {cleanTitle(p.title)}
+                      </h3>
+                      <span className="shrink-0 whitespace-nowrap font-sans text-sm font-bold text-ink">
+                        <Money data={p.priceRange.minVariantPrice} />
+                      </span>
+                    </div>
+                    <div className="mt-3 flex flex-wrap items-center gap-2">
+                      {benefit ? (
+                        <span className="rounded-full bg-cream px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-brand">
+                          {benefit}
+                        </span>
+                      ) : null}
+                      {p.vendor ? (
+                        <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-ink-muted">
+                          {p.vendor.replace('International', '').trim()}
+                        </span>
+                      ) : null}
+                    </div>
                   </div>
-                  {p.vendor && (
-                    <p className="mt-1 text-xs uppercase tracking-wider text-ink-muted">
-                      {p.vendor}
-                    </p>
-                  )}
                 </Link>
               </motion.div>
             </SwiperSlide>
