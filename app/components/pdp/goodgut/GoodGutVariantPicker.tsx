@@ -72,7 +72,10 @@ export function GoodGutVariantPicker({
   // ---------------------------------------------------------------------------
   // Subscription state
   // ---------------------------------------------------------------------------
-  const allocations = selectedVariant?.sellingPlanAllocations?.nodes ?? [];
+  const allocations = useMemo(
+    () => selectedVariant?.sellingPlanAllocations?.nodes ?? [],
+    [selectedVariant],
+  );
   const hasSellingPlans = allocations.length > 0;
 
   const [purchaseMode, setPurchaseMode] = useState<'subscribe' | 'oneTime'>(
