@@ -13,7 +13,30 @@ Body text (if present) shown as indented sub-bullets.
 
 ## 2026-05-02
 
-- **00:00 UTC** — auto-sync: 2026-05-02 00:00 UTC (`e988b9a`) — 5 files
+- **00:49 UTC** — checkout: add Buy-it-now express button as Shop Pay fallback (`33642fa`) — 4 files
+    The <ShopPayButton> we wired earlier renders fine but its click flow
+    silently does nothing on stores that don't have Shop Pay enabled or
+    haven't authorised the headless storefront URL — that's the failure
+    mode the user reported. Shop Pay-as-the-only-express-option is
+    fragile.
+    The headless equivalent of Liquid's `<button name="checkout">` is
+    "add line to cart, then top-level redirect to cart.checkoutUrl". That
+    works on every Shopify configuration, and is what the merchant theme
+    falls back to when Shop Pay isn't there.
+    New component
+- **00:43 UTC** — checkout: plug Shop Pay accelerated checkout into PDPs (`8545aed`) — 5 files
+    The Liquid main-product template renders dynamic checkout buttons via
+    {{ form | payment_button }}. The Hydrogen-side equivalent is
+    @shopify/hydrogen's <ShopPayButton>, which renders the wallet pill and
+    routes the user straight to Shop Pay checkout without the cart drawer
+    detour.
+    Wiring
+    - New thin wrapper at app/components/ShopPayExpress.tsx pulls the
+      store domain from useRouteLoaderData('root') (already exposed via
+      env.PUBLIC_STORE_DOMAIN in the root loader) and renders
+      <ShopPayButton storeDomain={...} variantIds={[selectedVariant.id]}
+- **00:14 UTC** — home polish: tighten mobile proof and product range titles (`efd6992`) — 2 files
+- **00:00 UTC** — auto-sync: 2026-05-02 00:00 UTC (`bf3cd9a`) — 6 files
         M	app/components/home/ProductRange.tsx
         M	app/components/home/RealDogsVideo.tsx
         M	app/components/home/ShopTheShelf.tsx
