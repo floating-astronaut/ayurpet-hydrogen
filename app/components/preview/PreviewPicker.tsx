@@ -1,36 +1,41 @@
-// Premium variant picker for the /preview canvas. Native Pet
-// pattern, rebuilt from scratch with clean state-driven layout:
+// Premium variant picker for the /preview canvas. Native Pet "The
+// Daily" anatomy, transposed onto AyurPet brand tokens. Component
+// structure deliberately mirrors the reference one-for-one — the
+// only translation is brand colour (green/cream instead of blue).
 //
-//   ┌──────────────────────────┐  ┌─────┐
-//   │ 30 Days       ▼          │  │ - 1 +│
-//   └──────────────────────────┘  └─────┘
-//   ┌──────────────────────────────────┐
-//   │ ●  Subscribe & save  [15% off]  $30.60
-//   │    Cancel anytime · ships every 30 days  $36
-//   │   ┌────────────────────────────┐
-//   │   │ ✓ Daily support             │
-//   │   │ ✓ Free shipping, always     │
-//   │   │ ✓ 15% off every delivery    │
-//   │   │ ✓ Cancel anytime, zero pressure │
-//   │   │ Cadence: Every 30 days  ▼   │
-//   │   └────────────────────────────┘
-//   └──────────────────────────────────┘
-//   ┌──────────────────────────────────┐
-//   │ ○  One-time purchase            $36.00
-//   └──────────────────────────────────┘
-//   ┌──────────────────────────────────┐
-//   │      ADD TO CART · $30.60   →    │
-//   └──────────────────────────────────┘
+// Anatomy:
+//   ┌─────────────────────────────┐ ┌───────┐
+//   │ 30 Days · $36          ▼    │ │ - 1 + │
+//   └─────────────────────────────┘ └───────┘
 //
-// Uses native <select> elements for size + cadence dropdowns
-// (styled to feel like custom listboxes via Tailwind). Subscribe/
-// one-time choice is two large radio buttons. Quantity stepper is
-// a compact - / + control. ATC label updates live with the final
-// price including subscribe discount.
+//   ┌────────────────────────────────────────┐ ← unified purchase card
+//   │ TINTED green/cream area (subscribe):   │   single border, overflow-
+//   │  ●  15% off with autoship   $36 $30.60 │   hidden, both rows feel
+//   │                                        │   connected.
+//   │  ┌──────┐ ┌──────┐                     │
+//   │  │ icon │ │ icon │  daily / free       │
+//   │  └──────┘ └──────┘  ship / 15% off     │
+//   │  ┌──────┐ ┌──────┐  cancel anytime     │
+//   │  │ icon │ │ icon │                     │
+//   │  └──────┘ └──────┘                     │
+//   │                                        │
+//   │  ┌────────────────────────────────┐    │  ← cadence dropdown
+//   │  │ Every 30 days              ▼   │    │     full-width white
+//   │  └────────────────────────────────┘    │
+//   │                                        │
+//   │  Easily skip, pause, or cancel from    │  ← centered helper text
+//   │  your account.                         │
+//   ├────────────────────────────────────────┤  ← horizontal border
+//   │ WHITE area (one-time):                 │
+//   │  ○  One-time purchase           $36.00 │
+//   └────────────────────────────────────────┘
 //
-// Falls back to one-time-only when the active variant has no
-// sellingPlanAllocations so the picker degrades gracefully on
-// stores without subscriptions configured.
+//   ┌────────────────────────────────────────┐
+//   │       ADD TO CART · $30.60   →         │  ← full-width pill
+//   └────────────────────────────────────────┘
+//
+// Falls back to one-time-only if sellingPlanAllocations is empty
+// (Seal not configured for the variant).
 import {useMemo, useState} from 'react';
 import {useNavigate} from 'react-router';
 import type {MappedProductOptions} from '@shopify/hydrogen';
@@ -49,23 +54,17 @@ export function PreviewPicker({productOptions, selectedVariant}: Props) {
   const navigate = useNavigate();
   const {open} = useAside();
 
-  // ---------------------------------------------------------------------------
   // Size option (the only varying option on this product)
-  // ---------------------------------------------------------------------------
   const sizeOption =
     productOptions.find((o) => o.name.toLowerCase() === 'size') ??
     productOptions.find((o) => o.optionValues.length > 1);
 
-  // ---------------------------------------------------------------------------
   // Quantity stepper
-  // ---------------------------------------------------------------------------
   const [qty, setQty] = useState<number>(1);
   const decQty = () => setQty((q) => Math.max(1, q - 1));
   const incQty = () => setQty((q) => Math.min(99, q + 1));
 
-  // ---------------------------------------------------------------------------
   // Subscription state
-  // ---------------------------------------------------------------------------
   const allocations = useMemo(
     () => selectedVariant?.sellingPlanAllocations?.nodes ?? [],
     [selectedVariant],
@@ -80,9 +79,9 @@ export function PreviewPicker({productOptions, selectedVariant}: Props) {
   );
 
   const activeAllocation = useMemo(() => {
-    if (mode !== 'subscribe' || !planId) return null;
+    if (!planId) return null;
     return allocations.find((a) => a.sellingPlan?.id === planId) ?? null;
-  }, [mode, planId, allocations]);
+  }, [planId, allocations]);
 
   const oneTimeAmount = selectedVariant?.price?.amount
     ? Number(selectedVariant.price.amount)
@@ -102,12 +101,14 @@ export function PreviewPicker({productOptions, selectedVariant}: Props) {
   const finalLineTotal =
     finalAmount !== null ? (finalAmount * qty).toFixed(2) : null;
 
+  const subscribeSelected = mode === 'subscribe';
+
   return (
     <div className="space-y-5">
       {/* ----------------------------------------------------------------
-          ROW 1 — Size dropdown + Quantity stepper
+          ROW 1 — Size dropdown + Quantity stepper, ~56px tall, 14px gap
           ---------------------------------------------------------------- */}
-      <div className="flex gap-3">
+      <div className="flex gap-3.5">
         {sizeOption ? (
           <label className="relative block min-w-0 flex-1">
             <span className="sr-only">Size</span>
@@ -142,18 +143,11 @@ export function PreviewPicker({productOptions, selectedVariant}: Props) {
                 );
               })}
             </select>
-            <span
-              aria-hidden
-              className="pointer-events-none absolute right-5 top-1/2 -translate-y-1/2 text-ink-muted"
-            >
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                <path d="M3 6l5 5 5-5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </span>
+            <Chevron className="absolute right-5 top-1/2 -translate-y-1/2 text-ink-muted" />
           </label>
         ) : null}
 
-        <div className="flex h-14 shrink-0 items-center rounded-2xl border border-line bg-paper">
+        <div className="flex h-14 w-[7.25rem] shrink-0 items-center rounded-2xl border border-line bg-paper">
           <button
             type="button"
             aria-label="Decrease quantity"
@@ -186,49 +180,122 @@ export function PreviewPicker({productOptions, selectedVariant}: Props) {
       </div>
 
       {/* ----------------------------------------------------------------
-          ROW 2 — Subscribe card (collapses cleanly when no plans)
+          ROW 2 — Unified purchase choice card. Subscribe section on
+          top with tinted brand-green background, attached one-time row
+          below separated by a horizontal border. Single rounded outer
+          container with overflow-hidden so the two rows feel connected.
           ---------------------------------------------------------------- */}
-      {hasSellingPlans ? (
-        <SubscribeCard
-          allocations={allocations}
-          selected={mode === 'subscribe'}
-          onSelect={() => setMode('subscribe')}
-          planId={planId}
-          setPlanId={setPlanId}
-          oneTimeAmount={oneTimeAmount}
-          subscribeAmount={subscribeAmount}
-          savingsPct={savingsPct}
-        />
-      ) : null}
+      <div className="overflow-hidden rounded-[20px] border border-brand/25 shadow-[0_18px_44px_rgba(31,26,20,0.06)]">
+        {/* SUBSCRIBE area */}
+        <div
+          className={
+            'transition-colors ' +
+            (subscribeSelected
+              ? 'bg-brand/[0.07]'
+              : 'bg-paper')
+          }
+        >
+          <button
+            type="button"
+            aria-pressed={subscribeSelected}
+            onClick={() => hasSellingPlans && setMode('subscribe')}
+            disabled={!hasSellingPlans}
+            className="flex w-full items-center gap-3.5 p-5 text-left sm:p-6 disabled:cursor-not-allowed"
+          >
+            <RadioDot selected={subscribeSelected} />
+            <span className="min-w-0 flex-1 font-display text-[1.05rem] leading-tight text-ink sm:text-[1.2rem]">
+              {savingsPct ? `${savingsPct}% off with autoship` : 'Subscribe & save'}
+            </span>
+            <span className="flex shrink-0 items-baseline gap-2">
+              {oneTimeAmount !== null && subscribeAmount !== null && oneTimeAmount > subscribeAmount ? (
+                <span className="text-[13px] text-ink-muted line-through sm:text-[14px]">
+                  ${oneTimeAmount.toFixed(2)}
+                </span>
+              ) : null}
+              <span className="font-display text-[1.2rem] leading-none text-ink sm:text-[1.35rem]">
+                ${(subscribeAmount ?? oneTimeAmount ?? 0).toFixed(2)}
+              </span>
+            </span>
+          </button>
+
+          {subscribeSelected && hasSellingPlans ? (
+            <div className="px-5 pb-5 sm:px-6 sm:pb-6">
+              {/* 2x2 benefit grid — centered icons above labels */}
+              <ul className="mx-auto grid max-w-md grid-cols-2 gap-x-6 gap-y-5">
+                {[
+                  {Icon: ShieldIcon, label: 'Daily support, made easy'},
+                  {Icon: TruckIcon, label: 'Free shipping, always'},
+                  {
+                    Icon: PercentIcon,
+                    label: `${savingsPct ?? 15}% off every delivery`,
+                  },
+                  {Icon: CycleIcon, label: 'Cancel anytime, zero pressure'},
+                ].map(({Icon, label}) => (
+                  <li
+                    key={label}
+                    className="flex flex-col items-center gap-2 text-center"
+                  >
+                    <span
+                      aria-hidden
+                      className="grid h-11 w-11 place-items-center rounded-full bg-brand/15 text-brand"
+                    >
+                      <Icon />
+                    </span>
+                    <span className="text-[12px] font-semibold leading-tight text-ink sm:text-[12.5px]">
+                      {label}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+
+              {/* Cadence dropdown — full-width, white, inside tinted area */}
+              <label className="relative mt-5 block">
+                <span className="sr-only">Delivery frequency</span>
+                <select
+                  value={planId ?? ''}
+                  onChange={(e) => setPlanId(e.target.value)}
+                  onClick={(e) => e.stopPropagation()}
+                  className="block h-12 w-full appearance-none rounded-xl border border-line/70 bg-paper px-4 pr-10 text-left text-[14px] text-ink focus:border-brand focus:outline-none"
+                >
+                  {allocations.map((a) => (
+                    <option key={a.sellingPlan.id} value={a.sellingPlan.id}>
+                      {a.sellingPlan.name}
+                    </option>
+                  ))}
+                </select>
+                <Chevron className="absolute right-4 top-1/2 -translate-y-1/2 text-ink-muted" />
+              </label>
+
+              {/* Helper text — centered, muted */}
+              <p className="mx-auto mt-3 max-w-sm text-center text-[12px] leading-snug text-ink-muted sm:text-[12.5px]">
+                Easily skip, pause, or cancel anytime in your account.
+              </p>
+            </div>
+          ) : null}
+        </div>
+
+        {/* ONE-TIME row — attached to same card via border-top, white bg */}
+        <button
+          type="button"
+          aria-pressed={!subscribeSelected}
+          onClick={() => setMode('oneTime')}
+          className="flex min-h-[78px] w-full items-center gap-3.5 border-t border-brand/15 bg-paper px-5 py-5 text-left transition hover:bg-paper/80 sm:px-6 sm:min-h-[84px]"
+        >
+          <RadioDot selected={!subscribeSelected} />
+          <span className="min-w-0 flex-1 font-display text-[1.05rem] leading-tight text-ink sm:text-[1.15rem]">
+            One-time purchase
+          </span>
+          <span className="shrink-0 font-display text-[1.2rem] leading-none text-ink sm:text-[1.3rem]">
+            {oneTimeAmount !== null ? `$${oneTimeAmount.toFixed(2)}` : ''}
+          </span>
+        </button>
+      </div>
 
       {/* ----------------------------------------------------------------
-          ROW 3 — One-time
-          ---------------------------------------------------------------- */}
-      <button
-        type="button"
-        aria-pressed={mode === 'oneTime'}
-        onClick={() => setMode('oneTime')}
-        className={
-          'flex w-full items-center gap-3.5 rounded-2xl border px-5 py-4 text-left transition ' +
-          (mode === 'oneTime'
-            ? 'border-brand bg-brand/[0.06] shadow-[0_14px_30px_rgba(45,90,61,0.10)]'
-            : 'border-line bg-paper hover:border-brand/40')
-        }
-      >
-        <RadioDot selected={mode === 'oneTime'} />
-        <span className="min-w-0 flex-1 font-display text-[1.05rem] leading-tight text-ink sm:text-[1.1rem]">
-          One-time purchase
-        </span>
-        <span className="shrink-0 font-display text-[1.2rem] leading-none text-ink sm:text-[1.3rem]">
-          {oneTimeAmount !== null ? `$${oneTimeAmount.toFixed(2)}` : ''}
-        </span>
-      </button>
-
-      {/* ----------------------------------------------------------------
-          ROW 4 — Add to cart
+          ROW 3 — Add to cart pill, full-width, soft underlay shadow
           ---------------------------------------------------------------- */}
       <AddToCartButton
-        className="inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-full bg-brand px-7 py-4 text-[12.5px] font-bold uppercase tracking-[0.22em] text-paper shadow-[0_18px_40px_rgba(45,90,61,0.18)] transition hover:bg-brand-deep disabled:cursor-not-allowed disabled:opacity-50 sm:text-[13px]"
+        className="inline-flex min-h-[58px] w-full items-center justify-center gap-3 rounded-full bg-brand px-7 text-[13px] font-bold uppercase tracking-[0.24em] text-paper shadow-[0_22px_50px_rgba(45,90,61,0.22)] transition hover:bg-brand-deep disabled:cursor-not-allowed disabled:opacity-50 sm:text-[13.5px]"
         disabled={!selectedVariant || !selectedVariant.availableForSale}
         onClick={() => open('cart')}
         lines={
@@ -265,145 +332,64 @@ export function PreviewPicker({productOptions, selectedVariant}: Props) {
 }
 
 // ---------------------------------------------------------------------------
-// SubscribeCard — large card with autoship radio at top, four-up benefits +
-// cadence dropdown revealed when selected. Mirrors Native Pet's "The Daily"
-// autoship UX one-for-one.
+// Bits
 // ---------------------------------------------------------------------------
-type Allocation = NonNullable<
-  NonNullable<Variant>['sellingPlanAllocations']
->['nodes'][number];
-
-function SubscribeCard({
-  allocations,
-  selected,
-  onSelect,
-  planId,
-  setPlanId,
-  oneTimeAmount,
-  subscribeAmount,
-  savingsPct,
-}: {
-  allocations: Allocation[];
-  selected: boolean;
-  onSelect: () => void;
-  planId: string | null;
-  setPlanId: (id: string | null) => void;
-  oneTimeAmount: number | null;
-  subscribeAmount: number | null;
-  savingsPct: number | null;
-}) {
-  return (
-    <div
-      className={
-        'overflow-hidden rounded-2xl border transition ' +
-        (selected
-          ? 'border-brand bg-brand/[0.06] shadow-[0_14px_30px_rgba(45,90,61,0.10)]'
-          : 'border-line bg-paper')
-      }
-    >
-      <button
-        type="button"
-        aria-pressed={selected}
-        onClick={onSelect}
-        className="flex w-full items-center gap-3.5 px-5 py-4 text-left"
-      >
-        <RadioDot selected={selected} />
-        <span className="min-w-0 flex-1">
-          <span className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-            <span className="font-display text-[1.05rem] leading-tight text-ink sm:text-[1.1rem]">
-              Subscribe &amp; save
-            </span>
-            {savingsPct ? (
-              <span className="rounded-full bg-brand/10 px-2 py-0.5 text-[9.5px] font-bold uppercase tracking-[0.22em] text-brand">
-                {savingsPct}% off
-              </span>
-            ) : null}
-          </span>
-          <span className="mt-1 block text-[12.5px] leading-snug text-ink-soft">
-            Cancel or skip anytime · ships automatically
-          </span>
-        </span>
-        <span className="shrink-0 text-right">
-          {subscribeAmount !== null ? (
-            <span className="block font-display text-[1.2rem] leading-none text-ink sm:text-[1.3rem]">
-              ${subscribeAmount.toFixed(2)}
-            </span>
-          ) : null}
-          {oneTimeAmount !== null && subscribeAmount !== null && oneTimeAmount > subscribeAmount ? (
-            <span className="mt-1 block text-[11.5px] text-ink-muted line-through">
-              ${oneTimeAmount.toFixed(2)}
-            </span>
-          ) : null}
-        </span>
-      </button>
-
-      {selected ? (
-        <div className="border-t border-brand/15 bg-paper/60 px-5 py-4">
-          <ul className="grid grid-cols-2 gap-x-4 gap-y-2.5 text-[12.5px] leading-snug text-ink-soft sm:text-[13px]">
-            {[
-              'Daily support, made easy',
-              'Free shipping, always',
-              `${savingsPct ?? 15}% off every delivery`,
-              'Cancel anytime, zero pressure',
-            ].map((line) => (
-              <li key={line} className="flex items-start gap-2">
-                <span aria-hidden className="mt-0.5 text-brand">
-                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-                    <path d="M3 8.5l3.5 3.5L13 5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </span>
-                <span>{line}</span>
-              </li>
-            ))}
-          </ul>
-
-          {allocations.length > 1 ? (
-            <label className="relative mt-4 block">
-              <span className="text-[10.5px] font-bold uppercase tracking-[0.22em] text-ink-muted">
-                Cadence
-              </span>
-              <select
-                value={planId ?? ''}
-                onChange={(e) => setPlanId(e.target.value)}
-                onClick={(e) => e.stopPropagation()}
-                className="mt-1.5 block h-11 w-full appearance-none rounded-xl border border-line bg-paper pl-4 pr-10 text-[13.5px] text-ink focus:border-brand focus:outline-none"
-              >
-                {allocations.map((a) => (
-                  <option key={a.sellingPlan.id} value={a.sellingPlan.id}>
-                    {a.sellingPlan.name}
-                  </option>
-                ))}
-              </select>
-              <span
-                aria-hidden
-                className="pointer-events-none absolute right-4 bottom-3.5 text-ink-muted"
-              >
-                <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-                  <path d="M3 6l5 5 5-5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </span>
-            </label>
-          ) : (
-            <p className="mt-3 text-[11.5px] leading-snug text-ink-muted">
-              Ships {allocations[0]?.sellingPlan.name?.toLowerCase() ?? 'on a recurring schedule'} · easy to skip, pause, or cancel from your account.
-            </p>
-          )}
-        </div>
-      ) : null}
-    </div>
-  );
-}
-
 function RadioDot({selected}: {selected: boolean}) {
   return (
     <span
       aria-hidden
       className={
-        'mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full border-2 transition ' +
+        'grid h-6 w-6 shrink-0 place-items-center rounded-full border-2 transition ' +
         (selected ? 'border-brand bg-brand' : 'border-line bg-paper')
       }
     >
-      {selected ? <span className="h-1.5 w-1.5 rounded-full bg-paper" /> : null}
+      {selected ? <span className="h-2 w-2 rounded-full bg-paper" /> : null}
     </span>
+  );
+}
+
+function Chevron({className = ''}: {className?: string}) {
+  return (
+    <span aria-hidden className={`pointer-events-none ${className}`}>
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+        <path d="M3 6l5 5 5-5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    </span>
+  );
+}
+
+// 4 benefit icons. Centered above their labels in the 2x2 grid.
+function ShieldIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+      <path d="M12 2.5l8 2.4v6.4c0 5-3.5 8.8-8 10.2-4.5-1.4-8-5.2-8-10.2V4.9l8-2.4z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+      <path d="M8.5 12.3L11 14.8l5-5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+function TruckIcon() {
+  return (
+    <svg width="22" height="20" viewBox="0 0 24 24" fill="none">
+      <path d="M2 7h12v9H2zM14 10h5l3 3v3h-8z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+      <circle cx="6.5" cy="17" r="2" stroke="currentColor" strokeWidth="1.6" />
+      <circle cx="17.5" cy="17" r="2" stroke="currentColor" strokeWidth="1.6" />
+    </svg>
+  );
+}
+function PercentIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+      <path d="M5 19L19 5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+      <circle cx="7.5" cy="7.5" r="2.5" stroke="currentColor" strokeWidth="1.8" />
+      <circle cx="16.5" cy="16.5" r="2.5" stroke="currentColor" strokeWidth="1.8" />
+    </svg>
+  );
+}
+function CycleIcon() {
+  return (
+    <svg width="22" height="20" viewBox="0 0 24 24" fill="none">
+      <path d="M3 12a9 9 0 0114-7.5L21 7M21 12a9 9 0 01-14 7.5L3 17" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M21 3v4h-4M3 21v-4h4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
   );
 }
