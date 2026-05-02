@@ -152,7 +152,7 @@ export default function Homepage() {
                   100%
                 </p>
                 <p className="mt-2 text-[9px] font-bold uppercase leading-[1.35] tracking-[0.16em] text-ink-muted sm:text-[10px]">
-                  Vet-led
+                  Vet led
                 </p>
               </div>
             </div>

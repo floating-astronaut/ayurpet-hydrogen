@@ -38,7 +38,10 @@ function cleanTitle(title: string): string {
   return title
     .replace(/\s*\|\s*/g, ' · ')
     .replace(/\s*Advanced Ayurveda \+ Science Backed Formulation\s*/i, '')
-    .replace(/\s*6-Hour Long Lasting Dental Chew\s*/i, '');
+    .replace(/\s*6-Hour Long Lasting Dental Chew\s*/i, '')
+    .replace(/\s*for Dog.*$/i, '')
+    .replace(/\s*Yak Cheese Chews\s*$/i, 'Yak Chews')
+    .trim();
 }
 function badgeFor(p: ProductLite): string | null {
   const tags = (p.tags ?? []).map((t) => t.toLowerCase());
